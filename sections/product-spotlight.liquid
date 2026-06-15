@@ -2,7 +2,7 @@
 <section class="spotlight">
   <div class="spot-img">
     {%- if section.settings.image != blank -%}
-      {{ section.settings.image | image_url: width: 900 | image_tag: alt: section.settings.heading | escape, loading: 'lazy', widths: '450,700,900' }}
+      {{ section.settings.image | image_url: width: 900 | image_tag: alt: section.settings.heading, loading: 'lazy', widths: '450,700,900' }}
     {%- else -%}
       <img src="{{ 'spotlight-console.jpg' | asset_url }}" alt="{{ section.settings.heading | escape }}" loading="lazy">
     {%- endif -%}

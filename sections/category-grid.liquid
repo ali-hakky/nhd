@@ -25,7 +25,7 @@
       -%}
       <a href="{{ url | default: '#' }}" class="cat-card" {{ block.shopify_attributes }}>
         {%- if img != blank -%}
-          {{ img | image_url: width: 600 | image_tag: alt: name | escape, loading: 'lazy', widths: '300,450,600' }}
+          {{ img | image_url: width: 600 | image_tag: alt: name, loading: 'lazy', widths: '300,450,600' }}
         {%- elsif block.settings.image_asset != blank -%}
           <img src="{{ block.settings.image_asset | asset_url }}" alt="{{ name | escape }}" loading="lazy">
         {%- else -%}

@@ -3,7 +3,7 @@
   <div class="hero-bg">
     <div class="hero-pane">
       {%- if section.settings.image_1 != blank -%}
-        {{ section.settings.image_1 | image_url: width: 1400 | image_tag: alt: section.settings.heading | strip_html, fetchpriority: 'high', widths: '700,1000,1400' }}
+        {{ section.settings.image_1 | image_url: width: 1400 | image_tag: alt: section.settings.heading, fetchpriority: 'high', widths: '700,1000,1400' }}
       {%- else -%}
         <img src="{{ 'hero-1.jpg' | asset_url }}" alt="{{ section.settings.heading | strip_html }}" fetchpriority="high">
       {%- endif -%}

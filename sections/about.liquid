@@ -2,7 +2,7 @@
 <section class="about">
   <div class="about-img">
     {%- if section.settings.image != blank -%}
-      {{ section.settings.image | image_url: width: 800 | image_tag: alt: section.settings.heading | escape, loading: 'lazy', widths: '400,600,800' }}
+      {{ section.settings.image | image_url: width: 800 | image_tag: alt: section.settings.heading, loading: 'lazy', widths: '400,600,800' }}
     {%- else -%}
       <img src="{{ 'about-nazly.jpg' | asset_url }}" alt="{{ section.settings.heading | escape }}" loading="lazy">
     {%- endif -%}

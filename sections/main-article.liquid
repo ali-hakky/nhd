@@ -3,7 +3,7 @@
   <nav class="breadcrumb"><a href="{{ routes.root_url }}">Home</a> / <a href="{{ blog.url }}">{{ blog.title }}</a> / <span>{{ article.title }}</span></nav>
   <span class="eyebrow">{{ article.published_at | date: '%B %-d, %Y' }}</span>
   <h1 class="product-title" style="margin:10px 0 20px">{{ article.title }}</h1>
-  {%- if article.image -%}<div class="gallery-main" style="aspect-ratio:16/9;margin-bottom:28px">{{ article.image | image_url: width: 1200 | image_tag: alt: article.title | escape }}</div>{%- endif -%}
+  {%- if article.image -%}<div class="gallery-main" style="aspect-ratio:16/9;margin-bottom:28px">{{ article.image | image_url: width: 1200 | image_tag: alt: article.title }}</div>{%- endif -%}
   <div class="rte">{{ article.content }}</div>
 
   {%- if blog.comments_enabled? -%}

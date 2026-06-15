@@ -51,9 +51,9 @@
 <a href="{{ c_url }}" class="prod-card" {{ block_attributes }}>
   <div class="prod-img {{ height }}">
     {%- if product and c_image -%}
-      {{ c_image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width: 640px) 50vw, 25vw', widths: '300,450,600,900', alt: c_title | escape }}
+      {{ c_image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width: 640px) 50vw, 25vw', widths: '300,450,600,900', alt: c_title }}
     {%- elsif image != blank -%}
-      {{ image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width: 640px) 50vw, 25vw', widths: '300,450,600,900', alt: c_title | escape }}
+      {{ image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width: 640px) 50vw, 25vw', widths: '300,450,600,900', alt: c_title }}
     {%- elsif image_src != blank -%}
       <img src="{{ image_src | asset_url }}" alt="{{ c_title | escape }}" loading="lazy" width="600" height="600">
     {%- else -%}

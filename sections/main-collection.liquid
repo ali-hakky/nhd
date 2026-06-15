@@ -2,10 +2,10 @@
 {%- paginate collection.products by section.settings.per_page -%}
 <div class="coll-banner{% unless collection.image or section.settings.banner_image %} no-image{% endunless %}">
   {%- if section.settings.banner_image != blank -%}
-    {{ section.settings.banner_image | image_url: width: 2000 | image_tag: alt: collection.title | escape, widths: '800,1200,2000' }}
+    {{ section.settings.banner_image | image_url: width: 2000 | image_tag: alt: collection.title, widths: '800,1200,2000' }}
     <div class="coll-banner-overlay"></div>
   {%- elsif collection.image -%}
-    {{ collection.image | image_url: width: 2000 | image_tag: alt: collection.title | escape, widths: '800,1200,2000' }}
+    {{ collection.image | image_url: width: 2000 | image_tag: alt: collection.title, widths: '800,1200,2000' }}
     <div class="coll-banner-overlay"></div>
   {%- endif -%}
   <div class="coll-banner-content">
