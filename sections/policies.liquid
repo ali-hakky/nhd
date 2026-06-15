@@ -1,0 +1,39 @@
+{%- comment -%} Policies strip {%- endcomment -%}
+<div class="policies">
+  {%- for block in section.blocks -%}
+    <div class="pol-item" {{ block.shopify_attributes }}>
+      {%- if block.settings.icon != blank -%}<div class="pol-icon">{{ block.settings.icon }}</div>{%- endif -%}
+      <div class="pol-title">{{ block.settings.title }}</div>
+      <div class="pol-body">{{ block.settings.body }}</div>
+    </div>
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Policies strip",
+  "blocks": [
+    {
+      "type": "policy",
+      "name": "Policy",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "🚚" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Delivery" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "Cairo & Giza: 2–3 days for in-stock pieces. International shipping: 1–3 weeks." }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Policies strip",
+      "blocks": [
+        { "type": "policy", "settings": { "icon": "🚚", "title": "Delivery", "body": "Cairo & Giza: 2–3 days for in-stock pieces. International shipping: 1–3 weeks depending on destination." } },
+        { "type": "policy", "settings": { "icon": "✦", "title": "Made to Order", "body": "Lead times range 2–12 weeks depending on piece. Exact timing confirmed at order. Worth every day." } },
+        { "type": "policy", "settings": { "icon": "↩", "title": "Returns Policy", "body": "Bespoke & made-to-order pieces are non-refundable. In-stock items accepted within 7 days of delivery." } },
+        { "type": "policy", "settings": { "icon": "📐", "title": "Handmade Note", "body": "All pieces 100% handmade. Minor size variations of 1–2cm are natural & expected. For pairs, order together." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

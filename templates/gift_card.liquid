@@ -1,0 +1,14 @@
+<div class="page-wrap" style="max-width:520px;text-align:center">
+  <span class="eyebrow">{{ shop.name }}</span>
+  <h1 class="product-title" style="margin:10px 0 18px">Gift Card</h1>
+  <div class="gallery-main" style="aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;background:var(--bl)">
+    <div>
+      <div class="spec-label">Value</div>
+      <div style="font-family:var(--font-heading);font-size:42px;color:var(--bd)">{{ gift_card.initial_value | money }}</div>
+    </div>
+  </div>
+  <p class="prod-lead" style="margin:18px 0 6px">Gift card code</p>
+  <p style="font-family:var(--font-heading);font-size:24px;letter-spacing:3px;color:var(--ink)">{{ gift_card.code | format_code }}</p>
+  <p class="prod-lead">Current balance: {{ gift_card.balance | money }}</p>
+  <a href="{{ shop.url }}" class="btn" style="margin-top:20px">Visit the shop</a>
+</div>

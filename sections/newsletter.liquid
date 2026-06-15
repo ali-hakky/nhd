@@ -1,0 +1,32 @@
+{%- comment -%} Newsletter signup (Shopify customer form) {%- endcomment -%}
+<section class="newsletter">
+  {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" style="color:rgba(255,255,255,.6)">{{ section.settings.eyebrow }}</span>{%- endif -%}
+  <h2 class="nl-title">{{ section.settings.heading }}{% if section.settings.heading_accent != blank %} <em>{{ section.settings.heading_accent }}</em>{% endif %}</h2>
+  {%- if section.settings.subheading != blank -%}<p class="nl-sub">{{ section.settings.subheading }}</p>{%- endif -%}
+
+  {%- form 'customer', class: 'nl-form' -%}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+    <input type="email" name="contact[email]" placeholder="{{ section.settings.placeholder | default: 'Your email address' }}" required aria-label="Email">
+    <button type="submit">{{ section.settings.button_label | default: 'Subscribe' }}</button>
+    {%- if form.posted_successfully? -%}
+      <p class="nl-success" style="width:100%">Thank you — you're on the list.</p>
+    {%- elsif form.errors -%}
+      <p class="nl-success" style="width:100%">{{ form.errors | default_errors }}</p>
+    {%- endif -%}
+  {%- endform -%}
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Stay in the loop" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "New pieces," },
+    { "type": "text", "id": "heading_accent", "label": "Heading (italic accent)", "default": "first." },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Early access to arrivals, behind-the-scenes & design inspiration from Nazly." },
+    { "type": "text", "id": "placeholder", "label": "Input placeholder", "default": "Your email address" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

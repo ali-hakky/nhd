@@ -1,0 +1,25 @@
+{%- comment -%} List of all collections {%- endcomment -%}
+<section class="section">
+  <div class="sec-head"><div><span class="eyebrow">Browse</span><h2 class="sec-title">All <em>Collections</em></h2></div></div>
+  <div class="cat-grid">
+    {%- for collection in collections -%}
+      {%- if collection.handle != 'frontpage' -%}
+        <a href="{{ collection.url }}" class="cat-card">
+          {%- if collection.featured_image -%}
+            {{ collection.featured_image | image_url: width: 600 | image_tag: alt: collection.title | escape, loading: 'lazy' }}
+          {%- else -%}
+            {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+          <div class="cat-overlay">
+            <div class="cat-name">{{ collection.title }}</div>
+            <div class="cat-sub">{{ collection.products_count }} pieces</div>
+          </div>
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Collections list", "settings": [] }
+{% endschema %}

@@ -1,0 +1,21 @@
+<div class="page-wrap account-wrap">
+  <h1 class="product-title" style="text-align:center;margin-bottom:24px">Login</h1>
+
+  {%- form 'customer_login' -%}
+    {%- if form.errors -%}<p class="form-status error">{{ form.errors | default_errors }}</p>{%- endif -%}
+    <div class="field"><label for="CustomerEmail">Email</label><input type="email" id="CustomerEmail" name="customer[email]" required></div>
+    <div class="field"><label for="CustomerPassword">Password</label><input type="password" id="CustomerPassword" name="customer[password]" required></div>
+    <button type="submit" class="btn" style="width:100%">Sign in</button>
+    <p style="text-align:center;margin-top:16px"><a href="#" onclick="document.getElementById('RecoverForm').style.display='block';return false;" class="story-link">Forgot password?</a></p>
+  {%- endform -%}
+
+  <div id="RecoverForm" style="display:none;margin-top:24px">
+    {%- form 'recover_customer_password' -%}
+      {%- if form.posted_successfully? -%}<p class="form-status success">We've sent you an email with a link to reset your password.</p>{%- endif -%}
+      <div class="field"><label for="RecoverEmail">Email</label><input type="email" id="RecoverEmail" name="email" required></div>
+      <button type="submit" class="btn" style="width:100%">Reset password</button>
+    {%- endform -%}
+  </div>
+
+  <p style="text-align:center;margin-top:24px">New here? <a href="{{ routes.account_register_url }}" class="story-link">Create an account →</a></p>
+</div>

@@ -1,0 +1,63 @@
+{%- comment -%} Product spotlight — large image + spec grid + CTA {%- endcomment -%}
+<section class="spotlight">
+  <div class="spot-img">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 900 | image_tag: alt: section.settings.heading | escape, loading: 'lazy', widths: '450,700,900' }}
+    {%- else -%}
+      <img src="{{ 'spotlight-console.jpg' | asset_url }}" alt="{{ section.settings.heading | escape }}" loading="lazy">
+    {%- endif -%}
+  </div>
+  <div>
+    {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+    <h2 class="spot-title">{{ section.settings.heading }}{% if section.settings.heading_accent != blank %}<br><em>{{ section.settings.heading_accent }}</em>{% endif %}</h2>
+    {%- if section.settings.body != blank -%}<p class="spot-body">{{ section.settings.body }}</p>{%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="specs">
+        {%- for block in section.blocks -%}
+          <div class="spec" {{ block.shopify_attributes }}>
+            <div class="spec-label">{{ block.settings.label }}</div>
+            <div class="spec-val">{{ block.settings.value }}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank -%}<a href="{{ section.settings.button_url | default: '#' }}" class="btn">{{ section.settings.button_label }}</a>{%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product spotlight",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Product spotlight" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Upholstered" },
+    { "type": "text", "id": "heading_accent", "label": "Heading (italic accent)", "default": "Console" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Nazly's latest obsession and one of the most saved pieces on her feed. Unique, unexpected — yet beautifully functional and timeless. Fully customisable in your choice of fabric to perfectly suit your space. Available for pre-order only." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Enquire Now" },
+    { "type": "url", "id": "button_url", "label": "Button URL" }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Spec",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Lead Time" },
+        { "type": "text", "id": "value", "label": "Value", "default": "3–4 Weeks" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Product spotlight",
+      "blocks": [
+        { "type": "spec", "settings": { "label": "Customisation", "value": "Fully Bespoke" } },
+        { "type": "spec", "settings": { "label": "Lead Time", "value": "3–4 Weeks" } },
+        { "type": "spec", "settings": { "label": "Fabric", "value": "Your Choice" } },
+        { "type": "spec", "settings": { "label": "Order Type", "value": "Pre-order Only" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,24 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "shop": { "type": "menu", "settings": { "heading": "Shop", "menu": "footer-shop" } },
+        "studio": { "type": "menu", "settings": { "heading": "Studio", "menu": "footer-studio" } },
+        "help": { "type": "menu", "settings": { "heading": "Help", "menu": "footer-help" } }
+      },
+      "block_order": ["shop", "studio", "help"],
+      "settings": {
+        "brand": "Nazly Habib Design",
+        "description": "Handcrafted rattan, wicker & upholstered furniture made to order. Every piece made with personality, for homes that have it too. Cairo & London.",
+        "instagram": "https://instagram.com/nazlyhabibdesigns",
+        "copyright": "All rights reserved. Handcrafted in Egypt.",
+        "show_payment_icons": true,
+        "payment_methods": "Visa, Mastercard, PayPal, Klarna"
+      }
+    }
+  },
+  "order": ["footer"]
+}

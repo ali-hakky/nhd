@@ -1,0 +1,48 @@
+{%- comment -%} Split-pane hero {%- endcomment -%}
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-pane">
+      {%- if section.settings.image_1 != blank -%}
+        {{ section.settings.image_1 | image_url: width: 1400 | image_tag: alt: section.settings.heading | strip_html, fetchpriority: 'high', widths: '700,1000,1400' }}
+      {%- else -%}
+        <img src="{{ 'hero-1.jpg' | asset_url }}" alt="{{ section.settings.heading | strip_html }}" fetchpriority="high">
+      {%- endif -%}
+    </div>
+    <div class="hero-pane">
+      {%- if section.settings.image_2 != blank -%}
+        {{ section.settings.image_2 | image_url: width: 900 | image_tag: alt: '', widths: '450,700,900' }}
+      {%- else -%}
+        <img src="{{ 'hero-2.jpg' | asset_url }}" alt="">
+      {%- endif -%}
+    </div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+    <h1>{{ section.settings.heading }}{% if section.settings.heading_accent != blank %}<br><em>{{ section.settings.heading_accent }}</em>{% endif %}</h1>
+    {%- if section.settings.subheading != blank -%}<p class="hero-sub">{{ section.settings.subheading }}</p>{%- endif -%}
+    <div class="hero-btns">
+      {%- if section.settings.button_label != blank -%}<a href="{{ section.settings.button_url }}" class="btn">{{ section.settings.button_label }}</a>{%- endif -%}
+      {%- if section.settings.button2_label != blank -%}<a href="{{ section.settings.button2_url }}" class="btn-ghost">{{ section.settings.button2_label }}</a>{%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "image_picker", "id": "image_1", "label": "Left image (large)" },
+    { "type": "image_picker", "id": "image_2", "label": "Right image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Cairo · London · Handcrafted · Made to Order" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Furniture with" },
+    { "type": "text", "id": "heading_accent", "label": "Heading (italic accent line)", "default": "personality." },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Rattan, wicker & bespoke upholstery" },
+    { "type": "text", "id": "button_label", "label": "Primary button", "default": "Shop the Collection" },
+    { "type": "url", "id": "button_url", "label": "Primary button link" },
+    { "type": "text", "id": "button2_label", "label": "Secondary button", "default": "Enquire Bespoke" },
+    { "type": "url", "id": "button2_url", "label": "Secondary button link" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

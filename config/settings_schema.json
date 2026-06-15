@@ -1,0 +1,49 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Nazly Habib Design",
+    "theme_version": "1.0.0",
+    "theme_author": "Nazly Habib Design",
+    "theme_documentation_url": "https://instagram.com/nazlyhabibdesigns",
+    "theme_support_url": "https://instagram.com/nazlyhabibdesigns"
+  },
+  {
+    "name": "Brand colours",
+    "settings": [
+      { "type": "color", "id": "color_base", "label": "Page background", "default": "#FAFAF8" },
+      { "type": "color", "id": "color_ink", "label": "Text", "default": "#1e1e1e" },
+      { "type": "color", "id": "color_muted", "label": "Muted text", "default": "#8a8a82" },
+      { "type": "color", "id": "color_blue", "label": "Soft blue", "default": "#7BA7BC" },
+      { "type": "color", "id": "color_blue_deep", "label": "Deep blue", "default": "#4E7F96" },
+      { "type": "color", "id": "color_blue_mid", "label": "Mid blue", "default": "#A8C8D8" },
+      { "type": "color", "id": "color_blue_light", "label": "Light blue", "default": "#EAF2F6" },
+      { "type": "color", "id": "color_offset", "label": "Offset background", "default": "#EFF5F8" },
+      { "type": "color", "id": "color_border", "label": "Borders", "default": "#DDE8EC" }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      { "type": "paragraph", "content": "This theme uses Cormorant Garamond (serif headings) and Jost (sans-serif body), loaded from Google Fonts to match the brand identity." }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      { "type": "range", "id": "page_width", "label": "Maximum page width", "min": 1200, "max": 1800, "step": 20, "unit": "px", "default": 1500 }
+    ]
+  },
+  {
+    "name": "Favicon & social",
+    "settings": [
+      { "type": "image_picker", "id": "favicon", "label": "Favicon", "info": "Will be scaled to 32 x 32px" },
+      { "type": "image_picker", "id": "share_image", "label": "Default social share image" }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      { "type": "checkbox", "id": "cart_drawer_enabled", "label": "Use slide-out cart drawer", "default": true }
+    ]
+  }
+]

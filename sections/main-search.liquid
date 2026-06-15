@@ -1,0 +1,38 @@
+{%- comment -%} Search results {%- endcomment -%}
+{%- paginate search.results by 16 -%}
+<div class="page-wrap">
+  <h1 class="product-title" style="text-align:center;margin-bottom:24px">Search</h1>
+  <form action="{{ routes.search_url }}" method="get" class="search-form" role="search">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search the collection…" aria-label="Search">
+    <button type="submit">Search</button>
+  </form>
+
+  {%- if search.performed -%}
+    <p class="coll-count" style="text-align:center;margin-bottom:24px">{{ search.results_count }} results for &ldquo;{{ search.terms | escape }}&rdquo;</p>
+    {%- if search.results.size > 0 -%}
+      <div class="grid-4">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {%- render 'product-card', product: item, image_height: 'med', show_price: true -%}
+          {%- else -%}
+            <a href="{{ item.url }}" class="prod-card"><div class="prod-body"><div class="prod-name">{{ item.title }}</div><div class="prod-mat">{{ item.content | strip_html | truncate: 100 }}</div></div></a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <div class="pagination">
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>{%- else -%}<span class="current">{{ part.title }}</span>{%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <p class="coll-empty">No results found. Try another search.</p>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+{%- endpaginate -%}
+
+{% schema %}
+{ "name": "Search", "settings": [] }
+{% endschema %}

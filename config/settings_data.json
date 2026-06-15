@@ -1,0 +1,30 @@
+{
+  "current": {
+    "color_base": "#FAFAF8",
+    "color_ink": "#1e1e1e",
+    "color_muted": "#8a8a82",
+    "color_blue": "#7BA7BC",
+    "color_blue_deep": "#4E7F96",
+    "color_blue_mid": "#A8C8D8",
+    "color_blue_light": "#EAF2F6",
+    "color_offset": "#EFF5F8",
+    "color_border": "#DDE8EC",
+    "page_width": 1500,
+    "cart_drawer_enabled": true
+  },
+  "presets": {
+    "Nazly Habib Design": {
+      "color_base": "#FAFAF8",
+      "color_ink": "#1e1e1e",
+      "color_muted": "#8a8a82",
+      "color_blue": "#7BA7BC",
+      "color_blue_deep": "#4E7F96",
+      "color_blue_mid": "#A8C8D8",
+      "color_blue_light": "#EAF2F6",
+      "color_offset": "#EFF5F8",
+      "color_border": "#DDE8EC",
+      "page_width": 1500,
+      "cart_drawer_enabled": true
+    }
+  }
+}

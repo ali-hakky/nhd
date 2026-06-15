@@ -1,0 +1,49 @@
+{%- comment -%} Contact / enquiry page {%- endcomment -%}
+<div class="page-wrap" style="max-width:680px">
+  <nav class="breadcrumb"><a href="{{ routes.root_url }}">Home</a> / <span>{{ page.title }}</span></nav>
+  <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+  <h1 class="product-title" style="margin:10px 0 16px">{{ page.title }}</h1>
+  {%- if page.content != blank -%}<div class="rte" style="margin-bottom:28px">{{ page.content }}</div>{%- endif -%}
+
+  {%- if section.settings.intro != blank -%}<p class="rte" style="margin-bottom:24px">{{ section.settings.intro }}</p>{%- endif -%}
+
+  {%- form 'contact' -%}
+    {%- if form.posted_successfully? -%}
+      <p class="form-status success">Thank you — your enquiry has been sent. Nazly's studio will be in touch shortly.</p>
+    {%- elsif form.errors -%}
+      <p class="form-status error">{{ form.errors | default_errors }}</p>
+    {%- endif -%}
+    <div class="field"><label for="ContactName">Name</label><input type="text" id="ContactName" name="contact[name]" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" required></div>
+    <div class="field"><label for="ContactEmail">Email</label><input type="email" id="ContactEmail" name="contact[email]" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required></div>
+    <div class="field"><label for="ContactPhone">Phone (optional)</label><input type="tel" id="ContactPhone" name="contact[phone]" value="{{ form.phone }}"></div>
+    <div class="field">
+      <label for="ContactBody">Your enquiry</label>
+      <textarea id="ContactBody" name="contact[body]" rows="6" required>{{ form.body }}</textarea>
+    </div>
+    <button type="submit" class="btn">{{ section.settings.button_label | default: 'Send enquiry' }}</button>
+  {%- endform -%}
+
+  <script>
+    // Prefill the message from ?product= / ?variant= when arriving from an enquire button.
+    (function () {
+      var p = new URLSearchParams(location.search);
+      if (p.get('product')) {
+        var ta = document.getElementById('ContactBody');
+        if (ta && !ta.value) {
+          ta.value = "I'd like to enquire about: " + p.get('product') + (p.get('variant') ? ' (' + p.get('variant') + ')' : '') + '.\n\n';
+        }
+      }
+    })();
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Bespoke & Enquiries" },
+    { "type": "textarea", "id": "intro", "label": "Intro text", "default": "Tell us about the piece you have in mind — fabric, dimensions, the room it's for — and we'll guide you through bringing it to life." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Send enquiry" }
+  ]
+}
+{% endschema %}

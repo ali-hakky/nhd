@@ -1,0 +1,24 @@
+<div class="page-wrap">
+  <nav class="breadcrumb"><a href="{{ routes.account_url }}">Account</a> / <span>{{ order.name }}</span></nav>
+  <h1 class="product-title" style="margin-bottom:8px">Order {{ order.name }}</h1>
+  <p class="prod-lead" style="margin-bottom:24px">Placed {{ order.created_at | date: '%B %-d, %Y' }} · {{ order.financial_status_label }} · {{ order.fulfillment_status_label }}</p>
+  <table class="cart-page-table">
+    <thead><tr><th>Product</th><th>Qty</th><th style="text-align:right">Total</th></tr></thead>
+    <tbody>
+      {%- for line in order.line_items -%}
+        <tr>
+          <td><a href="{{ line.product.url }}" class="cart-line-name">{{ line.title }}</a></td>
+          <td>{{ line.quantity }}</td>
+          <td style="text-align:right">{{ line.final_line_price | money }}</td>
+        </tr>
+      {%- endfor -%}
+    </tbody>
+  </table>
+  <div style="display:flex;justify-content:flex-end;margin-top:24px">
+    <div style="width:280px">
+      <div class="cart-subtotal"><span class="lbl">Subtotal</span><span class="cart-line-price">{{ order.line_items_subtotal_price | money }}</span></div>
+      <div class="cart-subtotal"><span class="lbl">Shipping</span><span class="cart-line-price">{{ order.shipping_price | money }}</span></div>
+      <div class="cart-subtotal"><span class="lbl">Total</span><span class="val">{{ order.total_net_amount | money }}</span></div>
+    </div>
+  </div>
+</div>

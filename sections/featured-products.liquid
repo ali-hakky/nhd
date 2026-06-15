@@ -1,0 +1,119 @@
+{%- comment -%}
+  Reusable product-grid section.
+  Two content modes:
+    • "collection" — pick a collection, products render via product-card.
+    • "manual"     — add Product blocks with custom imagery/copy (used so the
+                     homepage matches the design before the catalogue is live).
+  Optional fabric/filter tabs render from Tab blocks.
+{%- endcomment -%}
+{%- liquid
+  assign cols = section.settings.columns | default: 4
+  assign grid_class = 'grid-4'
+  if cols == 3
+    assign grid_class = 'grid-3'
+  endif
+  assign height = section.settings.image_height | default: 'med'
+  assign product_blocks = section.blocks | where: 'type', 'product'
+  assign tab_blocks = section.blocks | where: 'type', 'tab'
+-%}
+
+<section class="section{% if section.settings.background_off %} off{% endif %}">
+  <div class="sec-head">
+    <div>
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="sec-title">{{ section.settings.heading }}{% if section.settings.heading_accent != blank %} <em>{{ section.settings.heading_accent }}</em>{% endif %}</h2>
+    </div>
+    {%- if section.settings.view_all_label != blank -%}
+      <a href="{{ section.settings.view_all_url | default: '#' }}" class="view-all">{{ section.settings.view_all_label }}</a>
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.intro != blank -%}<p class="sec-intro">{{ section.settings.intro }}</p>{%- endif -%}
+
+  {%- if tab_blocks.size > 0 -%}
+    <div class="fab-tabs">
+      {%- for block in tab_blocks -%}
+        <a href="{{ block.settings.link | default: '#' }}" class="fab-tab{% if forloop.first %} on{% endif %}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <div class="{{ grid_class }}">
+    {%- if section.settings.collection != blank -%}
+      {%- assign limit = section.settings.products_to_show | default: cols -%}
+      {%- for product in section.settings.collection.products limit: limit -%}
+        {%- render 'product-card', product: product, image_height: height, show_price: section.settings.show_price -%}
+      {%- else -%}
+        {%- for i in (1..cols) -%}
+          {%- render 'product-card', image_height: height, title: 'Example product', material: 'Add products to this collection to populate the grid.', button: 'View' -%}
+        {%- endfor -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for block in product_blocks -%}
+        {%- render 'product-card',
+            image_height: height,
+            block_attributes: block.shopify_attributes,
+            image_src: block.settings.image_asset,
+            image: block.settings.image,
+            title: block.settings.title,
+            material: block.settings.material,
+            dims: block.settings.dims,
+            lead: block.settings.lead,
+            badge: block.settings.badge,
+            badge_label: block.settings.badge_label,
+            button: block.settings.button,
+            url: block.settings.url -%}
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product grid",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Just landed" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "New" },
+    { "type": "text", "id": "heading_accent", "label": "Heading (italic accent)", "default": "Arrivals" },
+    { "type": "textarea", "id": "intro", "label": "Intro paragraph (optional)" },
+    { "type": "text", "id": "view_all_label", "label": "View-all link label", "default": "View all →" },
+    { "type": "url", "id": "view_all_url", "label": "View-all link URL" },
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "columns", "label": "Columns", "options": [ { "value": "3", "label": "3" }, { "value": "4", "label": "4" } ], "default": "4" },
+    { "type": "select", "id": "image_height", "label": "Card image height", "options": [ { "value": "med", "label": "Medium" }, { "value": "tall", "label": "Tall" } ], "default": "med" },
+    { "type": "checkbox", "id": "background_off", "label": "Tinted background", "default": false },
+    { "type": "header", "content": "Content source" },
+    { "type": "paragraph", "content": "Pick a collection to show live products, OR leave it empty and add Product blocks below for custom cards." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "products_to_show", "label": "Products to show", "min": 2, "max": 12, "step": 1, "default": 4 },
+    { "type": "checkbox", "id": "show_price", "label": "Show price (collection mode)", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Filter tab",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "GP & J Baker" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    },
+    {
+      "type": "product",
+      "name": "Product card (manual)",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_asset", "label": "Image asset filename", "info": "Used if no image picked, e.g. new-amalfi.png" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Product name" },
+        { "type": "textarea", "id": "material", "label": "Material / description line" },
+        { "type": "text", "id": "dims", "label": "Dimensions" },
+        { "type": "text", "id": "lead", "label": "Lead time" },
+        { "type": "select", "id": "badge", "label": "Badge style", "options": [ { "value": "", "label": "None" }, { "value": "new", "label": "New (blue)" }, { "value": "best", "label": "Bestseller (black)" }, { "value": "pre", "label": "Pre-order (light blue)" }, { "value": "lim", "label": "Limited (brown)" }, { "value": "sold", "label": "Sold out (red)" } ], "default": "" },
+        { "type": "text", "id": "badge_label", "label": "Badge text" },
+        { "type": "text", "id": "button", "label": "Button label", "default": "Add to cart" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Product grid", "blocks": [] }]
+}
+{% endschema %}

@@ -1,0 +1,31 @@
+{%- comment -%} Blog listing {%- endcomment -%}
+{%- paginate blog.articles by 9 -%}
+<section class="section">
+  <div class="sec-head"><div><span class="eyebrow">Journal</span><h2 class="sec-title">{{ blog.title }}</h2></div></div>
+  <div class="grid-3">
+    {%- for article in blog.articles -%}
+      <a href="{{ article.url }}" class="prod-card">
+        <div class="prod-img med">
+          {%- if article.image -%}{{ article.image | image_url: width: 600 | image_tag: alt: article.title | escape, loading: 'lazy' }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
+        </div>
+        <div class="prod-body">
+          <div class="prod-name">{{ article.title }}</div>
+          <div class="prod-mat">{{ article.excerpt_or_content | strip_html | truncate: 120 }}</div>
+          <div class="prod-lead" style="margin-top:8px">{{ article.published_at | date: '%B %-d, %Y' }}</div>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+  {%- if paginate.pages > 1 -%}
+    <div class="pagination">
+      {%- for part in paginate.parts -%}
+        {%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>{%- else -%}<span class="current">{{ part.title }}</span>{%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+{%- endpaginate -%}
+
+{% schema %}
+{ "name": "Blog posts", "settings": [] }
+{% endschema %}

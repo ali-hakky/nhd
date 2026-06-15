@@ -1,0 +1,56 @@
+{%- comment -%} Cart page (full page fallback to the drawer) {%- endcomment -%}
+<div class="page-wrap">
+  <h1 class="product-title" style="margin-bottom:28px">Your Cart</h1>
+
+  {%- if cart.item_count == 0 -%}
+    <div class="coll-empty">
+      <p style="font-family:var(--font-heading);font-size:24px;font-style:italic;margin-bottom:16px">Your cart is empty.</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn">Browse the Collection</a>
+    </div>
+  {%- else -%}
+    <form action="{{ routes.cart_url }}" method="post" novalidate>
+      <table class="cart-page-table">
+        <thead>
+          <tr><th>Product</th><th>Quantity</th><th style="text-align:right">Total</th></tr>
+        </thead>
+        <tbody>
+          {%- for item in cart.items -%}
+            <tr>
+              <td>
+                <div style="display:flex;gap:16px">
+                  {%- if item.image -%}<a href="{{ item.url }}"><img src="{{ item.image | image_url: width: 180 }}" alt="{{ item.title | escape }}"></a>{%- endif -%}
+                  <div>
+                    <a href="{{ item.url }}" class="cart-line-name">{{ item.product.title }}</a>
+                    {%- unless item.variant.title contains 'Default' -%}<div class="cart-line-variant">{{ item.variant.title }}</div>{%- endunless -%}
+                    <div class="cart-line-price" style="margin-top:6px">{{ item.final_price | money }}</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="cart-line-qty" style="width:fit-content">
+                  <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ item.quantity | minus: 1 }}" aria-label="Decrease">−</a>
+                  <input type="text" value="{{ item.quantity }}" readonly aria-label="Quantity">
+                  <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ item.quantity | plus: 1 }}" aria-label="Increase">+</a>
+                </div>
+                <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" class="cart-line-remove">Remove</a>
+              </td>
+              <td style="text-align:right">{{ item.final_line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+
+      <div style="display:flex;justify-content:flex-end;margin-top:32px">
+        <div style="width:320px;max-width:100%">
+          <div class="cart-subtotal"><span class="lbl">Subtotal</span><span class="val">{{ cart.total_price | money }}</span></div>
+          <p class="cart-tax-note">Shipping &amp; taxes calculated at checkout.</p>
+          <button type="submit" name="checkout" class="btn" style="width:100%">Checkout</button>
+        </div>
+      </div>
+    </form>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{ "name": "Cart", "settings": [] }
+{% endschema %}

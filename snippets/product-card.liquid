@@ -1,0 +1,93 @@
+{%- comment -%}
+  Reusable product card.
+
+  Accepts either a real product or manual literal values (used by homepage
+  sections so the design renders before the catalogue is built).
+
+  Parameters:
+    product      - (optional) a product object. When present, fields are
+                   derived from it + its metafields.
+    image_height - 'tall' | 'med' (default 'med')
+    image_src    - (manual) asset filename for the card image, e.g. 'new-amalfi.png'
+    title        - (manual) product name
+    material     - (manual) short material/description line
+    dims         - (manual) dimensions string
+    lead         - (manual) lead time string
+    badge        - (manual) badge style: new|best|pre|lim|sold
+    badge_label  - (manual) badge text
+    button       - (manual) button label (Add / Pre-order / Enquire …)
+    url          - (manual) link target
+{%- endcomment -%}
+
+{%- liquid
+  assign height = image_height | default: 'med'
+  if product
+    assign c_url = product.url
+    assign c_title = product.title
+    assign c_material = product.metafields.custom.materials.value | default: product.metafields.custom.short_description.value
+    if c_material == blank
+      assign c_material = product.description | strip_html | truncate: 110
+    endif
+    assign c_dims = product.metafields.custom.dimensions.value
+    assign c_lead = product.metafields.custom.lead_time.value
+    assign c_badge = product.metafields.custom.badge.value
+    assign c_badge_label = product.metafields.custom.badge_label.value
+    assign c_button = product.metafields.custom.cta_label.value | default: 'Add to cart'
+    assign c_image = product.featured_image
+    assign c_available = product.available
+  else
+    assign c_url = url | default: '#'
+    assign c_title = title
+    assign c_material = material
+    assign c_dims = dims
+    assign c_lead = lead
+    assign c_badge = badge
+    assign c_badge_label = badge_label
+    assign c_button = button | default: 'Add to cart'
+    assign c_available = true
+  endif
+-%}
+
+<a href="{{ c_url }}" class="prod-card" {{ block_attributes }}>
+  <div class="prod-img {{ height }}">
+    {%- if product and c_image -%}
+      {{ c_image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width: 640px) 50vw, 25vw', widths: '300,450,600,900', alt: c_title | escape }}
+    {%- elsif image != blank -%}
+      {{ image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width: 640px) 50vw, 25vw', widths: '300,450,600,900', alt: c_title | escape }}
+    {%- elsif image_src != blank -%}
+      <img src="{{ image_src | asset_url }}" alt="{{ c_title | escape }}" loading="lazy" width="600" height="600">
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+
+    {%- if c_badge != blank -%}
+      <div class="badge {{ c_badge }}">{{ c_badge_label | default: c_badge }}</div>
+    {%- elsif product and product.compare_at_price > product.price -%}
+      <div class="badge sale">Sale</div>
+    {%- elsif product and c_available == false -%}
+      <div class="badge sold">Sold Out</div>
+    {%- endif -%}
+  </div>
+
+  <div class="prod-body">
+    <div class="prod-name">{{ c_title }}</div>
+    {%- if c_material != blank -%}<div class="prod-mat">{{ c_material }}</div>{%- endif -%}
+
+    {%- if product and show_price -%}
+      <div class="prod-price">
+        {%- if product.compare_at_price > product.price -%}
+          <span class="was">{{ product.compare_at_price | money }}</span>
+        {%- endif -%}
+        {{ product.price | money }}
+      </div>
+    {%- endif -%}
+
+    <div class="prod-foot">
+      <div>
+        {%- if c_dims != blank -%}<div class="prod-dims">{{ c_dims }}</div>{%- endif -%}
+        {%- if c_lead != blank -%}<div class="prod-lead">{{ c_lead }}</div>{%- endif -%}
+      </div>
+      <span class="add-btn">{{ c_button }}</span>
+    </div>
+  </div>
+</a>
