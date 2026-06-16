@@ -2,7 +2,13 @@
 <footer class="footer">
   <div class="footer-grid" style="grid-template-columns:2fr repeat({{ section.blocks | where: 'type', 'menu' | size }}, 1fr)">
     <div>
-      <div class="f-brand">{{ section.settings.brand | default: shop.name }}</div>
+      {%- liquid
+        assign footer_brand = section.settings.brand | default: 'Nazly Habib Design'
+        if footer_brand == shop.name and shop.name == 'My Store'
+          assign footer_brand = 'Nazly Habib Design'
+        endif
+      -%}
+      <div class="f-brand">{{ footer_brand }}</div>
       {%- if section.settings.description != blank -%}<p class="f-desc">{{ section.settings.description }}</p>{%- endif -%}
       <div class="f-social">
         {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}
@@ -11,24 +17,64 @@
       </div>
     </div>
 
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'menu' -%}
+    {%- assign menu_blocks = section.blocks | where: 'type', 'menu' -%}
+    {%- assign has_real_menus = false -%}
+    {%- for block in menu_blocks -%}
+      {%- if block.settings.menu != blank and linklists[block.settings.menu].links.size > 0 -%}
+        {%- assign has_real_menus = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if has_real_menus -%}
+      {%- for block in menu_blocks -%}
         <div {{ block.shopify_attributes }}>
           {%- if block.settings.heading != blank -%}<div class="f-head">{{ block.settings.heading }}</div>{%- endif -%}
           <ul class="f-links">
-            {%- if block.settings.menu != blank -%}
-              {%- for link in linklists[block.settings.menu].links -%}
-                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-              {%- endfor -%}
-            {%- endif -%}
+            {%- for link in linklists[block.settings.menu].links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
           </ul>
         </div>
-      {%- endif -%}
-    {%- endfor -%}
+      {%- endfor -%}
+    {%- else -%}
+      <div>
+        <div class="f-head">Shop</div>
+        <ul class="f-links">
+          <li><a href="/collections/seating">Seating</a></li>
+          <li><a href="/collections/tables">Tables</a></li>
+          <li><a href="/collections/consoles">Consoles</a></li>
+          <li><a href="/collections/stools">Stools</a></li>
+          <li><a href="/collections/beds">Beds & Headboards</a></li>
+          <li><a href="/collections/accessories">Accessories</a></li>
+          <li><a href="/collections/new-in">New In</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="f-head">Studio</div>
+        <ul class="f-links">
+          <li><a href="#">About Nazly</a></li>
+          <li><a href="#">Bespoke Orders</a></li>
+          <li><a href="#">Our Process</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="f-head">Help</div>
+        <ul class="f-links">
+          <li><a href="#">Delivery Info</a></li>
+          <li><a href="#">Returns Policy</a></li>
+          <li><a href="#">Care Guide</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    {%- endif -%}
   </div>
 
   <div class="footer-btm">
-    <p class="f-copy">© {{ 'now' | date: '%Y' }} {{ section.settings.brand | default: shop.name }}. {{ section.settings.copyright | default: 'All rights reserved. Handcrafted in Egypt.' }}</p>
+    <p class="f-copy">© {{ 'now' | date: '%Y' }} {{ footer_brand }}. {{ section.settings.copyright | default: 'All rights reserved. Handcrafted in Egypt.' }}</p>
     {%- if section.settings.show_payment_icons -%}
       <div class="f-pay">
         {%- assign methods = section.settings.payment_methods | split: ',' -%}

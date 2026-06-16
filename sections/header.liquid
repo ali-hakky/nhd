@@ -2,6 +2,15 @@
 {%- liquid
   assign menu = section.settings.menu
   assign nav = linklists[menu]
+  assign use_shopify_menu = false
+  if nav and nav.links.size > 3
+    assign use_shopify_menu = true
+  endif
+  assign brand_name = section.settings.logo_text | default: 'Nazly Habib Design'
+  if brand_name == shop.name and shop.name == 'My Store'
+    assign brand_name = 'Nazly Habib Design'
+  endif
+  assign tagline = section.settings.tagline | default: 'Handcrafted Interiors · Cairo & London'
 -%}
 
 <nav class="nav">
@@ -17,11 +26,11 @@
 
     <a href="{{ routes.root_url }}" class="nav-logo">
       {%- if section.settings.logo != blank -%}
-        {{ section.settings.logo | image_url: width: 320 | image_tag: class: 'logo-img', alt: shop.name, widths: '160,320' }}
+        {{ section.settings.logo | image_url: width: 320 | image_tag: class: 'logo-img', alt: brand_name, widths: '160,320' }}
       {%- else -%}
-        <span class="name">{{ section.settings.logo_text | default: shop.name }}</span>
+        <span class="name">{{ brand_name }}</span>
       {%- endif -%}
-      {%- if section.settings.tagline != blank -%}<span class="sub">{{ section.settings.tagline }}</span>{%- endif -%}
+      <span class="sub">{{ tagline }}</span>
     </a>
 
     <div class="nav-links-right">
@@ -43,8 +52,8 @@
     </div>
   </div>
 
-  {%- if nav and nav.links.size > 0 -%}
-    <div class="nav-bar">
+  <div class="nav-bar">
+    {%- if use_shopify_menu -%}
       {%- for link in nav.links -%}
         <div class="nav-item{% if link.links.size == 0 and forloop.last and section.settings.highlight_last %} is-accent{% endif %}">
           <a href="{{ link.url }}">{{ link.title }}</a>
@@ -57,36 +66,16 @@
           {%- endif -%}
         </div>
       {%- endfor -%}
-    </div>
-  {%- else -%}
-    {%- comment -%} Fallback nav matching the brand design, shown until a Shopify menu is created {%- endcomment -%}
-    {%- assign nav_blocks = section.blocks | where: 'type', 'nav_item' -%}
-    <div class="nav-bar">
-      {%- if nav_blocks.size > 0 -%}
-        {%- for block in nav_blocks -%}
-          <div class="nav-item{% if block.settings.accent %} is-accent{% endif %}" {{ block.shopify_attributes }}>
-            <a href="{{ block.settings.url | default: '#' }}">{{ block.settings.label }}</a>
-            {%- if block.settings.dropdown_links != blank -%}
-              <div class="dropdown">
-                {%- assign dd_items = block.settings.dropdown_links | split: '|' -%}
-                {%- for dd in dd_items -%}
-                  <a href="#">{{ dd | strip }}</a>
-                {%- endfor -%}
-              </div>
-            {%- endif -%}
-          </div>
-        {%- endfor -%}
-      {%- else -%}
-        <div class="nav-item"><a href="/collections/seating">Seating</a><div class="dropdown"><a href="#">Hamptons Armchair</a><a href="#">Riviera Rattan</a><a href="#">Amalfi Grande Sofa</a><a href="#">Miniature Chair</a><a href="#">View All Seating</a></div></div>
-        <div class="nav-item"><a href="/collections/tables">Tables</a><div class="dropdown"><a href="#">Coffee Tables</a><a href="#">Moroccan Side Table</a><a href="#">Painted Side Tables</a><a href="#">The Sloan</a><a href="#">View All Tables</a></div></div>
-        <div class="nav-item"><a href="/collections/consoles">Consoles</a><div class="dropdown"><a href="#">Hortensia Console</a><a href="#">Boltons Console</a><a href="#">Burl Wood Console</a><a href="#">Marrakech Console</a><a href="#">Upholstered Console</a><a href="#">View All Consoles</a></div></div>
-        <div class="nav-item"><a href="/collections/stools">Stools</a><div class="dropdown"><a href="#">X Stools — All Fabrics</a><a href="#">Butler's Stands</a><a href="#">Bobbin Bar Stools</a><a href="#">View All Stools</a></div></div>
-        <div class="nav-item"><a href="/collections/beds">Beds</a><div class="dropdown"><a href="#">Regency Headboard</a><a href="#">Bed Frames (Pre-order)</a></div></div>
-        <div class="nav-item"><a href="/collections/accessories">Accessories</a><div class="dropdown"><a href="#">Swoon Trays</a><a href="#">Butler's Tray Stands</a><a href="#">Bahamas Lantern</a><a href="#">Arabesque Mirror</a><a href="#">Bar Cart</a><a href="#">View All</a></div></div>
-        <div class="nav-item is-accent"><a href="/collections/new-in">New In</a></div>
-      {%- endif -%}
-    </div>
-  {%- endif -%}
+    {%- else -%}
+      <div class="nav-item"><a href="/collections/seating">Seating</a><div class="dropdown"><a href="#">Hamptons Armchair</a><a href="#">Riviera Rattan</a><a href="#">Amalfi Grande Sofa</a><a href="#">Miniature Chair</a><a href="#">View All Seating</a></div></div>
+      <div class="nav-item"><a href="/collections/tables">Tables</a><div class="dropdown"><a href="#">Coffee Tables</a><a href="#">Moroccan Side Table</a><a href="#">Painted Side Tables</a><a href="#">The Sloan</a><a href="#">View All Tables</a></div></div>
+      <div class="nav-item"><a href="/collections/consoles">Consoles</a><div class="dropdown"><a href="#">Hortensia Console</a><a href="#">Boltons Console</a><a href="#">Burl Wood Console</a><a href="#">Marrakech Console</a><a href="#">Upholstered Console</a><a href="#">View All Consoles</a></div></div>
+      <div class="nav-item"><a href="/collections/stools">Stools</a><div class="dropdown"><a href="#">X Stools — All Fabrics</a><a href="#">Butler's Stands</a><a href="#">Bobbin Bar Stools</a><a href="#">View All Stools</a></div></div>
+      <div class="nav-item"><a href="/collections/beds">Beds</a><div class="dropdown"><a href="#">Regency Headboard</a><a href="#">Bed Frames (Pre-order)</a></div></div>
+      <div class="nav-item"><a href="/collections/accessories">Accessories</a><div class="dropdown"><a href="#">Swoon Trays</a><a href="#">Butler's Tray Stands</a><a href="#">Bahamas Lantern</a><a href="#">Arabesque Mirror</a><a href="#">Bar Cart</a><a href="#">View All</a></div></div>
+      <div class="nav-item is-accent"><a href="/collections/new-in">New In</a></div>
+    {%- endif -%}
+  </div>
 </nav>
 
 {%- comment -%} Mobile slide-in nav {%- endcomment -%}
@@ -94,7 +83,7 @@
   <div class="mobile-nav-panel">
     <button class="mobile-nav-close" data-mobile-nav-close aria-label="Close menu">&times;</button>
     <div style="clear:both"></div>
-    {%- if nav -%}
+    {%- if use_shopify_menu -%}
       {%- for link in nav.links -%}
         <a href="{{ link.url }}" class="parent">{{ link.title }}</a>
         {%- for child in link.links -%}
@@ -102,26 +91,13 @@
         {%- endfor -%}
       {%- endfor -%}
     {%- else -%}
-      {%- assign nav_blocks_m = section.blocks | where: 'type', 'nav_item' -%}
-      {%- if nav_blocks_m.size > 0 -%}
-        {%- for block in nav_blocks_m -%}
-          <a href="{{ block.settings.url | default: '#' }}" class="parent">{{ block.settings.label }}</a>
-          {%- if block.settings.dropdown_links != blank -%}
-            {%- assign dd_items_m = block.settings.dropdown_links | split: '|' -%}
-            {%- for dd in dd_items_m -%}
-              <a href="#" class="child">{{ dd | strip }}</a>
-            {%- endfor -%}
-          {%- endif -%}
-        {%- endfor -%}
-      {%- else -%}
-        <a href="/collections/seating" class="parent">Seating</a>
-        <a href="/collections/tables" class="parent">Tables</a>
-        <a href="/collections/consoles" class="parent">Consoles</a>
-        <a href="/collections/stools" class="parent">Stools</a>
-        <a href="/collections/beds" class="parent">Beds</a>
-        <a href="/collections/accessories" class="parent">Accessories</a>
-        <a href="/collections/new-in" class="parent">New In</a>
-      {%- endif -%}
+      <a href="/collections/seating" class="parent">Seating</a>
+      <a href="/collections/tables" class="parent">Tables</a>
+      <a href="/collections/consoles" class="parent">Consoles</a>
+      <a href="/collections/stools" class="parent">Stools</a>
+      <a href="/collections/beds" class="parent">Beds</a>
+      <a href="/collections/accessories" class="parent">Accessories</a>
+      <a href="/collections/new-in" class="parent">New In</a>
     {%- endif -%}
     {%- if section.settings.left_link_1_label != blank -%}<a href="{{ section.settings.left_link_1_url }}" class="parent">{{ section.settings.left_link_1_label }}</a>{%- endif -%}
     {%- if section.settings.left_link_2_label != blank -%}<a href="{{ section.settings.left_link_2_url }}" class="parent">{{ section.settings.left_link_2_label }}</a>{%- endif -%}
@@ -136,7 +112,7 @@
     { "type": "image_picker", "id": "logo", "label": "Logo image" },
     { "type": "text", "id": "logo_text", "label": "Logo text", "default": "Nazly Habib Design" },
     { "type": "text", "id": "tagline", "label": "Tagline under logo", "default": "Handcrafted Interiors · Cairo & London" },
-    { "type": "link_list", "id": "menu", "label": "Navigation menu", "default": "main-menu", "info": "If this menu exists in Shopify, it overrides the nav blocks below." },
+    { "type": "link_list", "id": "menu", "label": "Navigation menu", "default": "main-menu", "info": "Only used if the menu has 4+ items. Otherwise the built-in NHD nav shows." },
     { "type": "checkbox", "id": "highlight_last", "label": "Highlight last menu item", "default": true },
     { "type": "header", "content": "Top-left links" },
     { "type": "text", "id": "left_link_1_label", "label": "Link 1 label", "default": "About" },
@@ -146,19 +122,6 @@
     { "type": "header", "content": "Top-right link" },
     { "type": "text", "id": "right_link_label", "label": "Link label", "default": "Contact" },
     { "type": "url", "id": "right_link_url", "label": "Link URL" }
-  ],
-  "blocks": [
-    {
-      "type": "nav_item",
-      "name": "Nav item",
-      "settings": [
-        { "type": "text", "id": "label", "label": "Label", "default": "Seating" },
-        { "type": "url", "id": "url", "label": "Link" },
-        { "type": "text", "id": "dropdown_links", "label": "Dropdown items (pipe-separated)", "info": "e.g. Hamptons Armchair | Riviera Rattan | View All" },
-        { "type": "checkbox", "id": "accent", "label": "Highlight colour", "default": false }
-      ]
-    }
-  ],
-  "max_blocks": 10
+  ]
 }
 {% endschema %}
