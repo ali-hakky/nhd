@@ -1,71 +1,46 @@
-{%- comment -%} Collection page {%- endcomment -%}
-{%- paginate collection.products by section.settings.per_page -%}
-<div class="coll-banner{% unless collection.image or section.settings.banner_image %} no-image{% endunless %}">
-  {%- if section.settings.banner_image != blank -%}
-    {{ section.settings.banner_image | image_url: width: 2000 | image_tag: alt: collection.title, widths: '800,1200,2000' }}
-    <div class="coll-banner-overlay"></div>
-  {%- elsif collection.image -%}
-    {{ collection.image | image_url: width: 2000 | image_tag: alt: collection.title, widths: '800,1200,2000' }}
-    <div class="coll-banner-overlay"></div>
-  {%- endif -%}
-  <div class="coll-banner-content">
-    <span class="eyebrow">Nazly Habib Design</span>
-    <h1>{{ collection.title }}</h1>
+<div class="collection-hero">
+  <h1>{{ collection.title }}{% if collection.title contains ' ' %} {% endif %}</h1>
+  {%- if collection.description != blank -%}<p>{{ collection.description }}</p>{%- endif -%}
+</div>
+
+<div class="collection-bar">
+  <span>{{ collection.products_count }} {{ 'collection.products_count' | t: count: collection.products_count }}</span>
+  <select onchange="window.location.href=this.value">
+    {%- for option in collection.sort_options -%}
+      <option value="{{ option.url }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ option.name }}</option>
+    {%- endfor -%}
+  </select>
+</div>
+
+<div class="collection-grid">
+  <div class="grid-3">
+    {%- paginate collection.products by 12 -%}
+      {%- for product in collection.products -%}
+        {%- render 'product-card', product: product, image_height: 'tall', show_price: true -%}
+      {%- else -%}
+        <p style="grid-column:1/-1;text-align:center;padding:40px;color:var(--mu)">No products in this collection yet.</p>
+      {%- endfor -%}
+
+      {%- if paginate.pages > 1 -%}
+        <div class="pagination" style="grid-column:1/-1">
+          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">←</a>{%- endif -%}
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}
+              <a href="{{ part.url }}">{{ part.title }}</a>
+            {%- else -%}
+              <span class="current">{{ part.title }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if paginate.next -%}<a href="{{ paginate.next.url }}">→</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
   </div>
 </div>
 
-{%- if collection.description != blank -%}
-  <div class="coll-desc rte">{{ collection.description }}</div>
-{%- endif -%}
-
-<div class="coll-toolbar">
-  <div class="coll-count">{{ collection.products_count }} {% if collection.products_count == 1 %}piece{% else %}pieces{% endif %}</div>
-  {%- if section.settings.show_sort -%}
-    <form method="get" id="SortForm">
-      <select name="sort_by" class="coll-sort" onchange="document.getElementById('SortForm').submit()" aria-label="Sort by">
-        {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
-        {%- for option in collection.sort_options -%}
-          <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
-        {%- endfor -%}
-      </select>
-    </form>
-  {%- endif -%}
-</div>
-
-<div class="coll-grid">
-  {%- if collection.products.size > 0 -%}
-    <div class="grid-4">
-      {%- for product in collection.products -%}
-        {%- render 'product-card', product: product, image_height: 'med', show_price: true -%}
-      {%- endfor -%}
-    </div>
-
-    {%- if paginate.pages > 1 -%}
-      <div class="pagination">
-        {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">←</a>{%- endif -%}
-        {%- for part in paginate.parts -%}
-          {%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>
-          {%- else -%}<span class="current">{{ part.title }}</span>{%- endif -%}
-        {%- endfor -%}
-        {%- if paginate.next -%}<a href="{{ paginate.next.url }}">→</a>{%- endif -%}
-      </div>
-    {%- endif -%}
-  {%- else -%}
-    <div class="coll-empty">
-      <p style="font-family:var(--font-heading);font-size:24px;font-style:italic;margin-bottom:12px">No pieces here yet.</p>
-      <a href="{{ routes.all_products_collection_url }}" class="view-all">Browse all products →</a>
-    </div>
-  {%- endif -%}
-</div>
-{%- endpaginate -%}
-
 {% schema %}
 {
-  "name": "Collection",
-  "settings": [
-    { "type": "image_picker", "id": "banner_image", "label": "Banner image override", "info": "Defaults to the collection image." },
-    { "type": "checkbox", "id": "show_sort", "label": "Show sort dropdown", "default": true },
-    { "type": "range", "id": "per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 16 }
-  ]
+  "name": "Collection page",
+  "settings": []
 }
 {% endschema %}

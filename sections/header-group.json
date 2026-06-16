@@ -1,25 +1,20 @@
 {
-  "type": "header",
   "name": "Header group",
+  "type": "header",
   "sections": {
-    "announcement-bar": {
+    "announcement": {
       "type": "announcement-bar",
-      "settings": {
-        "text": "Free shipping on orders over £500  ·  All pieces handcrafted in Egypt  ·  Cairo & London studio"
-      }
+      "settings": {}
     },
     "header": {
       "type": "header",
-      "settings": {
-        "logo_text": "Nazly Habib Design",
-        "tagline": "Handcrafted Interiors · Cairo & London",
-        "menu": "main-menu",
-        "highlight_last": true,
-        "left_link_1_label": "About",
-        "left_link_2_label": "Bespoke Orders",
-        "right_link_label": "Contact"
-      }
+      "settings": {},
+      "blocks": {
+        "link1": { "type": "top_link", "settings": { "label": "About" } },
+        "link2": { "type": "top_link", "settings": { "label": "Bespoke Orders" } }
+      },
+      "block_order": ["link1", "link2"]
     }
   },
-  "order": ["announcement-bar", "header"]
+  "order": ["announcement", "header"]
 }

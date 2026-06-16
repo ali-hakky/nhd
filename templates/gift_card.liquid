@@ -1,14 +1,22 @@
-<div class="page-wrap" style="max-width:520px;text-align:center">
-  <span class="eyebrow">{{ shop.name }}</span>
-  <h1 class="product-title" style="margin:10px 0 18px">Gift Card</h1>
-  <div class="gallery-main" style="aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;background:var(--bl)">
-    <div>
-      <div class="spec-label">Value</div>
-      <div style="font-family:var(--font-heading);font-size:42px;color:var(--bd)">{{ gift_card.initial_value | money }}</div>
-    </div>
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ 'gift_cards.issued.title' | t }} — {{ shop.name }}</title>
+  {{ content_for_header }}
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+</head>
+<body>
+  <div class="page-content" style="text-align:center;padding:60px 20px">
+    <h1>{{ shop.name }} Gift Card</h1>
+    <p style="font-size:32px;color:var(--bd);margin:20px 0">{{ gift_card.balance | money }}</p>
+    <p style="font-size:16px;letter-spacing:3px;background:var(--bl);padding:16px;display:inline-block">{{ gift_card.code | format_code }}</p>
+    {%- if gift_card.expired -%}
+      <p style="color:#c0392b;margin-top:12px">This gift card has expired.</p>
+    {%- endif -%}
+    <p style="margin-top:20px"><a href="{{ shop.url }}" class="btn">Shop now</a></p>
   </div>
-  <p class="prod-lead" style="margin:18px 0 6px">Gift card code</p>
-  <p style="font-family:var(--font-heading);font-size:24px;letter-spacing:3px;color:var(--ink)">{{ gift_card.code | format_code }}</p>
-  <p class="prod-lead">Current balance: {{ gift_card.balance | money }}</p>
-  <a href="{{ shop.url }}" class="btn" style="margin-top:20px">Visit the shop</a>
-</div>
+</body>
+</html>

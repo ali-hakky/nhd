@@ -1,22 +1,6 @@
 {%- comment -%}
   Reusable product card.
-
-  Accepts either a real product or manual literal values (used by homepage
-  sections so the design renders before the catalogue is built).
-
-  Parameters:
-    product      - (optional) a product object. When present, fields are
-                   derived from it + its metafields.
-    image_height - 'tall' | 'med' (default 'med')
-    image        - (manual) an image_picker image; falls back to a placeholder
-    title        - (manual) product name
-    material     - (manual) short material/description line
-    dims         - (manual) dimensions string
-    lead         - (manual) lead time string
-    badge        - (manual) badge style: new|best|pre|lim|sold
-    badge_label  - (manual) badge text
-    button       - (manual) button label (Add / Pre-order / Enquire …)
-    url          - (manual) link target
+  Accepts either a real product or manual literal values.
 {%- endcomment -%}
 
 {%- liquid
@@ -51,9 +35,9 @@
 <a href="{{ c_url }}" class="prod-card" {{ block_attributes }}>
   <div class="prod-img {{ height }}">
     {%- if product and c_image -%}
-      {{ c_image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width: 640px) 50vw, 25vw', widths: '300,450,600,900', alt: c_title }}
+      {{ c_image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width:640px) 50vw, 25vw', widths: '300,450,600', alt: c_title }}
     {%- elsif image != blank -%}
-      {{ image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width: 640px) 50vw, 25vw', widths: '300,450,600,900', alt: c_title }}
+      {{ image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width:640px) 50vw, 25vw', widths: '300,450,600', alt: c_title }}
     {%- else -%}
       {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
     {%- endif -%}

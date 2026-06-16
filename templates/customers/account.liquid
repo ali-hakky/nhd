@@ -1,42 +1,22 @@
-<div class="page-wrap">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:12px">
-    <h1 class="product-title">My Account</h1>
-    <a href="{{ routes.account_logout_url }}" class="view-all">Log out →</a>
-  </div>
-  <p class="prod-lead" style="margin-bottom:24px">Welcome back, {{ customer.first_name | default: customer.email }}.</p>
-
-  <div style="display:grid;grid-template-columns:2fr 1fr;gap:40px" class="account-grid">
-    <div>
-      <h2 class="sec-title" style="font-size:24px;margin-bottom:16px">Order History</h2>
-      {%- paginate customer.orders by 12 -%}
-        {%- if customer.orders.size > 0 -%}
-          <table class="cart-page-table">
-            <thead><tr><th>Order</th><th>Date</th><th>Total</th><th>Status</th></tr></thead>
-            <tbody>
-              {%- for order in customer.orders -%}
-                <tr>
-                  <td><a href="{{ order.customer_url }}" class="cart-line-name">{{ order.name }}</a></td>
-                  <td>{{ order.created_at | date: '%b %-d, %Y' }}</td>
-                  <td>{{ order.total_net_amount | money }}</td>
-                  <td>{{ order.financial_status_label }} · {{ order.fulfillment_status_label }}</td>
-                </tr>
-              {%- endfor -%}
-            </tbody>
-          </table>
-          {%- if paginate.pages > 1 -%}
-            <div class="pagination">{%- for part in paginate.parts -%}{%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>{%- else -%}<span class="current">{{ part.title }}</span>{%- endif -%}{%- endfor -%}</div>
-          {%- endif -%}
-        {%- else -%}
-          <p class="prod-lead">You haven't placed any orders yet.</p>
-        {%- endif -%}
-      {%- endpaginate -%}
-    </div>
-    <div>
-      <h2 class="sec-title" style="font-size:24px;margin-bottom:16px">Address</h2>
-      {%- if customer.default_address -%}
-        <div class="rte">{{ customer.default_address | format_address }}</div>
-      {%- endif -%}
-      <a href="{{ routes.account_addresses_url }}" class="story-link" style="margin-top:12px;display:inline-block">Manage addresses →</a>
-    </div>
-  </div>
+<div class="page-content">
+  <h1>My Account</h1>
+  <p><a href="{{ routes.account_logout_url }}" style="color:var(--bd)">Log out</a></p>
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:24px;margin:24px 0 12px">Order History</h2>
+  {%- if customer.orders.size > 0 -%}
+    <table class="cart-table" style="margin-bottom:32px">
+      <thead><tr><th>Order</th><th>Date</th><th>Status</th><th>Total</th></tr></thead>
+      <tbody>
+        {%- for order in customer.orders -%}
+          <tr>
+            <td><a href="{{ order.customer_url }}" style="color:var(--bd)">{{ order.name }}</a></td>
+            <td>{{ order.created_at | date: '%B %d, %Y' }}</td>
+            <td>{{ order.fulfillment_status_label }}</td>
+            <td>{{ order.total_price | money }}</td>
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+  {%- else -%}
+    <p>No orders yet.</p>
+  {%- endif -%}
 </div>

@@ -1,40 +1,33 @@
-{%- comment -%} Footer {%- endcomment -%}
 <footer class="footer">
-  <div class="footer-grid" style="grid-template-columns:2fr repeat({{ section.blocks | where: 'type', 'menu' | size }}, 1fr)">
+  <div class="footer-grid">
     <div>
-      <div class="f-brand">{{ section.settings.brand | default: shop.name }}</div>
-      {%- if section.settings.description != blank -%}<p class="f-desc">{{ section.settings.description }}</p>{%- endif -%}
+      <div class="f-brand">{{ shop.name }}</div>
+      <p class="f-desc">{{ section.settings.description | default: 'Handcrafted rattan, wicker & upholstered furniture made to order.' }}</p>
       <div class="f-social">
-        {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}
-        {%- if section.settings.pinterest != blank -%}<a href="{{ section.settings.pinterest }}" target="_blank" rel="noopener">Pinterest</a>{%- endif -%}
-        {%- if section.settings.facebook != blank -%}<a href="{{ section.settings.facebook }}" target="_blank" rel="noopener">Facebook</a>{%- endif -%}
+        {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" target="_blank">Instagram</a>{%- endif -%}
+        {%- if section.settings.pinterest != blank -%}<a href="{{ section.settings.pinterest }}" target="_blank">Pinterest</a>{%- endif -%}
       </div>
     </div>
-
     {%- for block in section.blocks -%}
       {%- if block.type == 'menu' -%}
         <div {{ block.shopify_attributes }}>
-          {%- if block.settings.heading != blank -%}<div class="f-head">{{ block.settings.heading }}</div>{%- endif -%}
+          <div class="f-head">{{ block.settings.title }}</div>
           <ul class="f-links">
-            {%- if block.settings.menu != blank -%}
-              {%- for link in linklists[block.settings.menu].links -%}
-                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-              {%- endfor -%}
-            {%- endif -%}
+            {%- for link in linklists[block.settings.menu].links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
           </ul>
         </div>
       {%- endif -%}
     {%- endfor -%}
   </div>
-
   <div class="footer-btm">
-    <p class="f-copy">© {{ 'now' | date: '%Y' }} {{ section.settings.brand | default: shop.name }}. {{ section.settings.copyright | default: 'All rights reserved. Handcrafted in Egypt.' }}</p>
-    {%- if section.settings.show_payment_icons -%}
-      <div class="f-pay">
-        {%- assign methods = section.settings.payment_methods | split: ',' -%}
-        {%- for m in methods -%}<span>{{ m | strip }}</span>{%- endfor -%}
-      </div>
-    {%- endif -%}
+    <p class="f-copy">© {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+    <div class="f-pay">
+      {%- for type in shop.enabled_payment_types -%}
+        <span>{{ type | capitalize }}</span>
+      {%- endfor -%}
+    </div>
   </div>
 </footer>
 
@@ -42,33 +35,17 @@
 {
   "name": "Footer",
   "settings": [
-    { "type": "text", "id": "brand", "label": "Brand name", "default": "Nazly Habib Design" },
-    { "type": "textarea", "id": "description", "label": "Description", "default": "Handcrafted rattan, wicker & upholstered furniture made to order. Every piece made with personality, for homes that have it too. Cairo & London." },
-    { "type": "url", "id": "instagram", "label": "Instagram URL", "default": "https://instagram.com/nazlyhabibdesigns" },
-    { "type": "url", "id": "pinterest", "label": "Pinterest URL" },
-    { "type": "url", "id": "facebook", "label": "Facebook URL" },
-    { "type": "text", "id": "copyright", "label": "Copyright line", "default": "All rights reserved. Handcrafted in Egypt." },
-    { "type": "checkbox", "id": "show_payment_icons", "label": "Show payment methods", "default": true },
-    { "type": "text", "id": "payment_methods", "label": "Payment methods (comma separated)", "default": "Visa, Mastercard, PayPal, Klarna" }
+    { "type": "textarea", "id": "description", "label": "Brand description", "default": "Handcrafted rattan, wicker & upholstered furniture made to order. Every piece made with personality, for homes that have it too. Cairo & London." },
+    { "type": "url", "id": "instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "pinterest", "label": "Pinterest URL" }
   ],
   "blocks": [
     {
       "type": "menu",
       "name": "Menu column",
       "settings": [
-        { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
+        { "type": "text", "id": "title", "label": "Column title", "default": "Shop" },
         { "type": "link_list", "id": "menu", "label": "Menu" }
-      ]
-    }
-  ],
-  "max_blocks": 3,
-  "presets": [
-    {
-      "name": "Footer",
-      "blocks": [
-        { "type": "menu", "settings": { "heading": "Shop" } },
-        { "type": "menu", "settings": { "heading": "Studio" } },
-        { "type": "menu", "settings": { "heading": "Help" } }
       ]
     }
   ]

@@ -1,73 +1,151 @@
-# Store Setup Guide
+# Nazly Habib Design — Store Setup Guide
 
-Do these once, in this order, after the theme is uploaded. Everything here is
-**store data** configured in the Shopify admin (it cannot live inside theme
-files).
+Welcome! This guide walks you through getting your new website live, step by
+step, in plain English. You don't need any technical knowledge. Just follow the
+steps in order. ☕
 
-## 1. Create collections
+The website **design and layout are already done** inside the theme. What's left
+is adding your *store data* (products, photos, menus) — these live in your
+Shopify admin, not in the theme, so they have to be added once by hand.
 
-**Products → Collections → Create collection.** Use these exact handles so the
-theme's default links (menus, category grid, “view all” buttons) work:
+> **Tip:** Keep this guide open in one tab and your Shopify admin
+> (`admin.shopify.com`) in another.
 
-| Title | Handle | Type | Condition |
-| --- | --- | --- | --- |
-| Seating | `seating` | Automated | Product tag is equal to `seating` |
-| Tables | `tables` | Automated | Product tag is equal to `tables` |
-| Consoles | `consoles` | Automated | Product tag is equal to `consoles` |
-| Stools | `stools` | Automated | Product tag is equal to `stools` |
-| Beds & Headboards | `beds` | Automated | Product tag is equal to `beds` |
-| Accessories | `accessories` | Automated | Product tag is equal to `accessories` |
-| New In | `new-in` | Automated | Product tag is equal to `new-in` |
+---
 
-The handle is auto-generated from the title — for **Beds & Headboards** edit the
-handle to `beds`, and **New In** to `new-in`, to match the table above.
+## Step 1 — Upload the theme
 
-> Using **Automated** collections + the tags already in the CSV means products
-> file themselves into the right collection automatically.
+1. In Shopify admin, go to **Online Store → Themes**.
+2. Scroll to **Theme library**, click **Add theme → Upload ZIP file**.
+3. Choose the `NHD-theme.zip` file and upload it.
+4. When it appears in your library, click **⋯ → Preview** to look, or
+   **Publish** when you're ready for it to go live.
 
-## 2. Create the product metafields
+*(If your store is connected to GitHub, the theme will already be there — just
+publish it.)*
 
-Before importing, create the metafield definitions so the CSV columns map
-correctly. See **[`metafields.md`](metafields.md)**. (Skip only if you don't want
-the structured dimensions / lead-time data — the import still works without it.)
+---
 
-## 3. Import products
+## Step 2 — Create your collections
 
-**Products → Import → Add file →** select
-[`products_import.csv`](products_import.csv) → **Upload and continue**.
+Collections are the category pages (Seating, Tables, etc.). Go to
+**Products → Collections → Create collection** and make these **seven**.
 
-The file contains 28 products (39 rows). Two are multi-variant, as required:
+For each one: set the title, then under **Collection type** choose
+**Automated**, and add the condition **Product tag → is equal to →** (the tag
+below).
 
-- **The X Stool Collection** (`x-stool`) — one product, option **Fabric**:
+| Collection title | Web address (handle) | Tag to match |
+| --- | --- | --- |
+| Seating | `seating` | `seating` |
+| Tables | `tables` | `tables` |
+| Consoles | `consoles` | `consoles` |
+| Stools | `stools` | `stools` |
+| Beds & Headboards | `beds` | `beds` |
+| Accessories | `accessories` | `accessories` |
+| New In | `new-in` | `new-in` |
+
+**Important:** The *handle* (web address) must match exactly, because the menus
+and buttons in the theme link to them. Shopify creates the handle automatically
+from the title — for **Beds & Headboards** change it to `beds`, and for
+**New In** change it to `new-in`. You can edit the handle near the bottom of the
+collection page under **Search engine listing → Edit**.
+
+Because they're **Automated**, products tag themselves into the right collection
+the moment you import them in the next step. Nothing manual needed. ✨
+
+---
+
+## Step 3 — Set up the product detail fields (metafields)
+
+Your products carry extra info like dimensions and lead time. Open
+**[metafields.md](metafields.md)** and follow it once to create these fields.
+
+This takes about 5 minutes and only has to be done once. *(You can skip it, and
+the import still works — you'll just lose the tidy dimensions/lead-time lines on
+product pages.)*
+
+---
+
+## Step 4 — Import your products
+
+1. Go to **Products → Import**.
+2. Click **Add file** and choose **`products_import.csv`**.
+3. Click **Upload and continue**, then **Import products**.
+
+This loads all **28 products**, including the two with options:
+
+- **The X Stool Collection** — one product, choice of **Fabric**:
   GP & J Baker · Zoffany · Colefax & Fowler · Chinoiserie · Paisley.
-- **The Butler's Stand** (`butlers-stand`) — one product, option **Colour**:
+- **The Butler's Stand** — one product, choice of **Colour**:
   Sky Blue · Royal Burgundy · Olive Green · Mustard · Copper · Citrine.
 
-(The Hamptons Armchair is also set up with an **Edition** variant as an example.)
+Everything imports as **Draft** with sample GBP prices. The "Enquire" pieces
+(bespoke ones) are priced at £0 on purpose — they show an **Enquire** button
+instead of Add to Cart. Review prices, then switch each product to **Active**
+when you're happy.
 
-Products import as **Draft** with placeholder GBP prices and stock — review
-prices, then set each to **Active** when ready. “Enquire” pieces are priced 0
-and tagged `enquire`; set your own prices or leave them as enquiry-only.
+---
 
-## 4. Add product images
+## Step 5 — Add your photos
 
-Open each product and upload your own photography under **Media**. Products and
-sections show a neutral placeholder graphic until an image is added, so the site
-looks tidy in the meantime. Homepage section images (hero, story, about, etc.)
-are set in **Online Store → Customize** via each section's image picker.
+The whole site shows neat placeholder graphics until you add real images, so it
+always looks tidy. To add photos:
 
-## 5. Build the menus
+- **Product photos:** open a product → **Media** → upload. (You can drag several
+  at once.)
+- **Homepage photos** (hero, story, about, categories, Instagram): go to
+  **Online Store → Themes → Customize**, click any section in the left list, and
+  use its **image picker**. Changes save instantly.
 
-See **[`menus.md`](menus.md)** to create the `main-menu` (with dropdowns) and the
-three footer menus.
+You never touch code — every image is added through Shopify's normal screens.
 
-## 6. Customize
+---
 
-**Online Store → Customize.** Every section is editable — text, images, blocks,
-order. Set your real links on the hero buttons, “view all” links, etc. Theme
-colours and page width live under **Theme settings → Brand colours / Layout**.
+## Step 6 — Build your menus
 
-## 7. Create the Contact page
+The top navigation and footer links come from menus. Open
+**[menus.md](menus.md)** and follow it to build the **main menu** (with the
+category dropdowns) and the **three footer menus**. ~10 minutes.
 
-**Online Store → Pages → Add page**, title “Contact” (or “Bespoke & Enquiries”).
-In the template dropdown choose **page.contact**. This powers the Enquire flow.
+---
+
+## Step 7 — Create the Contact / Enquiry page
+
+This page powers the "Enquire" buttons.
+
+1. Go to **Online Store → Pages → Add page**.
+2. Title it **Contact** (or "Bespoke & Enquiries").
+3. On the right, under **Theme template**, choose **page.contact**.
+4. Save.
+
+Your contact form, studio details and the enquiry flow now work. You can edit
+the heading, intro text, email and phone in **Customize → Contact page**.
+
+---
+
+## Step 8 — Make it yours
+
+In **Online Store → Themes → Customize** you can:
+
+- Edit any text, image, or button in any section.
+- Reorder, hide, or add sections (click **Add section**).
+- Change brand colours and page width under **Theme settings**.
+
+Everything you see on the page is editable here — no developer required.
+
+---
+
+## Quick checklist
+
+- [ ] Theme uploaded / published
+- [ ] 7 collections created (handles match the table)
+- [ ] Metafields created (Step 3)
+- [ ] Products imported
+- [ ] Photos added to products + homepage
+- [ ] Menus built (main + 3 footer)
+- [ ] Contact page created with **page.contact** template
+- [ ] Prices reviewed, products set to **Active**
+
+That's it — you're live. If anything looks off, it's almost always a collection
+handle or a menu link that doesn't match the table above. 💙

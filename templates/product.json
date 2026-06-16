@@ -1,30 +1,6 @@
 {
   "sections": {
-    "main": {
-      "type": "main-product",
-      "blocks": {
-        "delivery": {
-          "type": "accordion",
-          "settings": {
-            "title": "Delivery & Returns",
-            "content": "<p>Cairo &amp; Giza: 2–3 days for in-stock pieces. International shipping 1–3 weeks. Bespoke &amp; made-to-order pieces are non-refundable; in-stock items accepted within 7 days of delivery.</p>"
-          }
-        },
-        "handmade": {
-          "type": "accordion",
-          "settings": {
-            "title": "Handmade Note",
-            "content": "<p>Every piece is 100% handmade. Minor size variations of 1–2cm are natural and expected. For pairs, please order together so the fabric and finish match.</p>"
-          }
-        }
-      },
-      "block_order": ["delivery", "handmade"],
-      "settings": {
-        "show_vendor": true,
-        "add_label": "Add to cart",
-        "enquire_label": "Enquire about this piece"
-      }
-    }
+    "main": { "type": "main-product", "settings": {} }
   },
   "order": ["main"]
 }

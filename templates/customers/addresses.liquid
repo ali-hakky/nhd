@@ -1,24 +1,10 @@
-<div class="page-wrap account-wrap" style="max-width:640px">
-  <nav class="breadcrumb"><a href="{{ routes.account_url }}">Account</a> / <span>Addresses</span></nav>
-  <h1 class="product-title" style="margin-bottom:24px">Your Addresses</h1>
-
-  {%- paginate customer.addresses by 6 -%}
-    {%- for address in customer.addresses -%}
-      <div style="border:1px solid var(--br);padding:20px;margin-bottom:16px">
-        <div class="rte">{{ address | format_address }}</div>
-      </div>
-    {%- endfor -%}
-  {%- endpaginate -%}
-
-  <h2 class="sec-title" style="font-size:22px;margin:24px 0 16px">Add a new address</h2>
-  {%- form 'customer_address', customer.new_address -%}
-    <div class="field"><label>First name</label><input type="text" name="address[first_name]"></div>
-    <div class="field"><label>Last name</label><input type="text" name="address[last_name]"></div>
-    <div class="field"><label>Address</label><input type="text" name="address[address1]"></div>
-    <div class="field"><label>City</label><input type="text" name="address[city]"></div>
-    <div class="field"><label>Country</label><input type="text" name="address[country]"></div>
-    <div class="field"><label>Postal / ZIP code</label><input type="text" name="address[zip]"></div>
-    <div class="field"><label>Phone</label><input type="tel" name="address[phone]"></div>
-    <button type="submit" class="btn">Add address</button>
-  {%- endform -%}
+<div class="page-content">
+  <h1>My Addresses</h1>
+  {%- for address in customer.addresses -%}
+    <div style="border:1px solid var(--br);padding:16px;margin-bottom:12px">
+      <p>{{ address | format_address }}</p>
+    </div>
+  {%- else -%}
+    <p>No saved addresses.</p>
+  {%- endfor -%}
 </div>

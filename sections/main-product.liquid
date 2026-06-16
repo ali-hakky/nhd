@@ -1,158 +1,98 @@
-{%- comment -%} Product page {%- endcomment -%}
-{%- liquid
-  assign product = product
-  assign current_variant = product.selected_or_first_available_variant
-  assign enquire = false
-  if product.metafields.custom.enquire_only.value == true or product.tags contains 'enquire' or product.price == 0
-    assign enquire = true
-  endif
-  assign contact_url = pages[section.settings.enquire_page].url | default: '/pages/contact'
--%}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign is_enquire = false -%}
+{%- if product.tags contains 'enquire' or product.metafields.custom.enquire_only.value == true or product.price == 0 -%}
+  {%- assign is_enquire = true -%}
+{%- endif -%}
 
-<div class="page-wrap">
-  <nav class="breadcrumb">
-    <a href="{{ routes.root_url }}">Home</a> /
-    {%- if collection -%}<a href="{{ collection.url }}">{{ collection.title }}</a> / {%- endif -%}
-    <span>{{ product.title }}</span>
-  </nav>
-
-  <div class="product" data-product-root
-       data-enquire-mode="{{ enquire }}"
-       data-enquire-url="{{ contact_url }}"
-       data-enquire-label="{{ section.settings.enquire_label | default: 'Enquire about this piece' }}"
-       data-add-label="{{ section.settings.add_label | default: 'Add to cart' }}"
-       data-product-title="{{ product.title | escape }}">
-
-    {%- comment -%} GALLERY {%- endcomment -%}
-    <div class="product-gallery">
-      <div class="gallery-main">
-        {%- if product.featured_media -%}
-          {{ product.featured_media | image_url: width: 1000 | image_tag: alt: product.title, widths: '500,750,1000', fetchpriority: 'high' }}
-        {%- else -%}
-          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-        {%- endif -%}
-      </div>
-      {%- if product.media.size > 1 -%}
-        <div class="gallery-thumbs">
-          {%- for media in product.media limit: 10 -%}
-            <button class="gallery-thumb{% if forloop.first %} on{% endif %}" data-full="{{ media | image_url: width: 1000 }}" aria-label="View image {{ forloop.index }}">
-              {{ media | image_url: width: 160 | image_tag: alt: '', loading: 'lazy', width: 160, height: 160 }}
-            </button>
-          {%- endfor -%}
-        </div>
+<div class="product-page">
+  <div class="product-gallery">
+    <div class="main-image">
+      {%- if current_variant.featured_image -%}
+        {{ current_variant.featured_image | image_url: width: 900 | image_tag: loading: 'eager', alt: product.title }}
+      {%- elsif product.featured_image -%}
+        {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'eager', alt: product.title }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
       {%- endif -%}
     </div>
+    {%- if product.images.size > 1 -%}
+      <div class="thumbs">
+        {%- for image in product.images limit: 6 -%}
+          <div class="thumb{% if image == current_variant.featured_image or image == product.featured_image and forloop.first %} active{% endif %}">
+            {{ image | image_url: width: 160 | image_tag: loading: 'lazy', alt: product.title }}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
 
-    {%- comment -%} INFO {%- endcomment -%}
-    <div class="product-info">
-      {%- if product.vendor != blank and section.settings.show_vendor -%}
-        <span class="eyebrow">{{ product.vendor }}</span>
-      {%- endif -%}
-      <h1 class="product-title">{{ product.title }}</h1>
+  <div class="product-info">
+    {%- if product.vendor != blank -%}
+      <div class="product-vendor">{{ product.vendor }}</div>
+    {%- endif -%}
+    <h1 class="product-title">{{ product.title }}</h1>
 
-      {%- unless enquire -%}
-        <div class="product-price">
-          <span class="was" data-compare-price {% if current_variant.compare_at_price <= current_variant.price %}style="display:none"{% endif %}>{{ current_variant.compare_at_price | money }}</span>
-          <span data-price>{{ current_variant.price | money }}</span>
-          <span class="save" data-save {% if current_variant.compare_at_price <= current_variant.price %}style="display:none"{% endif %}>Sale</span>
-        </div>
-      {%- else -%}
-        <div class="product-price">Price on enquiry</div>
+    {%- unless is_enquire -%}
+      <div class="product-price-main">
+        {%- if current_variant.compare_at_price > current_variant.price -%}
+          <span class="was">{{ current_variant.compare_at_price | money }}</span>
+        {%- endif -%}
+        {{ current_variant.price | money }}
+      </div>
+    {%- endunless -%}
+
+    {%- if product.description != blank -%}
+      <div class="product-desc">{{ product.description }}</div>
+    {%- endif -%}
+
+    <form action="/cart/add" method="post" class="product-form" data-variants='{{ product.variants | json }}'>
+      <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+      {%- unless product.has_only_default_variant -%}
+        {%- for option in product.options_with_values -%}
+          <fieldset class="variant-fieldset">
+            <legend>{{ option.name }}</legend>
+            <div class="variant-options">
+              {%- for value in option.values -%}
+                <span class="variant-opt{% if value == option.selected_value %} active{% endif %}">{{ value }}</span>
+              {%- endfor -%}
+            </div>
+          </fieldset>
+        {%- endfor -%}
       {%- endunless -%}
 
-      {%- if product.metafields.custom.materials.value != blank -%}
-        <p class="product-vendor">{{ product.metafields.custom.materials.value }}</p>
-      {%- endif -%}
-
-      {%- comment -%} VARIANTS {%- endcomment -%}
-      <form method="post" action="{{ routes.cart_add_url }}" data-product-form>
-        {%- unless product.has_only_default_variant -%}
-          {%- for option in product.options_with_values -%}
-            <div class="variant-group">
-              <span class="variant-label">{{ option.name }}<b data-selected-{{ forloop.index0 }}>{{ option.selected_value }}</b></span>
-              <div class="variant-options">
-                {%- for value in option.values -%}
-                  {%- assign opt_id = section.id | append: '-' | append: forloop.parentloop.index0 | append: '-' | append: forloop.index0 -%}
-                  <label class="variant-pill{% if option.selected_value == value %} on{% endif %}">
-                    <input type="radio" name="option-{{ forloop.parentloop.index0 }}" value="{{ value | escape }}" data-option-index="{{ forloop.parentloop.index0 }}" id="{{ opt_id }}" {% if option.selected_value == value %}checked{% endif %}>
-                    {{ value }}
-                  </label>
-                {%- endfor -%}
-              </div>
-            </div>
-          {%- endfor -%}
-        {%- endunless -%}
-
-        <input type="hidden" name="id" value="{{ current_variant.id }}">
-
-        <script type="application/json" data-variant-json>
-          [
-            {%- for variant in product.variants -%}
-              {
-                "id": {{ variant.id }},
-                "options": {{ variant.options | json }},
-                "price": {{ variant.price }},
-                "compare_at_price": {{ variant.compare_at_price | default: 0 }},
-                "available": {{ variant.available }},
-                "title": {{ variant.title | json }}
-              }{%- unless forloop.last -%},{%- endunless -%}
-            {%- endfor -%}
-          ]
-        </script>
-
-        {%- unless enquire -%}
-          <div class="product-form">
-            <div class="qty-row">
-              <div class="qty-box">
-                <button type="button" data-qty-change="-1" aria-label="Decrease quantity">−</button>
-                <input type="text" name="quantity" value="1" inputmode="numeric" aria-label="Quantity">
-                <button type="button" data-qty-change="1" aria-label="Increase quantity">+</button>
-              </div>
-              <button type="submit" class="btn" data-add-button {% unless current_variant.available %}disabled{% endunless %}>
-                {%- if current_variant.available -%}{{ section.settings.add_label | default: 'Add to cart' }}{%- else -%}Sold out{%- endif -%}
-              </button>
-            </div>
-          </div>
+      <div class="product-form-btn">
+        {%- if is_enquire -%}
+          <a href="/pages/contact?product={{ product.title | url_encode }}" class="btn" data-enquire-url="/pages/contact?product={{ product.title | url_encode }}">Enquire</a>
         {%- else -%}
-          <div class="product-form">
-            <button type="submit" class="btn" data-add-button>{{ section.settings.enquire_label | default: 'Enquire about this piece' }}</button>
-          </div>
-        {%- endunless -%}
-      </form>
-
-      {%- comment -%} SPECS {%- endcomment -%}
-      {%- assign dims = product.metafields.custom.dimensions.value -%}
-      {%- assign lead = product.metafields.custom.lead_time.value -%}
-      {%- assign care = product.metafields.custom.care.value -%}
-      {%- if dims != blank or lead != blank or product.metafields.custom.order_type.value != blank -%}
-        <div class="product-specs">
-          {%- if dims != blank -%}<div class="spec-row"><span class="k">Dimensions</span><span class="v">{{ dims }}</span></div>{%- endif -%}
-          {%- if lead != blank -%}<div class="spec-row"><span class="k">Lead Time</span><span class="v">{{ lead }}</span></div>{%- endif -%}
-          {%- if product.metafields.custom.order_type.value != blank -%}<div class="spec-row"><span class="k">Order Type</span><span class="v">{{ product.metafields.custom.order_type.value }}</span></div>{%- endif -%}
-          {%- if product.metafields.custom.materials.value != blank -%}<div class="spec-row"><span class="k">Materials</span><span class="v">{{ product.metafields.custom.materials.value }}</span></div>{%- endif -%}
-        </div>
-      {%- endif -%}
-
-      {%- if product.description != blank -%}
-        <div class="product-desc rte">{{ product.description }}</div>
-      {%- endif -%}
-
-      {%- comment -%} ACCORDION {%- endcomment -%}
-      <div class="product-accordion">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'accordion' -%}
-            {%- assign mf = block.settings.content -%}
-            <details {{ block.shopify_attributes }}>
-              <summary>{{ block.settings.title }}</summary>
-              <div class="acc-body rte">{{ block.settings.content }}</div>
-            </details>
-          {%- endif -%}
-        {%- endfor -%}
-        {%- if care != blank -%}
-          <details><summary>Care &amp; Materials</summary><div class="acc-body rte">{{ care }}</div></details>
+          <button type="submit" class="btn" data-add-label="{{ product.metafields.custom.cta_label.value | default: 'Add to cart' }}"{% unless current_variant.available %} disabled{% endunless %}>
+            {%- if current_variant.available -%}
+              {{ product.metafields.custom.cta_label.value | default: 'Add to cart' }}
+            {%- else -%}
+              Sold out
+            {%- endif -%}
+          </button>
         {%- endif -%}
       </div>
-    </div>
+    </form>
+
+    {%- comment -%} Product meta fields {%- endcomment -%}
+    {%- if product.metafields.custom.dimensions.value != blank or product.metafields.custom.lead_time.value != blank or product.metafields.custom.materials.value != blank -%}
+      <div class="product-meta">
+        {%- if product.metafields.custom.dimensions.value != blank -%}
+          <div class="product-meta-row"><span class="label">Dimensions</span><span class="value">{{ product.metafields.custom.dimensions.value }}</span></div>
+        {%- endif -%}
+        {%- if product.metafields.custom.lead_time.value != blank -%}
+          <div class="product-meta-row"><span class="label">Lead time</span><span class="value">{{ product.metafields.custom.lead_time.value }}</span></div>
+        {%- endif -%}
+        {%- if product.metafields.custom.materials.value != blank -%}
+          <div class="product-meta-row"><span class="label">Materials</span><span class="value">{{ product.metafields.custom.materials.value }}</span></div>
+        {%- endif -%}
+        {%- if product.metafields.custom.care.value != blank -%}
+          <div class="product-meta-row"><span class="label">Care</span><span class="value">{{ product.metafields.custom.care.value }}</span></div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -160,23 +100,7 @@
 
 {% schema %}
 {
-  "name": "Product",
-  "settings": [
-    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor / designer fabric", "default": true },
-    { "type": "text", "id": "add_label", "label": "Add to cart label", "default": "Add to cart" },
-    { "type": "text", "id": "enquire_label", "label": "Enquire button label", "default": "Enquire about this piece" },
-    { "type": "page", "id": "enquire_page", "label": "Enquiry / contact page", "info": "Enquire-only products link here." }
-  ],
-  "blocks": [
-    {
-      "type": "accordion",
-      "name": "Accordion row",
-      "settings": [
-        { "type": "text", "id": "title", "label": "Title", "default": "Delivery & Returns" },
-        { "type": "richtext", "id": "content", "label": "Content" }
-      ]
-    }
-  ],
-  "presets": [{ "name": "Product" }]
+  "name": "Product page",
+  "settings": []
 }
 {% endschema %}

@@ -1,11 +1,13 @@
-{%- comment -%} 404 {%- endcomment -%}
-<div class="center-page">
-  <span class="eyebrow">Page not found</span>
+<div class="page-404">
   <h1>404</h1>
-  <p class="hero-sub" style="color:var(--mu);margin-bottom:28px">The page you're looking for doesn't exist — but there's plenty more to admire.</p>
-  <a href="{{ routes.root_url }}" class="btn">Back to Home</a>
+  <h2>{{ 'general.404.heading' | t }}</h2>
+  <p>{{ 'general.404.text' | t }}</p>
+  <a href="/" class="btn">{{ 'general.404.button' | t }}</a>
 </div>
 
 {% schema %}
-{ "name": "404", "settings": [] }
+{
+  "name": "404 page",
+  "settings": []
+}
 {% endschema %}

@@ -1,24 +1,17 @@
-{%- comment -%} Article {%- endcomment -%}
-<article class="page-wrap" style="max-width:760px">
-  <nav class="breadcrumb"><a href="{{ routes.root_url }}">Home</a> / <a href="{{ blog.url }}">{{ blog.title }}</a> / <span>{{ article.title }}</span></nav>
-  <span class="eyebrow">{{ article.published_at | date: '%B %-d, %Y' }}</span>
-  <h1 class="product-title" style="margin:10px 0 20px">{{ article.title }}</h1>
-  {%- if article.image -%}<div class="gallery-main" style="aspect-ratio:16/9;margin-bottom:28px">{{ article.image | image_url: width: 1200 | image_tag: alt: article.title }}</div>{%- endif -%}
-  <div class="rte">{{ article.content }}</div>
-
-  {%- if blog.comments_enabled? -%}
-    <div style="margin-top:48px">
-      <h2 class="sec-title" style="font-size:24px;margin-bottom:20px">Comments</h2>
-      {%- for comment in article.comments -%}
-        <div style="border-bottom:1px solid var(--br);padding:16px 0">
-          <p class="rte">{{ comment.content }}</p>
-          <p class="prod-lead">— {{ comment.author }}</p>
-        </div>
-      {%- endfor -%}
+<div class="article-page">
+  <div class="article-meta">{{ article.published_at | date: '%B %d, %Y' }} · {{ blog.title }}</div>
+  <h1>{{ article.title }}</h1>
+  {%- if article.image -%}
+    <div class="article-featured">
+      {{ article.image | image_url: width: 1200 | image_tag: loading: 'eager', alt: article.title }}
     </div>
   {%- endif -%}
-</article>
+  <div class="rte">{{ article.content }}</div>
+</div>
 
 {% schema %}
-{ "name": "Article", "settings": [] }
+{
+  "name": "Article page",
+  "settings": []
+}
 {% endschema %}

@@ -1,26 +1,32 @@
-# Navigation Menus
+# Building Your Menus
 
-Build these under **Online Store → Navigation**. The theme references them by
-handle, so keep the handles as shown.
+Menus control the navigation links. Go to **Online Store → Navigation** in your
+Shopify admin. You'll build **four** menus.
 
-## Main menu (handle: `main-menu`)
-This drives the header nav bar and its mega-dropdowns (nested items become the
-dropdown). The header highlights the last top-level item in deep blue (“New In”).
+> Do **Step 2** (collections) first, so the links have somewhere to point.
+
+---
+
+## 1. Main menu (top navigation with dropdowns)
+
+Shopify already has a menu called **Main menu** (handle `main-menu`). Click it
+and set it up like this. Each top item links to a collection; the indented items
+under it are the dropdown.
 
 - **Seating** → `/collections/seating`
-  - Hamptons Armchair → `/products/hamptons-armchair`
+  - Hamptons Armchair → `/products/bahamas-hampton`
   - Riviera Rattan → `/products/riviera-rattan`
   - Amalfi Grande Sofa → `/products/amalfi-grande`
   - Miniature Chair → `/products/miniature-chair`
   - View All Seating → `/collections/seating`
 - **Tables** → `/collections/tables`
-  - Belgravia Coffee Table → `/products/belgravia-coffee-table`
+  - Coffee Tables → `/collections/tables`
   - Moroccan Side Table → `/products/moroccan-side-table`
   - Painted Side Tables → `/collections/tables`
   - The Sloan → `/products/the-sloan`
   - View All Tables → `/collections/tables`
 - **Consoles** → `/collections/consoles`
-  - Hortensia Console → `/products/hortensia-console`
+  - Hortensia Console → `/products/mini-hortensia-console`
   - Boltons Console → `/products/boltons-console`
   - Burl Wood Console → `/products/burl-wood-console`
   - Marrakech Console → `/products/marrakech-console`
@@ -36,25 +42,63 @@ dropdown). The header highlights the last top-level item in deep blue (“New In
   - Bed Frames (Pre-order) → `/products/bed-frames`
 - **Accessories** → `/collections/accessories`
   - Swoon Trays → `/products/swoon-lacquered-tray`
-  - Butler's Tray Stands → `/products/butlers-tray-stands`
   - Bahamas Lantern → `/products/bahamas-lantern`
   - Arabesque Mirror → `/products/arabesque-mirror`
-  - Bar Cart → `/products/bar-cart`
   - View All → `/collections/accessories`
 - **New In** → `/collections/new-in`
 
-## Footer menus
-Three columns in the footer, each its own menu:
+### How to add a dropdown item
 
-**footer-shop** (heading “Shop”): Seating, Tables, Consoles, Stools, Beds &
-Headboards, Accessories, New In — each → its collection.
+1. Click **Add menu item**.
+2. Type the **Name** (e.g. "Riviera Rattan").
+3. In **Link**, start typing and pick the product/collection, or paste the path.
+4. Save.
+5. To make it a dropdown child, **drag it slightly to the right** underneath its
+   parent so it's indented. That's what turns it into a dropdown.
 
-**footer-studio** (heading “Studio”): About Nazly, Bespoke Orders, Our Process,
-Press, Contact — each → the relevant page (`/pages/...`).
+---
 
-**footer-help** (heading “Help”): Delivery Info, Returns Policy, Care Guide,
-FAQs, Privacy Policy — each → the relevant page or policy.
+## 2. Footer menu — "Shop"
 
-> Create the linked **pages** (About, Contact, etc.) under Online Store → Pages
-> first, or the menu editor won't offer them. Header top-bar links (About,
-> Bespoke Orders, Contact) are set directly in the header section settings.
+Create a **new menu**. Title: **Footer Shop**, handle **`footer-shop`**.
+
+- Seating → `/collections/seating`
+- Tables → `/collections/tables`
+- Consoles → `/collections/consoles`
+- Stools → `/collections/stools`
+- Beds & Headboards → `/collections/beds`
+- Accessories → `/collections/accessories`
+- New In → `/collections/new-in`
+
+## 3. Footer menu — "Studio"
+
+New menu. Title: **Footer Studio**, handle **`footer-studio`**.
+
+- About Nazly → `/pages/about`
+- Bespoke Orders → `/pages/contact`
+- Our Process → `/pages/about`
+- Contact → `/pages/contact`
+
+## 4. Footer menu — "Help"
+
+New menu. Title: **Footer Help**, handle **`footer-help`**.
+
+- Delivery Info → `/pages/delivery` *(create these pages or link where you like)*
+- Returns Policy → `/pages/returns`
+- Care Guide → `/pages/care`
+- FAQs → `/pages/faqs`
+- Privacy Policy → `/policies/privacy-policy`
+
+> The handle is the important bit — the theme footer looks for `footer-shop`,
+> `footer-studio` and `footer-help`. If you change a handle, also update it in
+> **Customize → Footer** by re-picking the menu for that column.
+
+---
+
+### Note on handles
+
+When you create a new menu, Shopify makes the handle from the title. Double-check
+it matches (`footer-shop`, `footer-studio`, `footer-help`). You can see/edit the
+handle in the menu's web address while editing it. If a footer column is empty on
+the live site, it's almost always a handle mismatch — just open
+**Customize → Footer** and re-select the correct menu for that column.

@@ -1,34 +1,55 @@
-# Product Metafields
+# Creating the Product Fields (Metafields)
 
-The product page and product cards display structured details (dimensions, lead
-time, etc.) from product **metafields** in the `custom` namespace.
+These extra fields hold the dimensions, lead time and other details that show on
+each product page. You create each one **once**, and then the product import
+fills them in automatically.
 
-Create these under **Settings → Custom data → Products → Add definition**. The
-`products_import.csv` columns are named to match them, so once the definitions
-exist the import populates them automatically.
+Go to **Settings → Custom data → Products**, then click
+**Add definition** for each field below.
 
-| Name | Namespace and key | Type | Used for |
-| --- | --- | --- | --- |
-| Dimensions | `custom.dimensions` | Single line text | Spec row + card dimensions line |
-| Lead time | `custom.lead_time` | Single line text | Spec row + card lead-time line |
-| Materials | `custom.materials` | Single line text | Card material line + product subtitle |
-| Order type | `custom.order_type` | Single line text | Spec row (e.g. “Pre-order only”) |
-| Badge | `custom.badge` | Single line text | Card badge style: `new`, `best`, `pre`, `lim`, `sold` |
-| Badge label | `custom.badge_label` | Single line text | Card badge text (e.g. “Bestseller”) |
-| CTA label | `custom.cta_label` | Single line text | Card / product button text |
-| Care | `custom.care` | Multi-line text | “Care & Materials” accordion on product page |
-| Enquire only | `custom.enquire_only` | True / false (boolean) | Switches the product to the Enquire flow |
+For every definition you need three things: the **Name**, the **Namespace and
+key** (this must match *exactly* — copy it carefully), and the **Type**.
 
-> Tip: if you'd rather not use metafields, you can drive the homepage entirely
-> from the **manual Product blocks** already configured in the theme editor —
-> the metafields only matter for live collection/product pages.
+| Name | Namespace and key | Type |
+| --- | --- | --- |
+| Dimensions | `custom.dimensions` | Single line text |
+| Lead time | `custom.lead_time` | Single line text |
+| Materials | `custom.materials` | Multi-line text |
+| Badge | `custom.badge` | Single line text |
+| Badge label | `custom.badge_label` | Single line text |
+| CTA label | `custom.cta_label` | Single line text |
+| Order type | `custom.order_type` | Single line text |
+| Enquire only | `custom.enquire_only` | True or false (boolean) |
+| Care | `custom.care` | Multi-line text |
 
-## The Enquire flow
-A product becomes “enquire only” (button reads **Enquire about this piece**,
-price shows **Price on enquiry**) when **any** of these is true:
-- `custom.enquire_only` = `true`, **or**
-- the product has the tag `enquire`, **or**
-- the product price is 0.
+### How to add one
 
-The button links to your Contact page (`page.contact` template) with the product
-name and selected variant pre-filled in the enquiry message.
+1. **Settings → Custom data → Products → Add definition**.
+2. **Name:** type the name from the table (e.g. "Dimensions").
+3. Click **Select** next to *Namespace and key* and set it to the value in the
+   table (e.g. `custom.dimensions`). Remove any auto-suggested suffix so it
+   matches exactly.
+4. **Type:** choose the type from the table.
+5. **Save**.
+6. Repeat for all nine.
+
+### What each field does
+
+- **Dimensions** — the size line on the product card and page (e.g.
+  "W65 × H83 × D65 cm").
+- **Lead time** — e.g. "2–3 days delivery" or "Pre-order 3–4 weeks".
+- **Materials** — short description line shown on the card.
+- **Badge** — controls the little corner tag style. Use one of: `new`, `best`,
+  `pre`, `lim`, `sold`. (Leave empty for none.)
+- **Badge label** — the text inside that tag, e.g. "Bestseller", "Pre-order".
+- **CTA label** — the button text, e.g. "Add to cart", "Pre-order", "Enquire".
+- **Order type** — `in-stock`, `pre-order`, or `enquire` (for your own
+  reference).
+- **Enquire only** — set **true** for bespoke pieces. When true (or when a
+  product is tagged `enquire`, or priced £0), the product shows an **Enquire**
+  button that goes to your Contact page instead of adding to cart.
+- **Care** — optional care instructions shown on the product page.
+
+> These names line up with the column headers in `products_import.csv`, so once
+> the definitions exist, importing fills them in for you. If you create them
+> *after* importing, just re-import the same CSV to backfill the values.
