@@ -1,10 +1,10 @@
-{%- comment -%} Animated marquee ticker. Items duplicated for a seamless loop. {%- endcomment -%}
 <div class="ticker">
   <div class="ticker-inner">
-    {%- for i in (1..2) -%}
-      {%- for block in section.blocks -%}
-        <span class="t-item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span><span class="t-dot">{{ section.settings.separator | default: '✦' }}</span>
-      {%- endfor -%}
+    {%- for block in section.blocks -%}
+      <span class="t-item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span><span class="t-dot">✦</span>
+    {%- endfor -%}
+    {%- for block in section.blocks -%}
+      <span class="t-item">{{ block.settings.text }}</span><span class="t-dot">✦</span>
     {%- endfor -%}
   </div>
 </div>
@@ -12,29 +12,27 @@
 {% schema %}
 {
   "name": "Ticker",
-  "settings": [
-    { "type": "text", "id": "separator", "label": "Separator symbol", "default": "✦" }
-  ],
+  "settings": [],
   "blocks": [
-    { "type": "item", "name": "Ticker item", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "The Hamptons Armchair" } ] }
-  ],
-  "max_blocks": 24,
-  "presets": [
     {
-      "name": "Ticker",
-      "blocks": [
-        { "type": "item", "settings": { "text": "The Hamptons Armchair" } },
-        { "type": "item", "settings": { "text": "Regency Headboard" } },
-        { "type": "item", "settings": { "text": "Hortensia Console" } },
-        { "type": "item", "settings": { "text": "Bahamas Lantern" } },
-        { "type": "item", "settings": { "text": "X Stools in Zoffany" } },
-        { "type": "item", "settings": { "text": "Palm Beach Coffee Table" } },
-        { "type": "item", "settings": { "text": "Arabesque Mirror" } },
-        { "type": "item", "settings": { "text": "Swoon Tray Collection" } },
-        { "type": "item", "settings": { "text": "Amalfi Grande Sofa" } },
-        { "type": "item", "settings": { "text": "Chinoiserie & Peony Tables" } }
+      "type": "item",
+      "name": "Ticker item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Product name" }
       ]
     }
-  ]
+  ],
+  "presets": [{ "name": "Ticker", "blocks": [
+    { "type": "item", "settings": { "text": "The Hamptons Armchair" } },
+    { "type": "item", "settings": { "text": "Regency Headboard" } },
+    { "type": "item", "settings": { "text": "Hortensia Console" } },
+    { "type": "item", "settings": { "text": "Bahamas Lantern" } },
+    { "type": "item", "settings": { "text": "X Stools in Zoffany" } },
+    { "type": "item", "settings": { "text": "Palm Beach Coffee Table" } },
+    { "type": "item", "settings": { "text": "Arabesque Mirror" } },
+    { "type": "item", "settings": { "text": "Swoon Tray Collection" } },
+    { "type": "item", "settings": { "text": "Amalfi Grande Sofa" } },
+    { "type": "item", "settings": { "text": "Chinoiserie & Peony Tables" } }
+  ] }]
 }
 {% endschema %}
