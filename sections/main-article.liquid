@@ -1,17 +1,27 @@
 <div class="article-page">
-  <div class="article-meta">{{ article.published_at | date: '%B %d, %Y' }} · {{ blog.title }}</div>
+  <div class="article-meta">
+    {{ article.published_at | date: '%B %d, %Y' }}
+    {%- if article.author != blank %} &mdash; {{ article.author }}{% endif -%}
+  </div>
   <h1>{{ article.title }}</h1>
+
   {%- if article.image -%}
     <div class="article-featured">
       {{ article.image | image_url: width: 1200 | image_tag: loading: 'eager', alt: article.title }}
     </div>
   {%- endif -%}
+
   <div class="rte">{{ article.content }}</div>
+
+  <div style="margin-top:32px;padding-top:20px;border-top:1px solid var(--br)">
+    <a href="{{ blog.url }}" class="btn-ghost">&larr; Back to {{ blog.title }}</a>
+  </div>
 </div>
 
 {% schema %}
 {
-  "name": "Article page",
+  "name": "Blog article",
+  "tag": "section",
   "settings": []
 }
 {% endschema %}

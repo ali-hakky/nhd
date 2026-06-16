@@ -1,16 +1,21 @@
-<div class="section">
-  <div class="sec-head" style="justify-content:center"><div style="text-align:center"><h2 class="sec-title">All <em>Collections</em></h2></div></div>
-  <div class="grid-3">
+<div class="blog-page">
+  <h1>Collections</h1>
+
+  <div class="grid-4">
     {%- for collection in collections -%}
-      <a href="{{ collection.url }}" class="cat-card" style="aspect-ratio:1.2">
-        {%- if collection.image -%}
-          {{ collection.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: collection.title }}
-        {%- else -%}
-          <div class="ph" style="width:100%;height:100%">{{ collection.title }}</div>
-        {%- endif -%}
-        <div class="cat-overlay">
-          <div class="cat-name">{{ collection.title }}</div>
-          <div class="cat-sub">{{ collection.products_count }} products</div>
+      <a href="{{ collection.url }}" class="prod-card">
+        <div class="prod-img med">
+          {%- if collection.image -%}
+            {{ collection.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: collection.title, sizes: '(max-width:640px) 50vw, 25vw', widths: '300,450,600' }}
+          {%- elsif collection.products.first and collection.products.first.featured_image -%}
+            {{ collection.products.first.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: collection.title, sizes: '(max-width:640px) 50vw, 25vw', widths: '300,450,600' }}
+          {%- else -%}
+            {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+        <div class="prod-body">
+          <div class="prod-name">{{ collection.title }}</div>
+          <div class="prod-mat">{{ collection.products_count }} products</div>
         </div>
       </a>
     {%- endfor -%}
@@ -19,7 +24,8 @@
 
 {% schema %}
 {
-  "name": "Collections list",
+  "name": "Collection list",
+  "tag": "section",
   "settings": []
 }
 {% endschema %}

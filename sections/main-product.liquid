@@ -1,8 +1,26 @@
-{%- assign current_variant = product.selected_or_first_available_variant -%}
-{%- assign is_enquire = false -%}
-{%- if product.tags contains 'enquire' or product.metafields.custom.enquire_only.value == true or product.price == 0 -%}
-  {%- assign is_enquire = true -%}
-{%- endif -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign is_enquire = false
+  if product.tags contains 'enquire'
+    assign is_enquire = true
+  endif
+  if product.metafields.custom.enquire_only.value == true
+    assign is_enquire = true
+  endif
+  if current_variant.price == 0
+    assign is_enquire = true
+  endif
+-%}
+
+<div style="padding:12px 52px;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--mu)">
+  <a href="/" style="color:var(--mu);text-decoration:none">Home</a>
+  <span style="margin:0 6px">/</span>
+  {%- if product.collections.size > 0 -%}
+    <a href="{{ product.collections.first.url }}" style="color:var(--mu);text-decoration:none">{{ product.collections.first.title }}</a>
+    <span style="margin:0 6px">/</span>
+  {%- endif -%}
+  <span style="color:var(--ink)">{{ product.title }}</span>
+</div>
 
 <div class="product-page">
   <div class="product-gallery">
@@ -17,8 +35,8 @@
     </div>
     {%- if product.images.size > 1 -%}
       <div class="thumbs">
-        {%- for image in product.images limit: 6 -%}
-          <div class="thumb{% if image == current_variant.featured_image or image == product.featured_image and forloop.first %} active{% endif %}">
+        {%- for image in product.images -%}
+          <div class="thumb{% if forloop.first %} active{% endif %}">
             {{ image | image_url: width: 160 | image_tag: loading: 'lazy', alt: product.title }}
           </div>
         {%- endfor -%}
@@ -30,6 +48,7 @@
     {%- if product.vendor != blank -%}
       <div class="product-vendor">{{ product.vendor }}</div>
     {%- endif -%}
+
     <h1 class="product-title">{{ product.title }}</h1>
 
     {%- unless is_enquire -%}
@@ -45,7 +64,7 @@
       <div class="product-desc">{{ product.description }}</div>
     {%- endif -%}
 
-    <form action="/cart/add" method="post" class="product-form" data-variants='{{ product.variants | json }}'>
+    <form action="/cart/add" method="post" class="product-form" data-variants="{{ product.variants | json | escape }}">
       <input type="hidden" name="id" value="{{ current_variant.id }}">
 
       {%- unless product.has_only_default_variant -%}
@@ -65,31 +84,44 @@
         {%- if is_enquire -%}
           <a href="/pages/contact?product={{ product.title | url_encode }}" class="btn" data-enquire-url="/pages/contact?product={{ product.title | url_encode }}">Enquire</a>
         {%- else -%}
-          <button type="submit" class="btn" data-add-label="{{ product.metafields.custom.cta_label.value | default: 'Add to cart' }}"{% unless current_variant.available %} disabled{% endunless %}>
-            {%- if current_variant.available -%}
-              {{ product.metafields.custom.cta_label.value | default: 'Add to cart' }}
-            {%- else -%}
-              Sold out
-            {%- endif -%}
+          <button type="submit" class="btn" data-add-label="Add to cart"{% unless current_variant.available %} disabled{% endunless %}>
+            {%- if current_variant.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
           </button>
         {%- endif -%}
       </div>
     </form>
 
-    {%- comment -%} Product meta fields {%- endcomment -%}
-    {%- if product.metafields.custom.dimensions.value != blank or product.metafields.custom.lead_time.value != blank or product.metafields.custom.materials.value != blank -%}
+    {%- liquid
+      assign has_specs = false
+      if product.metafields.custom.dimensions.value != blank
+        assign has_specs = true
+      endif
+      if product.metafields.custom.lead_time.value != blank
+        assign has_specs = true
+      endif
+      if product.metafields.custom.materials.value != blank
+        assign has_specs = true
+      endif
+    -%}
+    {%- if has_specs -%}
       <div class="product-meta">
         {%- if product.metafields.custom.dimensions.value != blank -%}
-          <div class="product-meta-row"><span class="label">Dimensions</span><span class="value">{{ product.metafields.custom.dimensions.value }}</span></div>
-        {%- endif -%}
-        {%- if product.metafields.custom.lead_time.value != blank -%}
-          <div class="product-meta-row"><span class="label">Lead time</span><span class="value">{{ product.metafields.custom.lead_time.value }}</span></div>
+          <div class="product-meta-row">
+            <span class="label">Dimensions</span>
+            <span class="value">{{ product.metafields.custom.dimensions.value }}</span>
+          </div>
         {%- endif -%}
         {%- if product.metafields.custom.materials.value != blank -%}
-          <div class="product-meta-row"><span class="label">Materials</span><span class="value">{{ product.metafields.custom.materials.value }}</span></div>
+          <div class="product-meta-row">
+            <span class="label">Materials</span>
+            <span class="value">{{ product.metafields.custom.materials.value }}</span>
+          </div>
         {%- endif -%}
-        {%- if product.metafields.custom.care.value != blank -%}
-          <div class="product-meta-row"><span class="label">Care</span><span class="value">{{ product.metafields.custom.care.value }}</span></div>
+        {%- if product.metafields.custom.lead_time.value != blank -%}
+          <div class="product-meta-row">
+            <span class="label">Lead Time</span>
+            <span class="value">{{ product.metafields.custom.lead_time.value }}</span>
+          </div>
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -101,6 +133,7 @@
 {% schema %}
 {
   "name": "Product page",
+  "tag": "section",
   "settings": []
 }
 {% endschema %}

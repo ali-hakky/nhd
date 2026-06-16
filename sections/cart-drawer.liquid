@@ -1,16 +1,17 @@
 <div class="cart-overlay"></div>
 <div class="cart-drawer" id="cart-drawer">
   <div class="cart-head">
-    <h3>{{ 'general.cart.title' | t }} (<span data-cart-count>{{ cart.item_count }}</span>)</h3>
+    <h3>Your Cart (<span data-cart-count>{{ cart.item_count }}</span>)</h3>
     <button class="cart-close" aria-label="Close cart">&times;</button>
   </div>
+
   <div class="cart-body">
     {%- if cart.item_count > 0 -%}
       {%- for item in cart.items -%}
         <div class="cart-item">
           <div class="cart-item-img">
             {%- if item.image -%}
-              {{ item.image | image_url: width: 160 | image_tag: alt: item.title }}
+              <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title }}" loading="lazy">
             {%- endif -%}
           </div>
           <div class="cart-item-info">
@@ -20,28 +21,33 @@
             {%- endunless -%}
             <div class="cart-item-price">{{ item.price | money }}</div>
             <div class="cart-qty">
-              <button type="button" data-qty-change="-1" data-key="{{ item.key }}">−</button>
-              <input type="number" value="{{ item.quantity }}" min="0" readonly>
+              <button type="button" data-qty-change="-1" data-key="{{ item.key }}">-</button>
+              <input type="text" value="{{ item.quantity }}" readonly>
               <button type="button" data-qty-change="1" data-key="{{ item.key }}">+</button>
             </div>
-            <button class="cart-item-remove" data-remove-key="{{ item.key }}">{{ 'general.cart.remove' | t }}</button>
+            <button class="cart-item-remove" data-remove-key="{{ item.key }}">Remove</button>
           </div>
         </div>
       {%- endfor -%}
     {%- else -%}
-      <div class="cart-empty">{{ 'general.cart.empty' | t }}</div>
+      <div class="cart-empty">Your cart is empty.</div>
     {%- endif -%}
   </div>
+
   <div class="cart-foot{% if cart.item_count == 0 %} hidden{% endif %}">
-    <div class="cart-subtotal"><span>{{ 'general.cart.subtotal' | t }}</span><span>{{ cart.total_price | money }}</span></div>
-    <a href="/checkout" class="btn cart-checkout">{{ 'general.cart.checkout' | t }}</a>
-    <p class="cart-note">{{ 'general.cart.shipping_note' | t }}</p>
+    <div class="cart-subtotal">
+      <span>Subtotal</span>
+      <span>{{ cart.total_price | money }}</span>
+    </div>
+    <a href="/checkout" class="btn cart-checkout">Checkout</a>
+    <p class="cart-note">Shipping and taxes calculated at checkout</p>
   </div>
 </div>
 
 {% schema %}
 {
   "name": "Cart drawer",
+  "tag": "div",
   "settings": []
 }
 {% endschema %}
