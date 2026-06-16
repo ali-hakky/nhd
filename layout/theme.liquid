@@ -29,12 +29,22 @@
       </span>
       <button class="mobile-nav-close" aria-label="Close menu">&times;</button>
     </div>
-    {%- for link in linklists.main-menu.links -%}
-      <a href="{{ link.url }}">{{ link.title }}</a>
-      {%- for child in link.links -%}
-        <a href="{{ child.url }}" style="padding-left:20px;font-size:10px">{{ child.title }}</a>
+    {%- if linklists.main-menu.links.size > 0 -%}
+      {%- for link in linklists.main-menu.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- for child in link.links -%}
+          <a href="{{ child.url }}" style="padding-left:20px;font-size:10px">{{ child.title }}</a>
+        {%- endfor -%}
       {%- endfor -%}
-    {%- endfor -%}
+    {%- else -%}
+      <a href="{{ routes.collections_url }}/seating">Seating</a>
+      <a href="{{ routes.collections_url }}/tables">Tables</a>
+      <a href="{{ routes.collections_url }}/consoles">Consoles</a>
+      <a href="{{ routes.collections_url }}/stools">Stools</a>
+      <a href="{{ routes.collections_url }}/beds">Beds</a>
+      <a href="{{ routes.collections_url }}/accessories">Accessories</a>
+      <a href="{{ routes.collections_url }}/new-in">New In</a>
+    {%- endif -%}
   </div>
   <script src="{{ 'global.js' | asset_url }}" defer></script>
 </body>

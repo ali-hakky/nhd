@@ -23,18 +23,30 @@
     </div>
   </div>
   <div class="nav-bar">
-    {%- for link in linklists[section.settings.menu].links -%}
-      <div class="nav-item">
-        <a href="{{ link.url }}"{% if link.title == 'New In' %} style="color:var(--bd)"{% endif %}>{{ link.title }}</a>
-        {%- if link.links.size > 0 -%}
-          <div class="dropdown">
-            {%- for child in link.links -%}
-              <a href="{{ child.url }}">{{ child.title }}</a>
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
-      </div>
-    {%- endfor -%}
+    {%- assign main_links = linklists[section.settings.menu].links -%}
+    {%- if main_links.size > 0 -%}
+      {%- for link in main_links -%}
+        <div class="nav-item">
+          <a href="{{ link.url }}"{% if link.title == 'New In' %} style="color:var(--bd)"{% endif %}>{{ link.title }}</a>
+          {%- if link.links.size > 0 -%}
+            <div class="dropdown">
+              {%- for child in link.links -%}
+                <a href="{{ child.url }}">{{ child.title }}</a>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      {%- comment -%} Fallback so the bar matches the design before a menu is built {%- endcomment -%}
+      <div class="nav-item"><a href="{{ routes.collections_url }}/seating">Seating</a></div>
+      <div class="nav-item"><a href="{{ routes.collections_url }}/tables">Tables</a></div>
+      <div class="nav-item"><a href="{{ routes.collections_url }}/consoles">Consoles</a></div>
+      <div class="nav-item"><a href="{{ routes.collections_url }}/stools">Stools</a></div>
+      <div class="nav-item"><a href="{{ routes.collections_url }}/beds">Beds</a></div>
+      <div class="nav-item"><a href="{{ routes.collections_url }}/accessories">Accessories</a></div>
+      <div class="nav-item"><a href="{{ routes.collections_url }}/new-in" style="color:var(--bd)">New In</a></div>
+    {%- endif -%}
   </div>
 </nav>
 

@@ -1,4 +1,9 @@
 {
+  "gift_cards": {
+    "issued": {
+      "title": "Gift Card"
+    }
+  },
   "general": {
     "cart": {
       "title": "Your Cart",
