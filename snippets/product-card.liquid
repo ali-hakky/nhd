@@ -58,7 +58,7 @@
       {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
     {%- endif -%}
 
-    {%- if c_badge != blank -%}
+    {%- if c_badge != blank and c_badge != 'none' -%}
       <div class="badge {{ c_badge }}">{{ c_badge_label | default: c_badge }}</div>
     {%- elsif product and product.compare_at_price > product.price -%}
       <div class="badge sale">Sale</div>
