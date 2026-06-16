@@ -10,8 +10,6 @@
       <a href="{{ block.settings.link | default: section.settings.handle_url | default: '#' }}" class="insta-cell" target="_blank" rel="noopener" {{ block.shopify_attributes }}>
         {%- if block.settings.image != blank -%}
           {{ block.settings.image | image_url: width: 400 | image_tag: alt: 'Instagram post', loading: 'lazy', widths: '200,300,400' }}
-        {%- elsif block.settings.image_asset != blank -%}
-          <img src="{{ block.settings.image_asset | asset_url }}" alt="Instagram post" loading="lazy">
         {%- else -%}
           {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
         {%- endif -%}
@@ -35,7 +33,6 @@
       "name": "Post",
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "text", "id": "image_asset", "label": "Image asset filename", "info": "e.g. insta-1.png" },
         { "type": "url", "id": "link", "label": "Post link" }
       ]
     }
@@ -45,12 +42,12 @@
     {
       "name": "Instagram strip",
       "blocks": [
-        { "type": "post", "settings": { "image_asset": "insta-1.png" } },
-        { "type": "post", "settings": { "image_asset": "insta-2.png" } },
-        { "type": "post", "settings": { "image_asset": "insta-3.png" } },
-        { "type": "post", "settings": { "image_asset": "insta-4.png" } },
-        { "type": "post", "settings": { "image_asset": "insta-5.png" } },
-        { "type": "post", "settings": { "image_asset": "insta-6.png" } }
+        { "type": "post" },
+        { "type": "post" },
+        { "type": "post" },
+        { "type": "post" },
+        { "type": "post" },
+        { "type": "post" }
       ]
     }
   ]

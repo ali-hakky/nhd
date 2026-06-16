@@ -51,9 +51,10 @@ and tagged `enquire`; set your own prices or leave them as enquiry-only.
 
 ## 4. Add product images
 
-The design imagery is in the theme's `assets/` folder (e.g. `xstool-zoffany.png`,
-`console-boltons.png`). Open each product and upload the matching image(s) from
-that folder, or your own photography. Filenames map obviously to products.
+Open each product and upload your own photography under **Media**. Products and
+sections show a neutral placeholder graphic until an image is added, so the site
+looks tidy in the meantime. Homepage section images (hero, story, about, etc.)
+are set in **Online Store → Customize** via each section's image picker.
 
 ## 5. Build the menus
 

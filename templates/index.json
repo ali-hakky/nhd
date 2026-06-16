@@ -15,46 +15,196 @@
     },
     "ticker": {
       "type": "ticker",
-      "settings": { "separator": "✦" },
-      "blocks": {
-        "t1": { "type": "item", "settings": { "text": "The Hamptons Armchair" } },
-        "t2": { "type": "item", "settings": { "text": "Regency Headboard" } },
-        "t3": { "type": "item", "settings": { "text": "Hortensia Console" } },
-        "t4": { "type": "item", "settings": { "text": "Bahamas Lantern" } },
-        "t5": { "type": "item", "settings": { "text": "X Stools in Zoffany" } },
-        "t6": { "type": "item", "settings": { "text": "Palm Beach Coffee Table" } },
-        "t7": { "type": "item", "settings": { "text": "Arabesque Mirror" } },
-        "t8": { "type": "item", "settings": { "text": "Swoon Tray Collection" } },
-        "t9": { "type": "item", "settings": { "text": "Amalfi Grande Sofa" } },
-        "t10": { "type": "item", "settings": { "text": "Chinoiserie & Peony Tables" } }
+      "settings": {
+        "separator": "✦"
       },
-      "block_order": ["t1","t2","t3","t4","t5","t6","t7","t8","t9","t10"]
+      "blocks": {
+        "t1": {
+          "type": "item",
+          "settings": {
+            "text": "The Hamptons Armchair"
+          }
+        },
+        "t2": {
+          "type": "item",
+          "settings": {
+            "text": "Regency Headboard"
+          }
+        },
+        "t3": {
+          "type": "item",
+          "settings": {
+            "text": "Hortensia Console"
+          }
+        },
+        "t4": {
+          "type": "item",
+          "settings": {
+            "text": "Bahamas Lantern"
+          }
+        },
+        "t5": {
+          "type": "item",
+          "settings": {
+            "text": "X Stools in Zoffany"
+          }
+        },
+        "t6": {
+          "type": "item",
+          "settings": {
+            "text": "Palm Beach Coffee Table"
+          }
+        },
+        "t7": {
+          "type": "item",
+          "settings": {
+            "text": "Arabesque Mirror"
+          }
+        },
+        "t8": {
+          "type": "item",
+          "settings": {
+            "text": "Swoon Tray Collection"
+          }
+        },
+        "t9": {
+          "type": "item",
+          "settings": {
+            "text": "Amalfi Grande Sofa"
+          }
+        },
+        "t10": {
+          "type": "item",
+          "settings": {
+            "text": "Chinoiserie & Peony Tables"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9",
+        "t10"
+      ]
     },
     "category-grid": {
       "type": "category-grid",
-      "settings": { "eyebrow": "Browse by category", "heading": "Shop the", "heading_accent": "Collection" },
-      "blocks": {
-        "c1": { "type": "category", "settings": { "name": "Seating", "sub": "Armchairs · Sofas", "image_asset": "cat-seating.jpg", "link": "shopify://collections/seating" } },
-        "c2": { "type": "category", "settings": { "name": "Tables", "sub": "Coffee · Side · Painted", "image_asset": "cat-tables.jpg", "link": "shopify://collections/tables" } },
-        "c3": { "type": "category", "settings": { "name": "Consoles", "sub": "Hall · Buffet · Bespoke", "image_asset": "cat-consoles.jpg", "link": "shopify://collections/consoles" } },
-        "c4": { "type": "category", "settings": { "name": "Stools & Stands", "sub": "X Stools · Butler Stands", "image_asset": "cat-stools.jpg", "link": "shopify://collections/stools" } },
-        "c5": { "type": "category", "settings": { "name": "Accessories", "sub": "Trays · Mirrors · Lighting", "image_asset": "cat-accessories.jpg", "link": "shopify://collections/accessories" } }
+      "settings": {
+        "eyebrow": "Browse by category",
+        "heading": "Shop the",
+        "heading_accent": "Collection"
       },
-      "block_order": ["c1","c2","c3","c4","c5"]
+      "blocks": {
+        "c1": {
+          "type": "category",
+          "settings": {
+            "name": "Seating",
+            "sub": "Armchairs · Sofas",
+            "link": "shopify://collections/seating"
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "name": "Tables",
+            "sub": "Coffee · Side · Painted",
+            "link": "shopify://collections/tables"
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "name": "Consoles",
+            "sub": "Hall · Buffet · Bespoke",
+            "link": "shopify://collections/consoles"
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "name": "Stools & Stands",
+            "sub": "X Stools · Butler Stands",
+            "link": "shopify://collections/stools"
+          }
+        },
+        "c5": {
+          "type": "category",
+          "settings": {
+            "name": "Accessories",
+            "sub": "Trays · Mirrors · Lighting",
+            "link": "shopify://collections/accessories"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ]
     },
     "new-arrivals": {
       "type": "featured-products",
       "settings": {
-        "eyebrow": "Just landed", "heading": "New", "heading_accent": "Arrivals",
-        "view_all_label": "View all →", "view_all_url": "shopify://collections/new-in",
-        "columns": "3", "image_height": "tall", "background_off": false
+        "eyebrow": "Just landed",
+        "heading": "New",
+        "heading_accent": "Arrivals",
+        "view_all_label": "View all →",
+        "view_all_url": "shopify://collections/new-in",
+        "columns": "3",
+        "image_height": "tall",
+        "background_off": false
       },
       "blocks": {
-        "p1": { "type": "product", "settings": { "image_asset": "new-amalfi.png", "title": "The Amalfi Grande", "material": "Handcrafted wrought iron frame · Crisp white upholstery · Beige & white piping · Fabric customisation available", "dims": "W300 × D80 × H75 cm", "lead": "Contact for lead time", "badge": "new", "badge_label": "New", "button": "Enquire" } },
-        "p2": { "type": "product", "settings": { "image_asset": "new-regency.png", "title": "The Regency Headboard", "material": "Customised wicker & bamboo · Brings warmth, texture & coastal charm · Bed frame also available for pre-order", "dims": "King / Queen / Single", "lead": "Lead time 4–6 weeks", "badge": "pre", "badge_label": "Pre-order", "button": "Pre-order" } },
-        "p3": { "type": "product", "settings": { "image_asset": "new-bahamas.png", "title": "The Bahamas Lantern", "material": "Natural wicker, bamboo & wood · Brings warmth, texture & timeless coastal charm · Perfect for summer homes & outdoor spaces", "dims": "W46 × D46 × H65 cm", "lead": "Lead time 2–3 weeks", "badge": "new", "badge_label": "New", "button": "Add to cart" } }
+        "p1": {
+          "type": "product",
+          "settings": {
+            "title": "The Amalfi Grande",
+            "material": "Handcrafted wrought iron frame · Crisp white upholstery · Beige & white piping · Fabric customisation available",
+            "dims": "W300 × D80 × H75 cm",
+            "lead": "Contact for lead time",
+            "badge": "new",
+            "badge_label": "New",
+            "button": "Enquire"
+          }
+        },
+        "p2": {
+          "type": "product",
+          "settings": {
+            "title": "The Regency Headboard",
+            "material": "Customised wicker & bamboo · Brings warmth, texture & coastal charm · Bed frame also available for pre-order",
+            "dims": "King / Queen / Single",
+            "lead": "Lead time 4–6 weeks",
+            "badge": "pre",
+            "badge_label": "Pre-order",
+            "button": "Pre-order"
+          }
+        },
+        "p3": {
+          "type": "product",
+          "settings": {
+            "title": "The Bahamas Lantern",
+            "material": "Natural wicker, bamboo & wood · Brings warmth, texture & timeless coastal charm · Perfect for summer homes & outdoor spaces",
+            "dims": "W46 × D46 × H65 cm",
+            "lead": "Lead time 2–3 weeks",
+            "badge": "new",
+            "badge_label": "New",
+            "button": "Add to cart"
+          }
+        }
       },
-      "block_order": ["p1","p2","p3"]
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ]
     },
     "story": {
       "type": "story",
@@ -63,174 +213,672 @@
         "heading": "Design should make you feel",
         "heading_accent": "something.",
         "body": "Every piece begins with a conversation. We source the finest rattan and the most characterful fabrics from houses like Schumacher, Brunschwig & Fils, GP & J Baker and Zoffany — and we never settle for ordinary. Your home should feel like an extension of who you are.",
-        "link_label": "Meet Nazly →", "link_url": ""
+        "link_label": "Meet Nazly →",
+        "link_url": ""
       },
       "blocks": {
-        "tg1": { "type": "tag", "settings": { "label": "100% Handmade" } },
-        "tg2": { "type": "tag", "settings": { "label": "Bespoke" } },
-        "tg3": { "type": "tag", "settings": { "label": "Made to Order" } },
-        "tg4": { "type": "tag", "settings": { "label": "Natural Materials" } }
+        "tg1": {
+          "type": "tag",
+          "settings": {
+            "label": "100% Handmade"
+          }
+        },
+        "tg2": {
+          "type": "tag",
+          "settings": {
+            "label": "Bespoke"
+          }
+        },
+        "tg3": {
+          "type": "tag",
+          "settings": {
+            "label": "Made to Order"
+          }
+        },
+        "tg4": {
+          "type": "tag",
+          "settings": {
+            "label": "Natural Materials"
+          }
+        }
       },
-      "block_order": ["tg1","tg2","tg3","tg4"]
+      "block_order": [
+        "tg1",
+        "tg2",
+        "tg3",
+        "tg4"
+      ]
     },
     "seating": {
       "type": "featured-products",
       "settings": {
-        "eyebrow": "Seating", "heading": "The Hamptons", "heading_accent": "Armchair",
-        "view_all_label": "View all seating →", "view_all_url": "shopify://collections/seating",
-        "columns": "4", "image_height": "med", "background_off": true
+        "eyebrow": "Seating",
+        "heading": "The Hamptons",
+        "heading_accent": "Armchair",
+        "view_all_label": "View all seating →",
+        "view_all_url": "shopify://collections/seating",
+        "columns": "4",
+        "image_height": "med",
+        "background_off": true
       },
       "blocks": {
-        "s1": { "type": "product", "settings": { "image_asset": "seat-bahamas-hampton.png", "title": "The Bahamas Hampton", "material": "Bamboo & wicker · Schumacher seat pad & back cushion", "dims": "W65 × H83 × D65 cm", "lead": "2–3 days delivery", "badge": "best", "badge_label": "Bestseller", "button": "Add" } },
-        "s2": { "type": "product", "settings": { "image_asset": "seat-hamptons-schumacher.png", "title": "Hamptons × Schumacher", "material": "Bamboo & wicker · Brunschwig & Fils upholstery · Each piece unique", "dims": "W65 × H83 × D65 cm", "lead": "Pre-order 3–4 weeks", "badge": "best", "badge_label": "Bestseller", "button": "Pre-order" } },
-        "s3": { "type": "product", "settings": { "image_asset": "seat-hamptons-floral.png", "title": "Hamptons × Schumacher Floral", "material": "Bamboo & wicker · Schumacher floral · Last pair available", "dims": "W68 × H83 × D72 cm", "lead": "1 week delivery", "badge": "", "button": "Add" } },
-        "s4": { "type": "product", "settings": { "image_asset": "seat-riviera.png", "title": "The Riviera Rattan", "material": "100% handmade wicker & bamboo · Dark brown · Each chair truly unique", "dims": "W50 × D50 × H98 cm", "lead": "Contact for lead time", "badge": "", "button": "Enquire" } }
+        "s1": {
+          "type": "product",
+          "settings": {
+            "title": "The Bahamas Hampton",
+            "material": "Bamboo & wicker · Schumacher seat pad & back cushion",
+            "dims": "W65 × H83 × D65 cm",
+            "lead": "2–3 days delivery",
+            "badge": "best",
+            "badge_label": "Bestseller",
+            "button": "Add"
+          }
+        },
+        "s2": {
+          "type": "product",
+          "settings": {
+            "title": "Hamptons × Schumacher",
+            "material": "Bamboo & wicker · Brunschwig & Fils upholstery · Each piece unique",
+            "dims": "W65 × H83 × D65 cm",
+            "lead": "Pre-order 3–4 weeks",
+            "badge": "best",
+            "badge_label": "Bestseller",
+            "button": "Pre-order"
+          }
+        },
+        "s3": {
+          "type": "product",
+          "settings": {
+            "title": "Hamptons × Schumacher Floral",
+            "material": "Bamboo & wicker · Schumacher floral · Last pair available",
+            "dims": "W68 × H83 × D72 cm",
+            "lead": "1 week delivery",
+            "badge": "",
+            "button": "Add"
+          }
+        },
+        "s4": {
+          "type": "product",
+          "settings": {
+            "title": "The Riviera Rattan",
+            "material": "100% handmade wicker & bamboo · Dark brown · Each chair truly unique",
+            "dims": "W50 × D50 × H98 cm",
+            "lead": "Contact for lead time",
+            "badge": "",
+            "button": "Enquire"
+          }
+        }
       },
-      "block_order": ["s1","s2","s3","s4"]
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
     },
     "x-stools": {
       "type": "featured-products",
       "settings": {
-        "eyebrow": "Available in multiple designer fabrics", "heading": "The X Stool", "heading_accent": "Collection",
+        "eyebrow": "Available in multiple designer fabrics",
+        "heading": "The X Stool",
+        "heading_accent": "Collection",
         "intro": "A masterpiece of timeless and playful design — a true eye-catcher that works with any interior style, modern, classic or art deco. Each pair upholstered in a different designer fabric. Sold as pairs.",
-        "view_all_label": "View all stools →", "view_all_url": "shopify://collections/stools",
-        "columns": "4", "image_height": "med", "background_off": false
+        "view_all_label": "View all stools →",
+        "view_all_url": "shopify://collections/stools",
+        "columns": "4",
+        "image_height": "med",
+        "background_off": false
       },
       "blocks": {
-        "tab1": { "type": "tab", "settings": { "label": "GP & J Baker" } },
-        "tab2": { "type": "tab", "settings": { "label": "Zoffany" } },
-        "tab3": { "type": "tab", "settings": { "label": "Colefax & Fowler" } },
-        "tab4": { "type": "tab", "settings": { "label": "Chinoiserie" } },
-        "tab5": { "type": "tab", "settings": { "label": "Paisley" } },
-        "x1": { "type": "product", "settings": { "image_asset": "xstool-gpjbaker.png", "title": "X Stool — GP & J Baker", "material": "GP & J Baker chinoiserie designer fabric · Sold as a pair", "dims": "W47 × 62D × H48 cm", "lead": "Immediate delivery", "badge": "best", "badge_label": "Bestseller", "button": "Add pair" } },
-        "x2": { "type": "product", "settings": { "image_asset": "xstool-zoffany.png", "title": "X Stool — Zoffany", "material": "Zoffany floral designer fabric · Stunning, works with any interior", "dims": "D42 × L62 × H46 cm", "lead": "Contact for availability", "badge": "", "button": "Enquire" } },
-        "x3": { "type": "product", "settings": { "image_asset": "xstool-colefax.png", "title": "X Stool — Colefax & Fowler", "material": "Vintage Colefax & Fowler chinoiserie · Rare designer fabric · Sold as pair", "dims": "W47 × 62D × H48 cm", "lead": "Pre-order 3–4 weeks", "badge": "pre", "badge_label": "Pre-order", "button": "Pre-order" } },
-        "x4": { "type": "product", "settings": { "image_asset": "xstool-paisley.png", "title": "X Stool — Paisley", "material": "Handmade bamboo & wicker · Coastal Hamptons aesthetic · Each one unique", "dims": "W68 × H83 × D72 cm", "lead": "Pre-order 3–4 weeks", "badge": "best", "badge_label": "284 ♥", "button": "Pre-order" } }
+        "tab1": {
+          "type": "tab",
+          "settings": {
+            "label": "GP & J Baker"
+          }
+        },
+        "tab2": {
+          "type": "tab",
+          "settings": {
+            "label": "Zoffany"
+          }
+        },
+        "tab3": {
+          "type": "tab",
+          "settings": {
+            "label": "Colefax & Fowler"
+          }
+        },
+        "tab4": {
+          "type": "tab",
+          "settings": {
+            "label": "Chinoiserie"
+          }
+        },
+        "tab5": {
+          "type": "tab",
+          "settings": {
+            "label": "Paisley"
+          }
+        },
+        "x1": {
+          "type": "product",
+          "settings": {
+            "title": "X Stool — GP & J Baker",
+            "material": "GP & J Baker chinoiserie designer fabric · Sold as a pair",
+            "dims": "W47 × 62D × H48 cm",
+            "lead": "Immediate delivery",
+            "badge": "best",
+            "badge_label": "Bestseller",
+            "button": "Add pair"
+          }
+        },
+        "x2": {
+          "type": "product",
+          "settings": {
+            "title": "X Stool — Zoffany",
+            "material": "Zoffany floral designer fabric · Stunning, works with any interior",
+            "dims": "D42 × L62 × H46 cm",
+            "lead": "Contact for availability",
+            "badge": "",
+            "button": "Enquire"
+          }
+        },
+        "x3": {
+          "type": "product",
+          "settings": {
+            "title": "X Stool — Colefax & Fowler",
+            "material": "Vintage Colefax & Fowler chinoiserie · Rare designer fabric · Sold as pair",
+            "dims": "W47 × 62D × H48 cm",
+            "lead": "Pre-order 3–4 weeks",
+            "badge": "pre",
+            "badge_label": "Pre-order",
+            "button": "Pre-order"
+          }
+        },
+        "x4": {
+          "type": "product",
+          "settings": {
+            "title": "X Stool — Paisley",
+            "material": "Handmade bamboo & wicker · Coastal Hamptons aesthetic · Each one unique",
+            "dims": "W68 × H83 × D72 cm",
+            "lead": "Pre-order 3–4 weeks",
+            "badge": "best",
+            "badge_label": "284 ♥",
+            "button": "Pre-order"
+          }
+        }
       },
-      "block_order": ["tab1","tab2","tab3","tab4","tab5","x1","x2","x3","x4"]
+      "block_order": [
+        "tab1",
+        "tab2",
+        "tab3",
+        "tab4",
+        "tab5",
+        "x1",
+        "x2",
+        "x3",
+        "x4"
+      ]
     },
     "painted-tables": {
       "type": "featured-products",
       "settings": {
-        "eyebrow": "Chinoiserie & Peony Collection", "heading": "Painted", "heading_accent": "Side Tables",
-        "view_all_label": "View all tables →", "view_all_url": "shopify://collections/tables",
-        "columns": "4", "image_height": "med", "background_off": true
+        "eyebrow": "Chinoiserie & Peony Collection",
+        "heading": "Painted",
+        "heading_accent": "Side Tables",
+        "view_all_label": "View all tables →",
+        "view_all_url": "shopify://collections/tables",
+        "columns": "4",
+        "image_height": "med",
+        "background_off": true
       },
       "blocks": {
-        "t1": { "type": "product", "settings": { "image_asset": "table-chinoiserie-peony.png", "title": "Chinoiserie & Peony Clover", "material": "Hand-painted olive green · Chinoiserie motif · Glass top included", "dims": "W53 × D53 × H54 cm", "lead": "Ready to ship", "badge": "lim", "badge_label": "Limited", "button": "Add" } },
-        "t2": { "type": "product", "settings": { "image_asset": "table-chinoiserie-clover.png", "title": "The Chinoiserie Clover", "material": "Black lacquer · Classic with a twist · 2 designs available · Glass top", "dims": "W53 × D53 × H54 cm", "lead": "3–4 weeks", "badge": "new", "badge_label": "New", "button": "Pre-order" } },
-        "t3": { "type": "product", "settings": { "image_asset": "table-empire.png", "title": "The Empire Collection", "material": "Hand-painted Emperor & Empress · Bijou table · Glass top · Pair or single", "dims": "W25 × L50 × H54 cm", "lead": "Lead time 3 weeks", "badge": "pre", "badge_label": "Pre-order", "button": "Pre-order" } },
-        "t4": { "type": "product", "settings": { "image_asset": "table-leopard.png", "title": "The Leopard Bijou", "material": "Hand-painted leopard · Bijou wooden side table · Glass top for protection", "dims": "W25 × L50 × H54 cm", "lead": "Lead time 2–3 weeks", "badge": "lim", "badge_label": "Limited", "button": "Add" } }
+        "t1": {
+          "type": "product",
+          "settings": {
+            "title": "Chinoiserie & Peony Clover",
+            "material": "Hand-painted olive green · Chinoiserie motif · Glass top included",
+            "dims": "W53 × D53 × H54 cm",
+            "lead": "Ready to ship",
+            "badge": "lim",
+            "badge_label": "Limited",
+            "button": "Add"
+          }
+        },
+        "t2": {
+          "type": "product",
+          "settings": {
+            "title": "The Chinoiserie Clover",
+            "material": "Black lacquer · Classic with a twist · 2 designs available · Glass top",
+            "dims": "W53 × D53 × H54 cm",
+            "lead": "3–4 weeks",
+            "badge": "new",
+            "badge_label": "New",
+            "button": "Pre-order"
+          }
+        },
+        "t3": {
+          "type": "product",
+          "settings": {
+            "title": "The Empire Collection",
+            "material": "Hand-painted Emperor & Empress · Bijou table · Glass top · Pair or single",
+            "dims": "W25 × L50 × H54 cm",
+            "lead": "Lead time 3 weeks",
+            "badge": "pre",
+            "badge_label": "Pre-order",
+            "button": "Pre-order"
+          }
+        },
+        "t4": {
+          "type": "product",
+          "settings": {
+            "title": "The Leopard Bijou",
+            "material": "Hand-painted leopard · Bijou wooden side table · Glass top for protection",
+            "dims": "W25 × L50 × H54 cm",
+            "lead": "Lead time 2–3 weeks",
+            "badge": "lim",
+            "badge_label": "Limited",
+            "button": "Add"
+          }
+        }
       },
-      "block_order": ["t1","t2","t3","t4"]
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ]
     },
     "spotlight": {
       "type": "product-spotlight",
       "settings": {
-        "eyebrow": "Product spotlight", "heading": "The Upholstered", "heading_accent": "Console",
+        "eyebrow": "Product spotlight",
+        "heading": "The Upholstered",
+        "heading_accent": "Console",
         "body": "Nazly's latest obsession and one of the most saved pieces on her feed. Unique, unexpected — yet beautifully functional and timeless. Fully customisable in your choice of fabric to perfectly suit your space. Available for pre-order only.",
-        "button_label": "Enquire Now", "button_url": ""
+        "button_label": "Enquire Now",
+        "button_url": ""
       },
       "blocks": {
-        "sp1": { "type": "spec", "settings": { "label": "Customisation", "value": "Fully Bespoke" } },
-        "sp2": { "type": "spec", "settings": { "label": "Lead Time", "value": "3–4 Weeks" } },
-        "sp3": { "type": "spec", "settings": { "label": "Fabric", "value": "Your Choice" } },
-        "sp4": { "type": "spec", "settings": { "label": "Order Type", "value": "Pre-order Only" } }
+        "sp1": {
+          "type": "spec",
+          "settings": {
+            "label": "Customisation",
+            "value": "Fully Bespoke"
+          }
+        },
+        "sp2": {
+          "type": "spec",
+          "settings": {
+            "label": "Lead Time",
+            "value": "3–4 Weeks"
+          }
+        },
+        "sp3": {
+          "type": "spec",
+          "settings": {
+            "label": "Fabric",
+            "value": "Your Choice"
+          }
+        },
+        "sp4": {
+          "type": "spec",
+          "settings": {
+            "label": "Order Type",
+            "value": "Pre-order Only"
+          }
+        }
       },
-      "block_order": ["sp1","sp2","sp3","sp4"]
+      "block_order": [
+        "sp1",
+        "sp2",
+        "sp3",
+        "sp4"
+      ]
     },
     "consoles": {
       "type": "featured-products",
       "settings": {
-        "eyebrow": "Consoles & Shelving", "heading": "Statement", "heading_accent": "Consoles",
-        "view_all_label": "View all consoles →", "view_all_url": "shopify://collections/consoles",
-        "columns": "4", "image_height": "med", "background_off": true
+        "eyebrow": "Consoles & Shelving",
+        "heading": "Statement",
+        "heading_accent": "Consoles",
+        "view_all_label": "View all consoles →",
+        "view_all_url": "shopify://collections/consoles",
+        "columns": "4",
+        "image_height": "med",
+        "background_off": true
       },
       "blocks": {
-        "co1": { "type": "product", "settings": { "image_asset": "console-hortensia.jpg", "title": "Mini Hortensia Console", "material": "Lacquered scallop apron · Perfect for smaller spaces that need a simple yet flamboyant lift", "dims": "Contact for dimensions", "lead": "Contact for lead time", "badge": "lim", "badge_label": "Iconic", "button": "Enquire" } },
-        "co2": { "type": "product", "settings": { "image_asset": "console-belgravia.png", "title": "The Belgravia Coffee Table", "material": "Hand-painted scalloped · 30% Moski wood, 70% MDF · 100% Handcrafted in Egypt", "dims": "L126 × W86 × H50 cm", "lead": "In stock, 1 week", "badge": "", "button": "Add to cart" } },
-        "co3": { "type": "product", "settings": { "image_asset": "console-boltons.png", "title": "The Boltons Console", "material": "Arch-leg console · Use as buffet, entryway or back sofa table · Character piece", "dims": "50D × 170L × H74 cm", "lead": "Lead time 4–6 weeks", "badge": "", "button": "Add" } },
-        "co4": { "type": "product", "settings": { "image_asset": "console-burl.png", "title": "Burl Wood Console with Shelf", "material": "Versatile burl wood veneer · Shelf height 60cm · Display your favourite accessories", "dims": "D38 × W150 × H82 cm", "lead": "Pre-order 3 weeks", "badge": "", "button": "Pre-order" } }
+        "co1": {
+          "type": "product",
+          "settings": {
+            "title": "Mini Hortensia Console",
+            "material": "Lacquered scallop apron · Perfect for smaller spaces that need a simple yet flamboyant lift",
+            "dims": "Contact for dimensions",
+            "lead": "Contact for lead time",
+            "badge": "lim",
+            "badge_label": "Iconic",
+            "button": "Enquire"
+          }
+        },
+        "co2": {
+          "type": "product",
+          "settings": {
+            "title": "The Belgravia Coffee Table",
+            "material": "Hand-painted scalloped · 30% Moski wood, 70% MDF · 100% Handcrafted in Egypt",
+            "dims": "L126 × W86 × H50 cm",
+            "lead": "In stock, 1 week",
+            "badge": "",
+            "button": "Add to cart"
+          }
+        },
+        "co3": {
+          "type": "product",
+          "settings": {
+            "title": "The Boltons Console",
+            "material": "Arch-leg console · Use as buffet, entryway or back sofa table · Character piece",
+            "dims": "50D × 170L × H74 cm",
+            "lead": "Lead time 4–6 weeks",
+            "badge": "",
+            "button": "Add"
+          }
+        },
+        "co4": {
+          "type": "product",
+          "settings": {
+            "title": "Burl Wood Console with Shelf",
+            "material": "Versatile burl wood veneer · Shelf height 60cm · Display your favourite accessories",
+            "dims": "D38 × W150 × H82 cm",
+            "lead": "Pre-order 3 weeks",
+            "badge": "",
+            "button": "Pre-order"
+          }
+        }
       },
-      "block_order": ["co1","co2","co3","co4"]
+      "block_order": [
+        "co1",
+        "co2",
+        "co3",
+        "co4"
+      ]
     },
     "butler": {
       "type": "featured-products",
       "settings": {
-        "eyebrow": "The Swoon Collection", "heading": "Butler's Stands", "heading_accent": "& Trays",
-        "view_all_label": "View all →", "view_all_url": "shopify://collections/accessories",
-        "columns": "4", "image_height": "med", "background_off": false
+        "eyebrow": "The Swoon Collection",
+        "heading": "Butler's Stands",
+        "heading_accent": "& Trays",
+        "view_all_label": "View all →",
+        "view_all_url": "shopify://collections/accessories",
+        "columns": "4",
+        "image_height": "med",
+        "background_off": false
       },
       "blocks": {
-        "b1": { "type": "product", "settings": { "image_asset": "butler-skyblue.png", "title": "Butler's Stand — Sky Blue", "material": "Imported velour · Tassel detail · Tray minimum 5cm wider than stand · Tray not included", "dims": "H70–80 × W45 × L50 cm", "lead": "Contact for availability", "badge": "", "button": "Enquire" } },
-        "b2": { "type": "product", "settings": { "image_asset": "butler-burgundy.png", "title": "Butler's Stand — Royal Burgundy", "material": "Velour upholstered · Tassels · Shown with Swoon Tray in Black · Immediate delivery", "dims": "H70–80 × W45 × L50 cm", "lead": "Immediate delivery", "badge": "new", "badge_label": "In Stock", "button": "Add to cart" } },
-        "b3": { "type": "product", "settings": { "image_asset": "tray-swoon-black.png", "title": "The Swoon Lacquered Tray", "material": "Black & White available · Scalloped edge · Versatile — butler's tray or display piece", "dims": "L70 × W50 cm", "lead": "Immediate delivery", "badge": "new", "badge_label": "In Stock", "button": "Add to cart" } },
-        "b4": { "type": "product", "settings": { "image_asset": "tray-swoon-wooden.png", "title": "The Swoon Wooden Tray", "material": "Part of The Swoon Collection · Generously sized · Custom colours available", "dims": "L70 × W50 cm", "lead": "2 weeks (3 for custom)", "badge": "", "button": "Add to cart" } }
+        "b1": {
+          "type": "product",
+          "settings": {
+            "title": "Butler's Stand — Sky Blue",
+            "material": "Imported velour · Tassel detail · Tray minimum 5cm wider than stand · Tray not included",
+            "dims": "H70–80 × W45 × L50 cm",
+            "lead": "Contact for availability",
+            "badge": "",
+            "button": "Enquire"
+          }
+        },
+        "b2": {
+          "type": "product",
+          "settings": {
+            "title": "Butler's Stand — Royal Burgundy",
+            "material": "Velour upholstered · Tassels · Shown with Swoon Tray in Black · Immediate delivery",
+            "dims": "H70–80 × W45 × L50 cm",
+            "lead": "Immediate delivery",
+            "badge": "new",
+            "badge_label": "In Stock",
+            "button": "Add to cart"
+          }
+        },
+        "b3": {
+          "type": "product",
+          "settings": {
+            "title": "The Swoon Lacquered Tray",
+            "material": "Black & White available · Scalloped edge · Versatile — butler's tray or display piece",
+            "dims": "L70 × W50 cm",
+            "lead": "Immediate delivery",
+            "badge": "new",
+            "badge_label": "In Stock",
+            "button": "Add to cart"
+          }
+        },
+        "b4": {
+          "type": "product",
+          "settings": {
+            "title": "The Swoon Wooden Tray",
+            "material": "Part of The Swoon Collection · Generously sized · Custom colours available",
+            "dims": "L70 × W50 cm",
+            "lead": "2 weeks (3 for custom)",
+            "badge": "",
+            "button": "Add to cart"
+          }
+        }
       },
-      "block_order": ["b1","b2","b3","b4"]
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
     },
     "more-tables": {
       "type": "featured-products",
       "settings": {
-        "eyebrow": "Tables", "heading": "More", "heading_accent": "Tables",
-        "view_all_label": "View all tables →", "view_all_url": "shopify://collections/tables",
-        "columns": "4", "image_height": "med", "background_off": true
+        "eyebrow": "Tables",
+        "heading": "More",
+        "heading_accent": "Tables",
+        "view_all_label": "View all tables →",
+        "view_all_url": "shopify://collections/tables",
+        "columns": "4",
+        "image_height": "med",
+        "background_off": true
       },
       "blocks": {
-        "m1": { "type": "product", "settings": { "image_asset": "table-palmbeach.png", "title": "The Palm Beach Coffee Table", "material": "Statement minimalist scroll form · A piece of art. Great taste required.", "dims": "L120 × W70 cm", "lead": "Lead time 4–5 weeks", "badge": "", "button": "Add" } },
-        "m2": { "type": "product", "settings": { "image_asset": "table-moroccan.png", "title": "The Moroccan Side Table", "material": "Bleu & Blanc · Subtle contrasting interior colour · Not for outdoor use", "dims": "W45 × D45 × H52 cm", "lead": "Contact for lead time", "badge": "", "button": "Add" } },
-        "m3": { "type": "product", "settings": { "image_asset": "table-sloan.png", "title": "The Sloan", "material": "Beautifully crafted wicker · Generous space for daily use · Handmade", "dims": "51cm W × 50cm H", "lead": "Pre-order 2 weeks", "badge": "", "button": "Pre-order" } },
-        "m4": { "type": "product", "settings": { "image_asset": "mirror-arabesque.png", "title": "The Arabesque Mirror", "material": "Wood inlay floral pattern with mother of pearl · Hang vertically or horizontally", "dims": "80×110cm or 110×80cm", "lead": "Lead time 10–12 weeks", "badge": "", "button": "Enquire" } }
+        "m1": {
+          "type": "product",
+          "settings": {
+            "title": "The Palm Beach Coffee Table",
+            "material": "Statement minimalist scroll form · A piece of art. Great taste required.",
+            "dims": "L120 × W70 cm",
+            "lead": "Lead time 4–5 weeks",
+            "badge": "",
+            "button": "Add"
+          }
+        },
+        "m2": {
+          "type": "product",
+          "settings": {
+            "title": "The Moroccan Side Table",
+            "material": "Bleu & Blanc · Subtle contrasting interior colour · Not for outdoor use",
+            "dims": "W45 × D45 × H52 cm",
+            "lead": "Contact for lead time",
+            "badge": "",
+            "button": "Add"
+          }
+        },
+        "m3": {
+          "type": "product",
+          "settings": {
+            "title": "The Sloan",
+            "material": "Beautifully crafted wicker · Generous space for daily use · Handmade",
+            "dims": "51cm W × 50cm H",
+            "lead": "Pre-order 2 weeks",
+            "badge": "",
+            "button": "Pre-order"
+          }
+        },
+        "m4": {
+          "type": "product",
+          "settings": {
+            "title": "The Arabesque Mirror",
+            "material": "Wood inlay floral pattern with mother of pearl · Hang vertically or horizontally",
+            "dims": "80×110cm or 110×80cm",
+            "lead": "Lead time 10–12 weeks",
+            "badge": "",
+            "button": "Enquire"
+          }
+        }
       },
-      "block_order": ["m1","m2","m3","m4"]
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4"
+      ]
     },
     "about": {
       "type": "about",
       "settings": {
-        "badge_text": "Est. 2010", "eyebrow": "Meet Nazly", "heading": "Design with", "heading_accent": "soul & intention",
+        "badge_text": "Est. 2010",
+        "eyebrow": "Meet Nazly",
+        "heading": "Design with",
+        "heading_accent": "soul & intention",
         "body": "<p>I'm Nazly — wife, mother of three, and someone who has spent most of her life quietly obsessed with beautiful rooms.</p><p>What started as a genuine love of chinoiserie, antiques and the kind of interiors you want to live inside rather than just admire, eventually became something more. When my children headed off to school and I finally had a few hours to myself, I decided to stop collecting inspiration and start making things.</p><p>Today, Nazly Habib Design is a small studio making handcrafted rattan, wicker and upholstered furniture — bespoke pieces built around your home, your taste and your life. Every piece is made to order, which means it was made for you.</p><p><em>I still can't believe this is my job.</em></p>",
         "signature": "— Nazly Habib"
       }
     },
     "testimonials": {
       "type": "testimonials",
-      "settings": { "eyebrow": "Client love", "heading": "What our clients", "heading_accent": "say" },
-      "blocks": {
-        "r1": { "type": "testimonial", "settings": { "stars": "★★★★★", "quote": "The Hamptons Armchair is the most complimented piece in our home. It feels like it was always meant to be there.", "author": "— Sophie T., London" } },
-        "r2": { "type": "testimonial", "settings": { "stars": "★★★★★", "quote": "Beautiful craftsmanship and fabric — absolutely gorgeous. Nazly understood exactly what I wanted.", "author": "— coffeeandthings, Instagram" } },
-        "r3": { "type": "testimonial", "settings": { "stars": "★★★★★", "quote": "The X Stools in GP & J Baker are a genuine conversation piece. Worth every penny and every week of the wait.", "author": "— Layla H., Cairo" } }
+      "settings": {
+        "eyebrow": "Client love",
+        "heading": "What our clients",
+        "heading_accent": "say"
       },
-      "block_order": ["r1","r2","r3"]
+      "blocks": {
+        "r1": {
+          "type": "testimonial",
+          "settings": {
+            "stars": "★★★★★",
+            "quote": "The Hamptons Armchair is the most complimented piece in our home. It feels like it was always meant to be there.",
+            "author": "— Sophie T., London"
+          }
+        },
+        "r2": {
+          "type": "testimonial",
+          "settings": {
+            "stars": "★★★★★",
+            "quote": "Beautiful craftsmanship and fabric — absolutely gorgeous. Nazly understood exactly what I wanted.",
+            "author": "— coffeeandthings, Instagram"
+          }
+        },
+        "r3": {
+          "type": "testimonial",
+          "settings": {
+            "stars": "★★★★★",
+            "quote": "The X Stools in GP & J Baker are a genuine conversation piece. Worth every penny and every week of the wait.",
+            "author": "— Layla H., Cairo"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ]
     },
     "instagram": {
       "type": "instagram",
-      "settings": { "eyebrow": "Follow along", "heading": "The World of NHD", "handle": "@nazlyhabibdesigns", "handle_url": "https://instagram.com/nazlyhabibdesigns" },
-      "blocks": {
-        "i1": { "type": "post", "settings": { "image_asset": "insta-1.png" } },
-        "i2": { "type": "post", "settings": { "image_asset": "insta-2.png" } },
-        "i3": { "type": "post", "settings": { "image_asset": "insta-3.png" } },
-        "i4": { "type": "post", "settings": { "image_asset": "insta-4.png" } },
-        "i5": { "type": "post", "settings": { "image_asset": "insta-5.png" } },
-        "i6": { "type": "post", "settings": { "image_asset": "insta-6.png" } }
+      "settings": {
+        "eyebrow": "Follow along",
+        "heading": "The World of NHD",
+        "handle": "@nazlyhabibdesigns",
+        "handle_url": "https://instagram.com/nazlyhabibdesigns"
       },
-      "block_order": ["i1","i2","i3","i4","i5","i6"]
+      "blocks": {
+        "i1": {
+          "type": "post",
+          "settings": {}
+        },
+        "i2": {
+          "type": "post",
+          "settings": {}
+        },
+        "i3": {
+          "type": "post",
+          "settings": {}
+        },
+        "i4": {
+          "type": "post",
+          "settings": {}
+        },
+        "i5": {
+          "type": "post",
+          "settings": {}
+        },
+        "i6": {
+          "type": "post",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3",
+        "i4",
+        "i5",
+        "i6"
+      ]
     },
     "policies": {
       "type": "policies",
       "blocks": {
-        "po1": { "type": "policy", "settings": { "icon": "🚚", "title": "Delivery", "body": "Cairo & Giza: 2–3 days for in-stock pieces. International shipping: 1–3 weeks depending on destination." } },
-        "po2": { "type": "policy", "settings": { "icon": "✦", "title": "Made to Order", "body": "Lead times range 2–12 weeks depending on piece. Exact timing confirmed at order. Worth every day." } },
-        "po3": { "type": "policy", "settings": { "icon": "↩", "title": "Returns Policy", "body": "Bespoke & made-to-order pieces are non-refundable. In-stock items accepted within 7 days of delivery." } },
-        "po4": { "type": "policy", "settings": { "icon": "📐", "title": "Handmade Note", "body": "All pieces 100% handmade. Minor size variations of 1–2cm are natural & expected. For pairs, order together." } }
+        "po1": {
+          "type": "policy",
+          "settings": {
+            "icon": "🚚",
+            "title": "Delivery",
+            "body": "Cairo & Giza: 2–3 days for in-stock pieces. International shipping: 1–3 weeks depending on destination."
+          }
+        },
+        "po2": {
+          "type": "policy",
+          "settings": {
+            "icon": "✦",
+            "title": "Made to Order",
+            "body": "Lead times range 2–12 weeks depending on piece. Exact timing confirmed at order. Worth every day."
+          }
+        },
+        "po3": {
+          "type": "policy",
+          "settings": {
+            "icon": "↩",
+            "title": "Returns Policy",
+            "body": "Bespoke & made-to-order pieces are non-refundable. In-stock items accepted within 7 days of delivery."
+          }
+        },
+        "po4": {
+          "type": "policy",
+          "settings": {
+            "icon": "📐",
+            "title": "Handmade Note",
+            "body": "All pieces 100% handmade. Minor size variations of 1–2cm are natural & expected. For pairs, order together."
+          }
+        }
       },
-      "block_order": ["po1","po2","po3","po4"]
+      "block_order": [
+        "po1",
+        "po2",
+        "po3",
+        "po4"
+      ]
     },
     "newsletter": {
       "type": "newsletter",
       "settings": {
-        "eyebrow": "Stay in the loop", "heading": "New pieces,", "heading_accent": "first.",
+        "eyebrow": "Stay in the loop",
+        "heading": "New pieces,",
+        "heading_accent": "first.",
         "subheading": "Early access to arrivals, behind-the-scenes & design inspiration from Nazly.",
-        "placeholder": "Your email address", "button_label": "Subscribe"
+        "placeholder": "Your email address",
+        "button_label": "Subscribe"
       }
     }
   },

@@ -5,14 +5,14 @@
       {%- if section.settings.image_1 != blank -%}
         {{ section.settings.image_1 | image_url: width: 1400 | image_tag: alt: section.settings.heading, fetchpriority: 'high', widths: '700,1000,1400' }}
       {%- else -%}
-        <img src="{{ 'hero-1.jpg' | asset_url }}" alt="{{ section.settings.heading | strip_html }}" fetchpriority="high">
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
       {%- endif -%}
     </div>
     <div class="hero-pane">
       {%- if section.settings.image_2 != blank -%}
         {{ section.settings.image_2 | image_url: width: 900 | image_tag: alt: '', widths: '450,700,900' }}
       {%- else -%}
-        <img src="{{ 'hero-2.jpg' | asset_url }}" alt="">
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
       {%- endif -%}
     </div>
   </div>

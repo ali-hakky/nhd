@@ -44,9 +44,9 @@ so the homepage matches the design before the catalogue is built). Add / remove
 / reorder cards, tabs and sections freely in the editor.
 
 ### Theme assets
-The 43 design images are bundled in `assets/` (e.g. `hero-1.jpg`,
-`new-amalfi.png`) and used as the default imagery. Replace them in the editor
-with `image_picker` settings on every section, or swap the asset files.
+Every section uses Shopify's built-in placeholder graphics until you add your
+own. Pick images via the `image_picker` setting on each section/block in the
+theme editor (hero, story, about, category tiles, product cards, Instagram, …).
 
 ## Installing the theme
 

@@ -8,7 +8,7 @@
     product      - (optional) a product object. When present, fields are
                    derived from it + its metafields.
     image_height - 'tall' | 'med' (default 'med')
-    image_src    - (manual) asset filename for the card image, e.g. 'new-amalfi.png'
+    image        - (manual) an image_picker image; falls back to a placeholder
     title        - (manual) product name
     material     - (manual) short material/description line
     dims         - (manual) dimensions string
@@ -54,8 +54,6 @@
       {{ c_image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width: 640px) 50vw, 25vw', widths: '300,450,600,900', alt: c_title }}
     {%- elsif image != blank -%}
       {{ image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width: 640px) 50vw, 25vw', widths: '300,450,600,900', alt: c_title }}
-    {%- elsif image_src != blank -%}
-      <img src="{{ image_src | asset_url }}" alt="{{ c_title | escape }}" loading="lazy" width="600" height="600">
     {%- else -%}
       {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
     {%- endif -%}
