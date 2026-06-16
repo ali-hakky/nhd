@@ -1,84 +1,47 @@
-{%- comment -%} Slide-out cart drawer. Re-rendered via the Section Rendering API. {%- endcomment -%}
-<div class="cart-drawer" id="CartDrawer" data-cart-drawer data-item-count="{{ cart.item_count }}">
-  <div class="cart-overlay" data-cart-close></div>
-  <div class="cart-panel" role="dialog" aria-modal="true" aria-label="Cart">
-    <div class="cart-header">
-      <h2>Your Cart</h2>
-      <button class="cart-close" data-cart-close aria-label="Close cart">&times;</button>
-    </div>
-
-    {%- if cart.item_count == 0 -%}
-      <div class="cart-items">
-        <div class="cart-empty">
-          <p>Your cart is empty.</p>
-          <a href="{{ routes.all_products_collection_url }}" class="btn" data-cart-close>Browse the Collection</a>
-        </div>
-      </div>
-    {%- else -%}
-      <div class="cart-items">
-        {%- for item in cart.items -%}
-          <div class="cart-line" data-cart-line="{{ forloop.index }}">
-            <a href="{{ item.url }}">
-              {%- if item.image -%}
-                <img class="cart-line-img" src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" width="78" height="90">
-              {%- else -%}
-                <span class="cart-line-img"></span>
-              {%- endif -%}
-            </a>
-            <div class="cart-line-info">
-              <a href="{{ item.url }}" class="cart-line-name">{{ item.product.title }}</a>
-              {%- unless item.variant.title contains 'Default' -%}
-                <div class="cart-line-variant">{{ item.variant.title }}</div>
-              {%- endunless -%}
-              {%- if item.selling_plan_allocation -%}
-                <div class="cart-line-variant">{{ item.selling_plan_allocation.selling_plan.name }}</div>
-              {%- endif -%}
-              <div class="cart-line-bottom">
-                <div class="cart-line-qty">
-                  <button data-qty-change="-1" data-line="{{ forloop.index }}" data-current="{{ item.quantity }}" aria-label="Decrease">−</button>
-                  <input type="text" value="{{ item.quantity }}" readonly aria-label="Quantity">
-                  <button data-qty-change="1" data-line="{{ forloop.index }}" data-current="{{ item.quantity }}" aria-label="Increase">+</button>
-                </div>
-                <div class="cart-line-price">
-                  {%- if item.original_line_price != item.final_line_price -%}
-                    <span style="text-decoration:line-through;color:var(--mu)">{{ item.original_line_price | money }}</span>
-                  {%- endif -%}
-                  {{ item.final_line_price | money }}
-                </div>
-              </div>
-              <button class="cart-line-remove" data-cart-remove data-line="{{ forloop.index }}">Remove</button>
-            </div>
+<div class="cart-overlay"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-head">
+    <h3>{{ 'general.cart.title' | t }} (<span data-cart-count>{{ cart.item_count }}</span>)</h3>
+    <button class="cart-close" aria-label="Close cart">&times;</button>
+  </div>
+  <div class="cart-body">
+    {%- if cart.item_count > 0 -%}
+      {%- for item in cart.items -%}
+        <div class="cart-item">
+          <div class="cart-item-img">
+            {%- if item.image -%}
+              {{ item.image | image_url: width: 160 | image_tag: alt: item.title }}
+            {%- endif -%}
           </div>
-        {%- endfor -%}
-      </div>
-
-      <div class="cart-footer">
-        {%- if cart.cart_level_discount_applications.size > 0 -%}
-          {%- for discount in cart.cart_level_discount_applications -%}
-            <div class="cart-subtotal"><span class="lbl">{{ discount.title }}</span><span class="cart-line-price">-{{ discount.total_allocated_amount | money }}</span></div>
-          {%- endfor -%}
-        {%- endif -%}
-        <div class="cart-subtotal">
-          <span class="lbl">Subtotal</span>
-          <span class="val">{{ cart.total_price | money }}</span>
+          <div class="cart-item-info">
+            <div class="cart-item-title">{{ item.product.title }}</div>
+            {%- unless item.variant.title == 'Default Title' -%}
+              <div class="cart-item-variant">{{ item.variant.title }}</div>
+            {%- endunless -%}
+            <div class="cart-item-price">{{ item.price | money }}</div>
+            <div class="cart-qty">
+              <button type="button" data-qty-change="-1" data-key="{{ item.key }}">−</button>
+              <input type="number" value="{{ item.quantity }}" min="0" readonly>
+              <button type="button" data-qty-change="1" data-key="{{ item.key }}">+</button>
+            </div>
+            <button class="cart-item-remove" data-remove-key="{{ item.key }}">{{ 'general.cart.remove' | t }}</button>
+          </div>
         </div>
-        <p class="cart-tax-note">Shipping &amp; taxes calculated at checkout.</p>
-        <form action="{{ routes.cart_url }}" method="post">
-          <button type="submit" name="checkout" class="btn">Checkout</button>
-        </form>
-        <button class="cart-continue" data-cart-close>Continue shopping</button>
-      </div>
+      {%- endfor -%}
+    {%- else -%}
+      <div class="cart-empty">{{ 'general.cart.empty' | t }}</div>
     {%- endif -%}
+  </div>
+  <div class="cart-foot{% if cart.item_count == 0 %} hidden{% endif %}">
+    <div class="cart-subtotal"><span>{{ 'general.cart.subtotal' | t }}</span><span>{{ cart.total_price | money }}</span></div>
+    <a href="/checkout" class="btn cart-checkout">{{ 'general.cart.checkout' | t }}</a>
+    <p class="cart-note">{{ 'general.cart.shipping_note' | t }}</p>
   </div>
 </div>
 
-<script>
-  document.querySelectorAll('[data-cart-count]').forEach(function (n) {
-    n.textContent = {{ cart.item_count }};
-    n.style.display = {{ cart.item_count }} > 0 ? '' : 'none';
-  });
-</script>
-
 {% schema %}
-{ "name": "Cart drawer", "settings": [] }
+{
+  "name": "Cart drawer",
+  "settings": []
+}
 {% endschema %}

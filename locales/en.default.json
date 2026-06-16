@@ -1,47 +1,68 @@
 {
-  "accessibility": {
-    "skip_to_content": "Skip to content",
-    "close": "Close",
-    "menu": "Menu",
-    "cart": "Cart"
+  "gift_cards": {
+    "issued": {
+      "title": "Gift Card"
+    }
   },
   "general": {
+    "cart": {
+      "title": "Your Cart",
+      "empty": "Your cart is empty",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout",
+      "shipping_note": "Shipping & taxes calculated at checkout",
+      "continue": "Continue shopping",
+      "remove": "Remove"
+    },
     "search": {
-      "search": "Search",
-      "placeholder": "Search the collection…"
+      "title": "Search",
+      "placeholder": "Search our store…",
+      "no_results": "No results found for",
+      "submit": "Search"
     },
     "404": {
-      "title": "Page not found",
-      "subtext": "The page you're looking for doesn't exist."
+      "title": "404",
+      "heading": "Page not found",
+      "text": "The page you're looking for doesn't exist or has been moved.",
+      "button": "Back to home"
+    },
+    "newsletter": {
+      "placeholder": "Your email address",
+      "submit": "Subscribe"
     },
     "pagination": {
       "previous": "Previous",
       "next": "Next"
     }
   },
-  "products": {
-    "product": {
-      "add_to_cart": "Add to cart",
-      "sold_out": "Sold out",
-      "unavailable": "Unavailable",
-      "enquire": "Enquire about this piece",
-      "price_on_enquiry": "Price on enquiry"
-    }
+  "product": {
+    "add_to_cart": "Add to cart",
+    "sold_out": "Sold out",
+    "unavailable": "Unavailable",
+    "enquire": "Enquire",
+    "pre_order": "Pre-order",
+    "description": "Description",
+    "details": "Details",
+    "care": "Care"
   },
-  "cart": {
-    "general": {
-      "title": "Your Cart",
-      "empty": "Your cart is empty.",
-      "subtotal": "Subtotal",
-      "checkout": "Checkout",
-      "continue_shopping": "Continue shopping",
-      "remove": "Remove",
-      "taxes_note": "Shipping & taxes calculated at checkout."
-    }
+  "collection": {
+    "products_count": "{{ count }} products",
+    "sort_by": "Sort by",
+    "sort_featured": "Featured",
+    "sort_best_selling": "Best selling",
+    "sort_alpha_asc": "A–Z",
+    "sort_alpha_desc": "Z–A",
+    "sort_price_asc": "Price: low to high",
+    "sort_price_desc": "Price: high to low",
+    "sort_date_desc": "Newest",
+    "sort_date_asc": "Oldest"
   },
-  "customer": {
-    "account": { "title": "My Account", "logout": "Log out" },
-    "login": { "title": "Login", "sign_in": "Sign in" },
-    "register": { "title": "Create Account" }
+  "contact": {
+    "title": "Get in Touch",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "submit": "Send Enquiry"
   }
 }

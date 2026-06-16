@@ -1,12 +1,10 @@
 {
-  "type": "header",
   "name": "Header group",
+  "type": "header",
   "sections": {
-    "announcement-bar": {
+    "announcement": {
       "type": "announcement-bar",
-      "settings": {
-        "text": "Free shipping on orders over £500  ·  All pieces handcrafted in Egypt  ·  Cairo & London studio"
-      }
+      "settings": {}
     },
     "header": {
       "type": "header",
@@ -21,5 +19,5 @@
       }
     }
   },
-  "order": ["announcement-bar", "header"]
+  "order": ["announcement", "header"]
 }

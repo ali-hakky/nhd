@@ -1,117 +1,122 @@
-/* ============================================================
-   Product variant selection.
-   Reads variant data from a JSON script tag, updates the hidden
-   variant id, price, availability and the add-to-cart button.
-   ============================================================ */
-(function () {
-  'use strict';
+(function(){
+  const form=document.querySelector('.product-form');
+  if(!form)return;
+  const variantData=JSON.parse(form.dataset.variants||'[]');
+  const priceEl=document.querySelector('.product-price-main');
+  const addBtn=form.querySelector('[type="submit"]');
+  const idInput=form.querySelector('[name="id"]');
 
-  function init(root) {
-    var dataEl = root.querySelector('[data-variant-json]');
-    if (!dataEl) return;
-    var variants = JSON.parse(dataEl.textContent);
-    var optionInputs = root.querySelectorAll('[data-option-index]');
-    var idInput = root.querySelector('input[name="id"]');
-    var submit = root.querySelector('[data-add-button]');
-    var priceEl = root.querySelector('[data-price]');
-    var wasEl = root.querySelector('[data-compare-price]');
-    var saveEl = root.querySelector('[data-save]');
-    var enquire = root.dataset.enquireMode === 'true';
-    var enquireUrl = root.dataset.enquireUrl || '';
-
-    function selectedOptions() {
-      var opts = [];
-      optionInputs.forEach(function (input) {
-        if (input.type === 'radio') {
-          if (input.checked) opts[parseInt(input.dataset.optionIndex, 10)] = input.value;
-        } else {
-          opts[parseInt(input.dataset.optionIndex, 10)] = input.value;
-        }
-      });
-      return opts;
-    }
-
-    function findVariant(opts) {
-      return variants.find(function (v) {
-        return v.options.every(function (o, i) { return o === opts[i]; });
-      });
-    }
-
-    function fmt(cents) {
-      return (window.NHD && window.NHD.money) ? window.NHD.money(cents) : '£' + (cents / 100).toFixed(2);
-    }
-
-    function update() {
-      var opts = selectedOptions();
-      var variant = optionInputs.length ? findVariant(opts) : variants[0];
-
-      // visual selected state
-      root.querySelectorAll('.variant-pill').forEach(function (pill) {
-        var radio = pill.querySelector('input');
-        if (radio) pill.classList.toggle('on', radio.checked);
-      });
-
-      // refresh the "selected value" labels next to each option name
-      opts.forEach(function (val, i) {
-        var lbl = root.querySelector('[data-selected-' + i + ']');
-        if (lbl) lbl.textContent = val;
-      });
-
-      if (!variant) {
-        if (submit) { submit.disabled = true; submit.textContent = 'Unavailable'; }
-        return;
-      }
-      if (idInput) idInput.value = variant.id;
-
-      if (priceEl) priceEl.textContent = fmt(variant.price);
-      if (wasEl) {
-        if (variant.compare_at_price && variant.compare_at_price > variant.price) {
-          wasEl.textContent = fmt(variant.compare_at_price); wasEl.style.display = '';
-          if (saveEl) { saveEl.style.display = ''; }
-        } else { wasEl.style.display = 'none'; if (saveEl) saveEl.style.display = 'none'; }
-      }
-
-      if (submit) {
-        if (enquire) {
-          submit.disabled = false;
-          submit.textContent = root.dataset.enquireLabel || 'Enquire';
-        } else if (!variant.available) {
-          submit.disabled = true; submit.textContent = 'Sold out';
-        } else {
-          submit.disabled = false; submit.textContent = root.dataset.addLabel || 'Add to cart';
-        }
-      }
-
-      // Update URL without reload for shareable variant links
-      if (history.replaceState && variant.id) {
-        var url = new URL(window.location.href);
-        url.searchParams.set('variant', variant.id);
-        history.replaceState({}, '', url.toString());
-      }
-    }
-
-    optionInputs.forEach(function (input) {
-      input.addEventListener('change', update);
+  function getSelectedOptions(){
+    const opts=[];
+    form.querySelectorAll('.variant-fieldset').forEach(fs=>{
+      const active=fs.querySelector('.variant-opt.active');
+      if(active) opts.push(active.textContent.trim());
     });
-
-    // Enquire mode: redirect to contact instead of adding to cart
-    if (enquire && enquireUrl) {
-      var form = root.querySelector('form[data-product-form]');
-      if (form) {
-        form.addEventListener('submit', function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          var opts = selectedOptions();
-          var variant = optionInputs.length ? findVariant(opts) : variants[0];
-          var q = '?product=' + encodeURIComponent(root.dataset.productTitle || '');
-          if (variant) q += '&variant=' + encodeURIComponent(variant.title);
-          window.location.href = enquireUrl + q;
-        }, true);
-      }
-    }
-
-    update();
+    return opts;
   }
 
-  document.querySelectorAll('[data-product-root]').forEach(init);
+  function findVariant(opts){
+    return variantData.find(v=>{
+      return opts.every((o,i)=>v['option'+(i+1)]===o);
+    });
+  }
+
+  function updateVariant(){
+    const opts=getSelectedOptions();
+    const variant=findVariant(opts);
+    if(!variant)return;
+    idInput.value=variant.id;
+    // Update price
+    if(priceEl){
+      let html='';
+      if(variant.compare_at_price && variant.compare_at_price>variant.price){
+        html+='<span class="was">'+formatMoney(variant.compare_at_price)+'</span>';
+      }
+      html+=formatMoney(variant.price);
+      priceEl.innerHTML=html;
+    }
+    // Update button
+    if(addBtn){
+      if(variant.available){
+        addBtn.disabled=false;
+        addBtn.textContent=addBtn.dataset.addLabel||'Add to cart';
+      }else{
+        addBtn.disabled=true;
+        addBtn.textContent='Sold out';
+      }
+    }
+    // Update URL
+    const url=new URL(window.location);
+    url.searchParams.set('variant',variant.id);
+    history.replaceState(null,'',url.toString());
+
+    // Update gallery main image if variant has featured_image
+    if(variant.featured_image){
+      const mainImg=document.querySelector('.product-gallery .main-image img');
+      if(mainImg) mainImg.src=variant.featured_image.src;
+    }
+  }
+
+  function formatMoney(cents){
+    return Shopify.formatMoney?Shopify.formatMoney(cents):'£'+(cents/100).toFixed(2);
+  }
+
+  // Variant option click
+  form.addEventListener('click',function(e){
+    const opt=e.target.closest('.variant-opt');
+    if(!opt||opt.classList.contains('unavailable'))return;
+    opt.closest('.variant-options').querySelectorAll('.variant-opt').forEach(o=>o.classList.remove('active'));
+    opt.classList.add('active');
+    updateVariant();
+  });
+
+  // Product page thumbnail click
+  document.addEventListener('click',function(e){
+    const thumb=e.target.closest('.product-gallery .thumb');
+    if(!thumb)return;
+    document.querySelectorAll('.product-gallery .thumb').forEach(t=>t.classList.remove('active'));
+    thumb.classList.add('active');
+    const img=thumb.querySelector('img');
+    const main=document.querySelector('.product-gallery .main-image img');
+    if(img&&main) main.src=img.src.replace(/&width=\d+/,'&width=900');
+  });
+
+  // Product tabs
+  document.addEventListener('click',function(e){
+    const tabBtn=e.target.closest('.product-tabs-nav button');
+    if(!tabBtn)return;
+    const tabs=tabBtn.closest('.product-tabs');
+    tabs.querySelectorAll('.product-tabs-nav button').forEach(b=>b.classList.remove('active'));
+    tabBtn.classList.add('active');
+    tabs.querySelectorAll('.product-tab-panel').forEach(p=>p.classList.add('hidden'));
+    const target=tabs.querySelector('#'+tabBtn.dataset.tab);
+    if(target) target.classList.remove('hidden');
+  });
+
+  // Enquire redirect
+  const enquireBtn=form.querySelector('[data-enquire-url]');
+  if(enquireBtn){
+    enquireBtn.addEventListener('click',function(e){
+      e.preventDefault();
+      window.location.href=enquireBtn.dataset.enquireUrl;
+    });
+  }
+
+  // Init: select variant from URL or first available
+  const urlParams=new URLSearchParams(window.location.search);
+  const variantId=urlParams.get('variant');
+  if(variantId){
+    const v=variantData.find(v=>String(v.id)===variantId);
+    if(v){
+      const opts=[v.option1,v.option2,v.option3].filter(Boolean);
+      form.querySelectorAll('.variant-fieldset').forEach((fs,i)=>{
+        if(opts[i]){
+          fs.querySelectorAll('.variant-opt').forEach(o=>{
+            o.classList.toggle('active',o.textContent.trim()===opts[i]);
+          });
+        }
+      });
+    }
+  }
+  updateVariant();
 })();

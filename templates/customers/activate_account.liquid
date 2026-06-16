@@ -1,11 +1,12 @@
-<div class="page-wrap account-wrap">
-  <h1 class="product-title" style="text-align:center;margin-bottom:8px">Activate Account</h1>
-  <p class="prod-lead" style="text-align:center;margin-bottom:24px">Create your password to activate your account.</p>
+<div class="page-content" style="max-width:400px">
+  <h1>Activate Account</h1>
   {%- form 'activate_customer_password' -%}
-    {%- if form.errors -%}<p class="form-status error">{{ form.errors | default_errors }}</p>{%- endif -%}
-    <div class="field"><label for="Pw">Password</label><input type="password" id="Pw" name="customer[password]" required></div>
-    <div class="field"><label for="PwC">Confirm password</label><input type="password" id="PwC" name="customer[password_confirmation]" required></div>
-    <button type="submit" class="btn" style="width:100%">Activate account</button>
-    <button type="submit" name="decline" class="cart-continue" style="margin-top:10px">Decline invitation</button>
+    <div class="contact-form">
+      <label>Password</label>
+      <input type="password" name="customer[password]" required>
+      <label>Confirm password</label>
+      <input type="password" name="customer[password_confirmation]" required>
+      <button type="submit" class="btn" style="margin-top:16px">Activate</button>
+    </div>
   {%- endform -%}
 </div>
