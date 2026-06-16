@@ -8,7 +8,7 @@
         "heading_accent": "personality.",
         "subheading": "Rattan, wicker & bespoke upholstery",
         "button_label": "Shop the Collection",
-        "button_url": "shopify://collections/all",
+        "button_url": "/collections/all",
         "button2_label": "Enquire Bespoke",
         "button2_url": ""
       }
@@ -106,7 +106,7 @@
           "settings": {
             "name": "Seating",
             "sub": "Armchairs · Sofas",
-            "link": "shopify://collections/seating"
+            "link": "/collections/seating"
           }
         },
         "c2": {
@@ -114,7 +114,7 @@
           "settings": {
             "name": "Tables",
             "sub": "Coffee · Side · Painted",
-            "link": "shopify://collections/tables"
+            "link": "/collections/tables"
           }
         },
         "c3": {
@@ -122,7 +122,7 @@
           "settings": {
             "name": "Consoles",
             "sub": "Hall · Buffet · Bespoke",
-            "link": "shopify://collections/consoles"
+            "link": "/collections/consoles"
           }
         },
         "c4": {
@@ -130,7 +130,7 @@
           "settings": {
             "name": "Stools & Stands",
             "sub": "X Stools · Butler Stands",
-            "link": "shopify://collections/stools"
+            "link": "/collections/stools"
           }
         },
         "c5": {
@@ -138,7 +138,7 @@
           "settings": {
             "name": "Accessories",
             "sub": "Trays · Mirrors · Lighting",
-            "link": "shopify://collections/accessories"
+            "link": "/collections/accessories"
           }
         }
       },
@@ -157,7 +157,7 @@
         "heading": "New",
         "heading_accent": "Arrivals",
         "view_all_label": "View all →",
-        "view_all_url": "shopify://collections/new-in",
+        "view_all_url": "/collections/new-in",
         "columns": "3",
         "image_height": "tall",
         "background_off": false
@@ -256,7 +256,7 @@
         "heading": "The Hamptons",
         "heading_accent": "Armchair",
         "view_all_label": "View all seating →",
-        "view_all_url": "shopify://collections/seating",
+        "view_all_url": "/collections/seating",
         "columns": "4",
         "image_height": "med",
         "background_off": true
@@ -324,7 +324,7 @@
         "heading_accent": "Collection",
         "intro": "A masterpiece of timeless and playful design — a true eye-catcher that works with any interior style, modern, classic or art deco. Each pair upholstered in a different designer fabric. Sold as pairs.",
         "view_all_label": "View all stools →",
-        "view_all_url": "shopify://collections/stools",
+        "view_all_url": "/collections/stools",
         "columns": "4",
         "image_height": "med",
         "background_off": false
@@ -427,7 +427,7 @@
         "heading": "Painted",
         "heading_accent": "Side Tables",
         "view_all_label": "View all tables →",
-        "view_all_url": "shopify://collections/tables",
+        "view_all_url": "/collections/tables",
         "columns": "4",
         "image_height": "med",
         "background_off": true
@@ -543,7 +543,7 @@
         "heading": "Statement",
         "heading_accent": "Consoles",
         "view_all_label": "View all consoles →",
-        "view_all_url": "shopify://collections/consoles",
+        "view_all_url": "/collections/consoles",
         "columns": "4",
         "image_height": "med",
         "background_off": true
@@ -609,7 +609,7 @@
         "heading": "Butler's Stands",
         "heading_accent": "& Trays",
         "view_all_label": "View all →",
-        "view_all_url": "shopify://collections/accessories",
+        "view_all_url": "/collections/accessories",
         "columns": "4",
         "image_height": "med",
         "background_off": false
@@ -676,7 +676,7 @@
         "heading": "More",
         "heading_accent": "Tables",
         "view_all_label": "View all tables →",
-        "view_all_url": "shopify://collections/tables",
+        "view_all_url": "/collections/tables",
         "columns": "4",
         "image_height": "med",
         "background_off": true
