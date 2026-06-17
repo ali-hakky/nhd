@@ -187,7 +187,9 @@ body{font-family:'Jost',sans-serif;background:var(--w,#FAFAF8);color:var(--ink,#
 /* INSTA */
 .insta{padding:56px 52px;background:var(--off);text-align:center}
 .insta-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--ink);margin-top:10px;margin-bottom:4px}
-.insta-handle{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--bd);margin-bottom:28px}
+.insta-handle{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--bd);margin-bottom:28px;text-decoration:none;display:inline-block}
+.insta-handle:hover{color:var(--ink)}
+.insta-title-link{text-decoration:none;color:inherit}
 .insta-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
 .insta-cell{aspect-ratio:1;overflow:hidden}
 .insta-cell .ph{width:100%;height:100%}
