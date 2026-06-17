@@ -1,3 +1,10 @@
+{%- liquid
+  assign mode = section.settings.source
+  if mode == blank
+    assign mode = 'auto'
+  endif
+-%}
+
 <section class="section" style="padding-bottom:0">
   <div class="sec-head">
     <div>
@@ -6,19 +13,36 @@
     </div>
   </div>
   <div class="cat-grid">
-    {%- for block in section.blocks -%}
-      <a href="{{ block.settings.url | default: routes.collections_url }}" class="cat-card" {{ block.shopify_attributes }}>
-        {%- if block.settings.image != blank -%}
-          {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: block.settings.title }}
-        {%- else -%}
-          <div class="ph">{{ block.settings.title }} Photo</div>
-        {%- endif -%}
-        <div class="cat-overlay">
-          <div class="cat-name">{{ block.settings.title }}</div>
-          {%- if block.settings.subtitle != blank -%}<div class="cat-sub">{{ block.settings.subtitle }}</div>{%- endif -%}
-        </div>
-      </a>
-    {%- endfor -%}
+    {%- if mode == 'auto' -%}
+      {%- for collection in collections -%}
+        {%- if collection.handle == 'all' or collection.handle == 'frontpage' -%}{%- continue -%}{%- endif -%}
+        <a href="{{ collection.url }}" class="cat-card">
+          {%- if collection.image != blank -%}
+            {{ collection.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: collection.title }}
+          {%- else -%}
+            <div class="ph">{{ collection.title }} Photo</div>
+          {%- endif -%}
+          <div class="cat-overlay">
+            <div class="cat-name">{{ collection.title }}</div>
+            <div class="cat-sub">{{ collection.products_count }} {% if collection.products_count == 1 %}piece{% else %}pieces{% endif %}</div>
+          </div>
+        </a>
+      {%- endfor -%}
+    {%- else -%}
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.url | default: routes.collections_url }}" class="cat-card" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: block.settings.title }}
+          {%- else -%}
+            <div class="ph">{{ block.settings.title }} Photo</div>
+          {%- endif -%}
+          <div class="cat-overlay">
+            <div class="cat-name">{{ block.settings.title }}</div>
+            {%- if block.settings.subtitle != blank -%}<div class="cat-sub">{{ block.settings.subtitle }}</div>{%- endif -%}
+          </div>
+        </a>
+      {%- endfor -%}
+    {%- endif -%}
   </div>
 </section>
 
@@ -28,7 +52,11 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Browse by category" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Shop the" },
-    { "type": "text", "id": "heading_accent", "label": "Heading italic", "default": "Collection" }
+    { "type": "text", "id": "heading_accent", "label": "Heading italic", "default": "Collection" },
+    { "type": "select", "id": "source", "label": "Content source", "options": [
+      { "value": "auto", "label": "Auto (all collections)" },
+      { "value": "manual", "label": "Manual (use blocks below)" }
+    ], "default": "auto" }
   ],
   "blocks": [
     {
@@ -42,12 +70,6 @@
       ]
     }
   ],
-  "presets": [{ "name": "Category grid", "blocks": [
-    { "type": "category", "settings": { "title": "Seating", "subtitle": "Armchairs · Sofas" } },
-    { "type": "category", "settings": { "title": "Tables", "subtitle": "Coffee · Side · Painted" } },
-    { "type": "category", "settings": { "title": "Consoles", "subtitle": "Hall · Buffet · Bespoke" } },
-    { "type": "category", "settings": { "title": "Stools & Stands", "subtitle": "X Stools · Butler Stands" } },
-    { "type": "category", "settings": { "title": "Accessories", "subtitle": "Trays · Mirrors · Lighting" } }
-  ] }]
+  "presets": [{ "name": "Category grid", "blocks": [] }]
 }
 {% endschema %}
