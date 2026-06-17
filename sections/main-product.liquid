@@ -32,14 +32,16 @@
     {%- endif -%}
     <h1 class="product-title">{{ product.title }}</h1>
 
-    {%- unless is_enquire -%}
+    {%- if is_enquire -%}
+      <div class="product-price-main" style="color:var(--bd);font-style:italic">Price on enquiry</div>
+    {%- else -%}
       <div class="product-price-main">
         {%- if current_variant.compare_at_price > current_variant.price -%}
           <span class="was">{{ current_variant.compare_at_price | money }}</span>
         {%- endif -%}
         {{ current_variant.price | money }}
       </div>
-    {%- endunless -%}
+    {%- endif -%}
 
     {%- if product.description != blank -%}
       <div class="product-desc">{{ product.description }}</div>
@@ -52,24 +54,35 @@
         {%- for option in product.options_with_values -%}
           <fieldset class="variant-fieldset">
             <legend>{{ option.name }}</legend>
-            <div class="variant-options">
+            <div class="variant-options" role="radiogroup" aria-label="{{ option.name }}">
               {%- for value in option.values -%}
-                <span class="variant-opt{% if value == option.selected_value %} active{% endif %}">{{ value }}</span>
+                <span class="variant-opt{% if value == option.selected_value %} active{% endif %}" role="radio" aria-checked="{% if value == option.selected_value %}true{% else %}false{% endif %}" tabindex="0">{{ value }}</span>
               {%- endfor -%}
             </div>
           </fieldset>
         {%- endfor -%}
       {%- endunless -%}
 
+      {%- unless is_enquire -%}
+        <div class="product-qty">
+          <label class="product-qty-label">Quantity</label>
+          <div class="product-qty-wrap">
+            <button type="button" class="product-qty-btn" data-action="minus" aria-label="Decrease quantity">−</button>
+            <input type="number" name="quantity" value="1" min="1" aria-label="Quantity">
+            <button type="button" class="product-qty-btn" data-action="plus" aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+      {%- endunless -%}
+
       <div class="product-form-btn">
         {%- if is_enquire -%}
-          <a href="/pages/contact?product={{ product.title | url_encode }}" class="btn" data-enquire-url="/pages/contact?product={{ product.title | url_encode }}">Enquire</a>
+          <a href="/pages/contact?product={{ product.title | url_encode }}" class="btn" data-enquire-url="/pages/contact?product={{ product.title | url_encode }}">{{ 'product.enquire' | t }}</a>
         {%- else -%}
           <button type="submit" class="btn" data-add-label="{{ product.metafields.custom.cta_label.value | default: 'Add to cart' }}"{% unless current_variant.available %} disabled{% endunless %}>
             {%- if current_variant.available -%}
               {{ product.metafields.custom.cta_label.value | default: 'Add to cart' }}
             {%- else -%}
-              Sold out
+              {{ 'product.sold_out' | t }}
             {%- endif -%}
           </button>
         {%- endif -%}
@@ -90,6 +103,36 @@
         {%- endif -%}
         {%- if product.metafields.custom.care.value != blank -%}
           <div class="product-meta-row"><span class="label">Care</span><span class="value">{{ product.metafields.custom.care.value }}</span></div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Product tabs {%- endcomment -%}
+    {%- assign has_tabs = false -%}
+    {%- if product.description != blank or product.metafields.custom.details.value != blank or product.metafields.custom.care.value != blank -%}
+      {%- assign has_tabs = true -%}
+    {%- endif -%}
+    {%- if has_tabs -%}
+      <div class="product-tabs">
+        <div class="product-tabs-nav" role="tablist">
+          {%- if product.description != blank -%}
+            <button class="active" data-tab="tab-desc" role="tab" aria-selected="true">{{ 'product.description' | t }}</button>
+          {%- endif -%}
+          {%- if product.metafields.custom.details.value != blank -%}
+            <button data-tab="tab-details" role="tab" aria-selected="false">{{ 'product.details' | t }}</button>
+          {%- endif -%}
+          {%- if product.metafields.custom.care.value != blank -%}
+            <button data-tab="tab-care" role="tab" aria-selected="false">{{ 'product.care' | t }}</button>
+          {%- endif -%}
+        </div>
+        {%- if product.description != blank -%}
+          <div id="tab-desc" class="product-tab-panel" role="tabpanel">{{ product.description }}</div>
+        {%- endif -%}
+        {%- if product.metafields.custom.details.value != blank -%}
+          <div id="tab-details" class="product-tab-panel hidden" role="tabpanel">{{ product.metafields.custom.details.value }}</div>
+        {%- endif -%}
+        {%- if product.metafields.custom.care.value != blank -%}
+          <div id="tab-care" class="product-tab-panel hidden" role="tabpanel">{{ product.metafields.custom.care.value }}</div>
         {%- endif -%}
       </div>
     {%- endif -%}

@@ -7,7 +7,7 @@
   </div>
   <div class="cat-grid">
     {%- for block in section.blocks -%}
-      <a href="{{ block.settings.url | default: '#' }}" class="cat-card" {{ block.shopify_attributes }}>
+      <a href="{{ block.settings.url | default: routes.collections_url }}" class="cat-card" {{ block.shopify_attributes }}>
         {%- if block.settings.image != blank -%}
           {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: block.settings.title }}
         {%- else -%}

@@ -28,11 +28,15 @@
     },
     "newsletter": {
       "placeholder": "Your email address",
-      "submit": "Subscribe"
+      "submit": "Subscribe",
+      "success": "Thank you for subscribing!"
     },
     "pagination": {
       "previous": "Previous",
       "next": "Next"
+    },
+    "accessibility": {
+      "skip_to_content": "Skip to content"
     }
   },
   "product": {
@@ -43,7 +47,9 @@
     "pre_order": "Pre-order",
     "description": "Description",
     "details": "Details",
-    "care": "Care"
+    "care": "Care",
+    "quantity": "Quantity",
+    "price_on_enquiry": "Price on enquiry"
   },
   "collection": {
     "products_count": "{{ count }} products",
@@ -55,14 +61,51 @@
     "sort_price_asc": "Price: low to high",
     "sort_price_desc": "Price: high to low",
     "sort_date_desc": "Newest",
-    "sort_date_asc": "Oldest"
+    "sort_date_asc": "Oldest",
+    "no_products": "No products in this collection yet."
   },
   "contact": {
     "title": "Get in Touch",
     "name": "Name",
     "email": "Email",
     "phone": "Phone",
+    "subject": "Subject",
     "message": "Message",
-    "submit": "Send Enquiry"
+    "submit": "Send Enquiry",
+    "success": "Thank you! We'll be in touch soon."
+  },
+  "customer": {
+    "account": {
+      "title": "My Account",
+      "orders": "Orders",
+      "addresses": "Addresses",
+      "logout": "Log out"
+    },
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "sign_in": "Sign In",
+      "forgot_password": "Forgot password?",
+      "create_account": "Create account"
+    },
+    "register": {
+      "title": "Create Account",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "create": "Create"
+    },
+    "addresses": {
+      "title": "My Addresses",
+      "add_new": "Add New Address",
+      "edit": "Edit",
+      "delete": "Delete",
+      "default": "Default"
+    },
+    "order": {
+      "title": "Order"
+    }
   }
 }

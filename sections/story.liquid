@@ -18,7 +18,7 @@
     {%- endif -%}
     {%- if section.settings.body != blank -%}<p class="story-body">{{ section.settings.body }}</p>{%- endif -%}
     {%- if section.settings.link_label != blank -%}
-      <a href="{{ section.settings.link_url | default: '#' }}" class="story-link">{{ section.settings.link_label }}</a>
+      <a href="{{ section.settings.link_url | default: '/pages/about' }}" class="story-link">{{ section.settings.link_label }}</a>
     {%- endif -%}
   </div>
 </section>

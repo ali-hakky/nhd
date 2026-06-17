@@ -3,7 +3,7 @@
     <div class="nav-left">
       {%- for block in section.blocks -%}
         {%- if block.type == 'top_link' -%}
-          <a href="{{ block.settings.url | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+          <a href="{{ block.settings.url | default: '/' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
         {%- endif -%}
       {%- endfor -%}
     </div>
@@ -15,11 +15,16 @@
       {%- if section.settings.contact_label != blank -%}
         <a href="{{ section.settings.contact_url | default: '/pages/contact' }}">{{ section.settings.contact_label }}</a>
       {%- endif -%}
+      {%- if customer -%}
+        <a href="{{ routes.account_url }}">Account</a>
+      {%- else -%}
+        <a href="{{ routes.account_login_url }}">Login</a>
+      {%- endif -%}
       <div class="nav-icons">
         <a href="/search" aria-label="Search"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></a>
         <a href="/cart" data-cart-toggle aria-label="Cart"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count hidden" data-cart-count>{{ cart.item_count }}</span></a>
       </div>
-      <button class="mobile-toggle" aria-label="Menu"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <button class="mobile-toggle" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
     </div>
   </div>
   <div class="nav-bar">
@@ -38,14 +43,11 @@
         </div>
       {%- endfor -%}
     {%- else -%}
-      {%- comment -%} Fallback so the bar matches the design before a menu is built {%- endcomment -%}
-      <div class="nav-item"><a href="{{ routes.collections_url }}/seating">Seating</a></div>
-      <div class="nav-item"><a href="{{ routes.collections_url }}/tables">Tables</a></div>
-      <div class="nav-item"><a href="{{ routes.collections_url }}/consoles">Consoles</a></div>
-      <div class="nav-item"><a href="{{ routes.collections_url }}/stools">Stools</a></div>
-      <div class="nav-item"><a href="{{ routes.collections_url }}/beds">Beds</a></div>
-      <div class="nav-item"><a href="{{ routes.collections_url }}/accessories">Accessories</a></div>
-      <div class="nav-item"><a href="{{ routes.collections_url }}/new-in" style="color:var(--bd)">New In</a></div>
+      {%- for collection in collections limit: 7 -%}
+        <div class="nav-item">
+          <a href="{{ collection.url }}"{% if collection.handle == 'new-in' %} style="color:var(--bd)"{% endif %}>{{ collection.title }}</a>
+        </div>
+      {%- endfor -%}
     {%- endif -%}
   </div>
 </nav>

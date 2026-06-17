@@ -22,10 +22,11 @@
                     {%- endif -%}
                   </a>
                   <div>
-                    <div class="cart-prod-name">{{ item.product.title }}</div>
+                    <div class="cart-prod-name"><a href="{{ item.url }}" style="text-decoration:none;color:inherit">{{ item.product.title }}</a></div>
                     {%- unless item.variant.title == 'Default Title' -%}
                       <div class="cart-prod-variant">{{ item.variant.title }}</div>
                     {%- endunless -%}
+                    <button type="button" class="cart-item-remove" data-remove-key="{{ item.key }}">{{ 'general.cart.remove' | t }}</button>
                   </div>
                 </div>
               </td>
@@ -44,7 +45,7 @@
       </table>
 
       <div class="cart-totals">
-        <div class="cart-totals-row"><span>Subtotal</span><span>{{ cart.total_price | money }}</span></div>
+        <div class="cart-totals-row"><span>{{ 'general.cart.subtotal' | t }}</span><span>{{ cart.total_price | money }}</span></div>
         <div class="cart-totals-row" style="font-size:11px;color:var(--mu)"><span>{{ 'general.cart.shipping_note' | t }}</span></div>
         <div class="cart-totals-row total"><span>Total</span><span>{{ cart.total_price | money }}</span></div>
         <button type="submit" name="checkout" class="btn" style="width:100%;text-align:center;margin-top:16px">{{ 'general.cart.checkout' | t }}</button>

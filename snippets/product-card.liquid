@@ -20,7 +20,7 @@
     assign c_image = product.featured_image
     assign c_available = product.available
   else
-    assign c_url = url | default: '#'
+    assign c_url = url | default: routes.all_products_collection_url
     assign c_title = title
     assign c_material = material
     assign c_dims = dims

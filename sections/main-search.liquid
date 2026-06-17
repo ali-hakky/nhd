@@ -1,9 +1,10 @@
 <div class="search-page">
   <h1>{{ 'general.search.title' | t }}</h1>
   <div class="search-form">
-    <form action="/search" method="get">
-      <div class="search-form" style="margin-bottom:0">
-        <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}">
+    <form action="/search" method="get" role="search">
+      <div style="display:flex">
+        <label for="search-input" class="hidden">{{ 'general.search.placeholder' | t }}</label>
+        <input type="search" id="search-input" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.placeholder' | t }}">
         <button type="submit">{{ 'general.search.submit' | t }}</button>
       </div>
     </form>
@@ -11,10 +12,24 @@
 
   {%- if search.performed -%}
     {%- if search.results_count > 0 -%}
+      <p style="text-align:center;color:var(--mu);margin-bottom:24px;font-size:12px">{{ search.results_count }} results for "{{ search.terms }}"</p>
       <div class="grid-3">
         {%- for item in search.results -%}
           {%- if item.object_type == 'product' -%}
             {%- render 'product-card', product: item, image_height: 'med', show_price: true -%}
+          {%- elsif item.object_type == 'article' -%}
+            <a href="{{ item.url }}" class="blog-card">
+              {%- if item.image -%}
+                <div class="blog-card-img">
+                  {{ item.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: item.title }}
+                </div>
+              {%- endif -%}
+              <div class="blog-card-body">
+                <div class="blog-card-date">Article</div>
+                <h2 class="blog-card-title">{{ item.title }}</h2>
+                <p class="blog-card-excerpt">{{ item.content | strip_html | truncate: 120 }}</p>
+              </div>
+            </a>
           {%- else -%}
             <a href="{{ item.url }}" class="prod-card">
               <div class="prod-body">

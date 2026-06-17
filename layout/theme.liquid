@@ -5,11 +5,29 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{{ page_title }}{% unless page_title contains shop.name %} — {{ shop.name }}{% endunless %}</title>
   {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+  {%- if settings.favicon -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
+  {%- render 'meta-tags' -%}
   {{ content_for_header }}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
   {{ 'base.css' | asset_url | stylesheet_tag }}
+  <style>
+    :root {
+      --b: {{ settings.color_brand }};
+      --bl: {{ settings.color_brand_light }};
+      --bm: {{ settings.color_brand_mid }};
+      --bd: {{ settings.color_brand_dark }};
+      --w: {{ settings.color_bg }};
+      --off: {{ settings.color_off }};
+      --ink: {{ settings.color_ink }};
+      --mu: {{ settings.color_muted }};
+      --br: {{ settings.color_border }};
+      --page-w: {{ settings.page_width }}px;
+    }
+  </style>
   <script>
     window.Shopify = window.Shopify || {};
     window.Shopify.formatMoney = function(cents) {
@@ -18,10 +36,12 @@
   </script>
 </head>
 <body>
+  <a href="#main" class="skip-to-content">Skip to content</a>
   {%- sections 'header-group' -%}
   <main id="main">{{ content_for_layout }}</main>
   {%- sections 'footer-group' -%}
   {%- section 'cart-drawer' -%}
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
   <div class="mobile-nav" id="mobile-nav">
     <div class="mobile-nav-head">
       <span class="nav-logo">
@@ -29,22 +49,41 @@
       </span>
       <button class="mobile-nav-close" aria-label="Close menu">&times;</button>
     </div>
-    {%- if linklists.main-menu.links.size > 0 -%}
-      {%- for link in linklists.main-menu.links -%}
-        <a href="{{ link.url }}">{{ link.title }}</a>
-        {%- for child in link.links -%}
-          <a href="{{ child.url }}" style="padding-left:20px;font-size:10px">{{ child.title }}</a>
-        {%- endfor -%}
+    {%- assign mobile_links = linklists['main-menu'].links -%}
+    {%- if mobile_links.size > 0 -%}
+      {%- for link in mobile_links -%}
+        {%- if link.links.size > 0 -%}
+          <div class="mobile-nav-group">
+            <button class="mobile-nav-parent" aria-expanded="false">
+              <span>{{ link.title }}</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="mobile-nav-children">
+              <a href="{{ link.url }}">All {{ link.title }}</a>
+              {%- for child in link.links -%}
+                <a href="{{ child.url }}">{{ child.title }}</a>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- else -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endif -%}
       {%- endfor -%}
     {%- else -%}
-      <a href="{{ routes.collections_url }}/seating">Seating</a>
-      <a href="{{ routes.collections_url }}/tables">Tables</a>
-      <a href="{{ routes.collections_url }}/consoles">Consoles</a>
-      <a href="{{ routes.collections_url }}/stools">Stools</a>
-      <a href="{{ routes.collections_url }}/beds">Beds</a>
-      <a href="{{ routes.collections_url }}/accessories">Accessories</a>
-      <a href="{{ routes.collections_url }}/new-in">New In</a>
+      <a href="{{ routes.collections_url }}">Shop All</a>
+      <a href="/pages/about">About</a>
+      <a href="/pages/contact">Contact</a>
     {%- endif -%}
+    <div class="mobile-nav-footer">
+      {%- if customer -%}
+        <a href="{{ routes.account_url }}">My Account</a>
+        <a href="{{ routes.account_logout_url }}">Log Out</a>
+      {%- else -%}
+        <a href="{{ routes.account_login_url }}">Log In</a>
+        <a href="{{ routes.account_register_url }}">Create Account</a>
+      {%- endif -%}
+      <a href="/search">Search</a>
+    </div>
   </div>
   <script src="{{ 'global.js' | asset_url }}" defer></script>
 </body>

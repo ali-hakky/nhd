@@ -1,11 +1,12 @@
 <div class="collection-hero">
-  <h1>{{ collection.title }}{% if collection.title contains ' ' %} {% endif %}</h1>
+  <h1>{{ collection.title }}</h1>
   {%- if collection.description != blank -%}<p>{{ collection.description }}</p>{%- endif -%}
 </div>
 
 <div class="collection-bar">
   <span>{{ collection.products_count }} {{ 'collection.products_count' | t: count: collection.products_count }}</span>
-  <select onchange="window.location.href=this.value">
+  <label for="sort-by" class="hidden">{{ 'collection.sort_by' | t }}</label>
+  <select id="sort-by" onchange="window.location.href=this.value" aria-label="{{ 'collection.sort_by' | t }}">
     {%- for option in collection.sort_options -%}
       <option value="{{ option.url }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ option.name }}</option>
     {%- endfor -%}
@@ -22,17 +23,17 @@
       {%- endfor -%}
 
       {%- if paginate.pages > 1 -%}
-        <div class="pagination" style="grid-column:1/-1">
-          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">←</a>{%- endif -%}
+        <nav class="pagination" style="grid-column:1/-1" aria-label="Pagination">
+          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" aria-label="{{ 'general.pagination.previous' | t }}">←</a>{%- endif -%}
           {%- for part in paginate.parts -%}
             {%- if part.is_link -%}
-              <a href="{{ part.url }}">{{ part.title }}</a>
+              <a href="{{ part.url }}" aria-label="Page {{ part.title }}">{{ part.title }}</a>
             {%- else -%}
-              <span class="current">{{ part.title }}</span>
+              <span class="current" aria-current="page">{{ part.title }}</span>
             {%- endif -%}
           {%- endfor -%}
-          {%- if paginate.next -%}<a href="{{ paginate.next.url }}">→</a>{%- endif -%}
-        </div>
+          {%- if paginate.next -%}<a href="{{ paginate.next.url }}" aria-label="{{ 'general.pagination.next' | t }}">→</a>{%- endif -%}
+        </nav>
       {%- endif -%}
     {%- endpaginate -%}
   </div>

@@ -21,7 +21,7 @@
       </div>
     {%- endif -%}
     {%- if section.settings.btn_label != blank -%}
-      <a href="{{ section.settings.btn_url | default: '#' }}" class="btn">{{ section.settings.btn_label }}</a>
+      <a href="{{ section.settings.btn_url | default: '/pages/contact' }}" class="btn">{{ section.settings.btn_label }}</a>
     {%- endif -%}
   </div>
 </section>

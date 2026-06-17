@@ -21,8 +21,8 @@
     <h1>{{ section.settings.heading }}{% if section.settings.heading_accent != blank %}<br><em>{{ section.settings.heading_accent }}</em>{% endif %}</h1>
     {%- if section.settings.subheading != blank -%}<p class="hero-sub">{{ section.settings.subheading }}</p>{%- endif -%}
     <div class="hero-btns">
-      {%- if section.settings.btn_label != blank -%}<a href="{{ section.settings.btn_url | default: '#' }}" class="btn">{{ section.settings.btn_label }}</a>{%- endif -%}
-      {%- if section.settings.ghost_label != blank -%}<a href="{{ section.settings.ghost_url | default: '#' }}" class="btn-ghost">{{ section.settings.ghost_label }}</a>{%- endif -%}
+      {%- if section.settings.btn_label != blank -%}<a href="{{ section.settings.btn_url | default: routes.all_products_collection_url }}" class="btn">{{ section.settings.btn_label }}</a>{%- endif -%}
+      {%- if section.settings.ghost_label != blank -%}<a href="{{ section.settings.ghost_url | default: '/pages/contact' }}" class="btn-ghost">{{ section.settings.ghost_label }}</a>{%- endif -%}
     </div>
   </div>
 </section>

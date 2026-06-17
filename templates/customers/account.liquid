@@ -1,6 +1,11 @@
 <div class="page-content">
   <h1>My Account</h1>
-  <p><a href="{{ routes.account_logout_url }}" style="color:var(--bd)">Log out</a></p>
+  <div style="display:flex;gap:16px;justify-content:center;margin-bottom:32px;font-size:11px;letter-spacing:2px;text-transform:uppercase">
+    <a href="{{ routes.account_url }}" style="color:var(--bd)">Orders</a>
+    <a href="{{ routes.account_addresses_url }}" style="color:var(--mu);text-decoration:none">Addresses</a>
+    <a href="{{ routes.account_logout_url }}" style="color:var(--mu);text-decoration:none">Log out</a>
+  </div>
+
   <h2 style="font-family:'Cormorant Garamond',serif;font-size:24px;margin:24px 0 12px">Order History</h2>
   {%- if customer.orders.size > 0 -%}
     <table class="cart-table" style="margin-bottom:32px">
@@ -17,6 +22,6 @@
       </tbody>
     </table>
   {%- else -%}
-    <p>No orders yet.</p>
+    <p style="color:var(--mu);text-align:center;padding:20px 0">No orders yet.</p>
   {%- endif -%}
 </div>
