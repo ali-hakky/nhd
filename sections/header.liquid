@@ -1,127 +1,184 @@
-{%- comment -%} Sticky header with logo, utility links, icons and mega-menu nav {%- endcomment -%}
-{%- liquid
-  assign menu = section.settings.menu
-  assign nav = linklists[menu]
-  assign use_shopify_menu = false
-  if nav and nav.links.size > 3
-    assign use_shopify_menu = true
-  endif
-  assign brand_name = section.settings.logo_text | default: 'Nazly Habib Design'
-  if brand_name == shop.name and shop.name == 'My Store'
-    assign brand_name = 'Nazly Habib Design'
-  endif
-  assign tagline = section.settings.tagline | default: 'Handcrafted Interiors · Cairo & London'
--%}
-
 <nav class="nav">
   <div class="nav-top">
-    <button class="nav-toggle" data-mobile-nav-open aria-label="Open menu">
-      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
-
-    <div class="nav-links-left">
-      {%- if section.settings.left_link_1_label != blank -%}<a href="{{ section.settings.left_link_1_url }}">{{ section.settings.left_link_1_label }}</a>{%- endif -%}
-      {%- if section.settings.left_link_2_label != blank -%}<a href="{{ section.settings.left_link_2_url }}">{{ section.settings.left_link_2_label }}</a>{%- endif -%}
+    <div class="nav-left">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'top_link' -%}
+          <a href="{{ block.settings.url | default: '/' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+        {%- endif -%}
+      {%- endfor -%}
     </div>
-
-    <a href="{{ routes.root_url }}" class="nav-logo">
+    <a href="/" class="nav-logo">
       {%- if section.settings.logo != blank -%}
-        {{ section.settings.logo | image_url: width: 320 | image_tag: class: 'logo-img', alt: brand_name, widths: '160,320' }}
+        {{ section.settings.logo | image_url: width: 200 | image_tag: alt: shop.name }}
       {%- else -%}
-        <span class="name">{{ brand_name }}</span>
+        <span class="name">{{ shop.name }}</span>
       {%- endif -%}
-      <span class="sub">{{ tagline }}</span>
+      <span class="sub">{{ section.settings.tagline | default: 'Handcrafted Interiors · Cairo & London' }}</span>
     </a>
-
-    <div class="nav-links-right">
-      {%- if section.settings.right_link_label != blank -%}<a href="{{ section.settings.right_link_url }}">{{ section.settings.right_link_label }}</a>{%- endif -%}
+    <div class="nav-right">
+      {%- if section.settings.contact_label != blank -%}
+        <a href="{{ section.settings.contact_url | default: '/pages/contact' }}">{{ section.settings.contact_label }}</a>
+      {%- endif -%}
+      {%- if customer -%}
+        <a href="{{ routes.account_url }}">Account</a>
+      {%- else -%}
+        <a href="{{ routes.account_login_url }}">Login</a>
+      {%- endif -%}
       <div class="nav-icons">
-        <a href="{{ routes.search_url }}" aria-label="Search">
-          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        </a>
-        <a href="{{ routes.account_url }}" aria-label="Account" class="cart-link">
-          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        </a>
-        <button data-cart-open aria-label="Cart" class="cart-link">
-          <span class="cart-count-bubble">
-            <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-            <span data-cart-count {% if cart.item_count == 0 %}style="display:none"{% endif %}>{{ cart.item_count }}</span>
-          </span>
-        </button>
+        <a href="/search" aria-label="Search"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></a>
+        <a href="/cart" data-cart-toggle aria-label="Cart"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count hidden" data-cart-count>{{ cart.item_count }}</span></a>
       </div>
+      <button class="mobile-toggle" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
     </div>
   </div>
-
   <div class="nav-bar">
-    {%- if use_shopify_menu -%}
-      {%- for link in nav.links -%}
-        <div class="nav-item{% if link.links.size == 0 and forloop.last and section.settings.highlight_last %} is-accent{% endif %}">
-          <a href="{{ link.url }}">{{ link.title }}</a>
-          {%- if link.links.size > 0 -%}
-            <div class="dropdown">
-              {%- for child in link.links -%}
-                <a href="{{ child.url }}">{{ child.title }}</a>
-              {%- endfor -%}
+    {%- assign nav_mode = section.settings.nav_mode | default: 'collections' -%}
+    {%- if nav_mode == 'collections' -%}
+      {%- for collection in collections limit: section.settings.max_collections -%}
+        {%- if collection.handle == 'all' or collection.handle == 'frontpage' -%}{%- continue -%}{%- endif -%}
+        <div class="nav-item has-mega">
+          <a href="{{ collection.url }}">{{ collection.title }}</a>
+          <div class="mega-dropdown">
+            <div class="mega-inner">
+              <div class="mega-col mega-meta">
+                {%- if collection.image -%}
+                  <div class="mega-img">
+                    {{ collection.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: collection.title }}
+                  </div>
+                {%- endif -%}
+                <h3 class="mega-title">{{ collection.title }}</h3>
+                {%- if collection.description != blank -%}
+                  <p class="mega-desc">{{ collection.description | strip_html | truncate: 120 }}</p>
+                {%- endif -%}
+                <a href="{{ collection.url }}" class="mega-view-all">View all {{ collection.title }} →</a>
+              </div>
+              <div class="mega-col mega-products">
+                {%- for product in collection.products limit: section.settings.products_per_dropdown -%}
+                  <a href="{{ product.url }}" class="mega-product">
+                    <div class="mega-product-img">
+                      {%- if product.featured_image -%}
+                        {{ product.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: product.title }}
+                      {%- else -%}
+                        <div class="ph" style="width:100%;height:100%">Photo</div>
+                      {%- endif -%}
+                    </div>
+                    <div class="mega-product-info">
+                      <span class="mega-product-name">{{ product.title }}</span>
+                      {%- if product.metafields.custom.materials.value != blank -%}
+                        <span class="mega-product-mat">{{ product.metafields.custom.materials.value | truncate: 60 }}</span>
+                      {%- elsif product.metafields.custom.short_description.value != blank -%}
+                        <span class="mega-product-mat">{{ product.metafields.custom.short_description.value | truncate: 60 }}</span>
+                      {%- endif -%}
+                      {%- unless product.price == 0 -%}
+                        <span class="mega-product-price">{{ product.price | money }}</span>
+                      {%- endunless -%}
+                    </div>
+                  </a>
+                {%- endfor -%}
+              </div>
             </div>
-          {%- endif -%}
+          </div>
         </div>
       {%- endfor -%}
     {%- else -%}
-      <div class="nav-item"><a href="/collections/seating">Seating</a><div class="dropdown"><a href="#">Hamptons Armchair</a><a href="#">Riviera Rattan</a><a href="#">Amalfi Grande Sofa</a><a href="#">Miniature Chair</a><a href="#">View All Seating</a></div></div>
-      <div class="nav-item"><a href="/collections/tables">Tables</a><div class="dropdown"><a href="#">Coffee Tables</a><a href="#">Moroccan Side Table</a><a href="#">Painted Side Tables</a><a href="#">The Sloan</a><a href="#">View All Tables</a></div></div>
-      <div class="nav-item"><a href="/collections/consoles">Consoles</a><div class="dropdown"><a href="#">Hortensia Console</a><a href="#">Boltons Console</a><a href="#">Burl Wood Console</a><a href="#">Marrakech Console</a><a href="#">Upholstered Console</a><a href="#">View All Consoles</a></div></div>
-      <div class="nav-item"><a href="/collections/stools">Stools</a><div class="dropdown"><a href="#">X Stools — All Fabrics</a><a href="#">Butler's Stands</a><a href="#">Bobbin Bar Stools</a><a href="#">View All Stools</a></div></div>
-      <div class="nav-item"><a href="/collections/beds">Beds</a><div class="dropdown"><a href="#">Regency Headboard</a><a href="#">Bed Frames (Pre-order)</a></div></div>
-      <div class="nav-item"><a href="/collections/accessories">Accessories</a><div class="dropdown"><a href="#">Swoon Trays</a><a href="#">Butler's Tray Stands</a><a href="#">Bahamas Lantern</a><a href="#">Arabesque Mirror</a><a href="#">Bar Cart</a><a href="#">View All</a></div></div>
-      <div class="nav-item is-accent"><a href="/collections/new-in">New In</a></div>
+      {%- assign main_links = linklists[section.settings.menu].links -%}
+      {%- if main_links.size > 0 -%}
+        {%- for link in main_links -%}
+          {%- assign link_collection = nil -%}
+          {%- if link.type == 'collection_link' -%}
+            {%- assign link_collection = link.object -%}
+          {%- endif -%}
+          <div class="nav-item{% if link_collection %} has-mega{% endif %}">
+            <a href="{{ link.url }}"{% if link.title == 'New In' %} style="color:var(--bd)"{% endif %}>{{ link.title }}</a>
+            {%- if link_collection -%}
+              <div class="mega-dropdown">
+                <div class="mega-inner">
+                  <div class="mega-col mega-meta">
+                    {%- if link_collection.image -%}
+                      <div class="mega-img">
+                        {{ link_collection.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: link_collection.title }}
+                      </div>
+                    {%- endif -%}
+                    <h3 class="mega-title">{{ link_collection.title }}</h3>
+                    {%- if link_collection.description != blank -%}
+                      <p class="mega-desc">{{ link_collection.description | strip_html | truncate: 120 }}</p>
+                    {%- endif -%}
+                    <a href="{{ link_collection.url }}" class="mega-view-all">View all {{ link_collection.title }} →</a>
+                  </div>
+                  <div class="mega-col mega-products">
+                    {%- for product in link_collection.products limit: section.settings.products_per_dropdown -%}
+                      <a href="{{ product.url }}" class="mega-product">
+                        <div class="mega-product-img">
+                          {%- if product.featured_image -%}
+                            {{ product.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: product.title }}
+                          {%- else -%}
+                            <div class="ph" style="width:100%;height:100%">Photo</div>
+                          {%- endif -%}
+                        </div>
+                        <div class="mega-product-info">
+                          <span class="mega-product-name">{{ product.title }}</span>
+                          {%- if product.metafields.custom.materials.value != blank -%}
+                            <span class="mega-product-mat">{{ product.metafields.custom.materials.value | truncate: 60 }}</span>
+                          {%- elsif product.metafields.custom.short_description.value != blank -%}
+                            <span class="mega-product-mat">{{ product.metafields.custom.short_description.value | truncate: 60 }}</span>
+                          {%- endif -%}
+                          {%- unless product.price == 0 -%}
+                            <span class="mega-product-price">{{ product.price | money }}</span>
+                          {%- endunless -%}
+                        </div>
+                      </a>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              </div>
+            {%- elsif link.links.size > 0 -%}
+              <div class="dropdown">
+                {%- for child in link.links -%}
+                  <a href="{{ child.url }}">{{ child.title }}</a>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for collection in collections limit: 7 -%}
+          {%- if collection.handle == 'all' or collection.handle == 'frontpage' -%}{%- continue -%}{%- endif -%}
+          <div class="nav-item">
+            <a href="{{ collection.url }}">{{ collection.title }}</a>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
     {%- endif -%}
   </div>
 </nav>
-
-{%- comment -%} Mobile slide-in nav {%- endcomment -%}
-<div class="mobile-nav" id="MobileNav" data-mobile-nav>
-  <div class="mobile-nav-panel">
-    <button class="mobile-nav-close" data-mobile-nav-close aria-label="Close menu">&times;</button>
-    <div style="clear:both"></div>
-    {%- if use_shopify_menu -%}
-      {%- for link in nav.links -%}
-        <a href="{{ link.url }}" class="parent">{{ link.title }}</a>
-        {%- for child in link.links -%}
-          <a href="{{ child.url }}" class="child">{{ child.title }}</a>
-        {%- endfor -%}
-      {%- endfor -%}
-    {%- else -%}
-      <a href="/collections/seating" class="parent">Seating</a>
-      <a href="/collections/tables" class="parent">Tables</a>
-      <a href="/collections/consoles" class="parent">Consoles</a>
-      <a href="/collections/stools" class="parent">Stools</a>
-      <a href="/collections/beds" class="parent">Beds</a>
-      <a href="/collections/accessories" class="parent">Accessories</a>
-      <a href="/collections/new-in" class="parent">New In</a>
-    {%- endif -%}
-    {%- if section.settings.left_link_1_label != blank -%}<a href="{{ section.settings.left_link_1_url }}" class="parent">{{ section.settings.left_link_1_label }}</a>{%- endif -%}
-    {%- if section.settings.left_link_2_label != blank -%}<a href="{{ section.settings.left_link_2_url }}" class="parent">{{ section.settings.left_link_2_label }}</a>{%- endif -%}
-    {%- if section.settings.right_link_label != blank -%}<a href="{{ section.settings.right_link_url }}" class="parent">{{ section.settings.right_link_label }}</a>{%- endif -%}
-  </div>
-</div>
 
 {% schema %}
 {
   "name": "Header",
   "settings": [
     { "type": "image_picker", "id": "logo", "label": "Logo image" },
-    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "Nazly Habib Design" },
     { "type": "text", "id": "tagline", "label": "Tagline under logo", "default": "Handcrafted Interiors · Cairo & London" },
-    { "type": "link_list", "id": "menu", "label": "Navigation menu", "default": "main-menu", "info": "Only used if the menu has 4+ items. Otherwise the built-in NHD nav shows." },
-    { "type": "checkbox", "id": "highlight_last", "label": "Highlight last menu item", "default": true },
-    { "type": "header", "content": "Top-left links" },
-    { "type": "text", "id": "left_link_1_label", "label": "Link 1 label", "default": "About" },
-    { "type": "url", "id": "left_link_1_url", "label": "Link 1 URL" },
-    { "type": "text", "id": "left_link_2_label", "label": "Link 2 label", "default": "Bespoke Orders" },
-    { "type": "url", "id": "left_link_2_url", "label": "Link 2 URL" },
-    { "type": "header", "content": "Top-right link" },
-    { "type": "text", "id": "right_link_label", "label": "Link label", "default": "Contact" },
-    { "type": "url", "id": "right_link_url", "label": "Link URL" }
+    { "type": "header", "content": "Navigation" },
+    { "type": "select", "id": "nav_mode", "label": "Navigation mode", "options": [
+      { "value": "menu", "label": "Use a Shopify menu" },
+      { "value": "collections", "label": "Auto-show all collections" }
+    ], "default": "collections", "info": "Collections mode automatically shows all your collections with product dropdowns. Menu mode uses a Shopify navigation menu." },
+    { "type": "link_list", "id": "menu", "label": "Main menu (menu mode)", "default": "main-menu" },
+    { "type": "range", "id": "max_collections", "label": "Max collections to show", "min": 3, "max": 12, "step": 1, "default": 8, "info": "Only applies in collections mode" },
+    { "type": "range", "id": "products_per_dropdown", "label": "Products per dropdown", "min": 2, "max": 8, "step": 1, "default": 4 },
+    { "type": "header", "content": "Top bar" },
+    { "type": "text", "id": "contact_label", "label": "Contact link label", "default": "Contact" },
+    { "type": "url", "id": "contact_url", "label": "Contact link URL" }
+  ],
+  "blocks": [
+    {
+      "type": "top_link",
+      "name": "Top nav link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "About" },
+        { "type": "url", "id": "url", "label": "URL" }
+      ]
+    }
   ]
 }
 {% endschema %}

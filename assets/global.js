@@ -163,11 +163,11 @@
     children.classList.toggle('open');
   });
 
-  // Desktop dropdown — touch support
+  // Desktop dropdown — touch support (regular dropdowns and mega dropdowns)
   document.addEventListener('click',function(e){
     var navItem=e.target.closest('.nav-item');
     if(!navItem) return;
-    var dropdown=navItem.querySelector('.dropdown');
+    var dropdown=navItem.querySelector('.dropdown')||navItem.querySelector('.mega-dropdown');
     if(!dropdown) return;
     if('ontouchstart' in window){
       var link=navItem.querySelector(':scope > a');

@@ -1,7 +1,7 @@
 <div class="blog-page">
   <h1>{{ blog.title }}</h1>
   <div class="blog-grid">
-    {%- paginate blog.articles by 9 -%}
+    {%- paginate blog.articles by section.settings.articles_per_page -%}
       {%- for article in blog.articles -%}
         <a href="{{ article.url }}" class="blog-card">
           <div class="blog-card-img">
@@ -12,9 +12,13 @@
             {%- endif -%}
           </div>
           <div class="blog-card-body">
-            <div class="blog-card-date">{{ article.published_at | date: '%B %d, %Y' }}</div>
+            {%- if section.settings.show_date -%}
+              <div class="blog-card-date">{{ article.published_at | date: '%B %d, %Y' }}</div>
+            {%- endif -%}
             <h2 class="blog-card-title">{{ article.title }}</h2>
-            <p class="blog-card-excerpt">{{ article.excerpt_or_content | strip_html | truncate: 120 }}</p>
+            {%- if section.settings.show_excerpt -%}
+              <p class="blog-card-excerpt">{{ article.excerpt_or_content | strip_html | truncate: 120 }}</p>
+            {%- endif -%}
           </div>
         </a>
       {%- endfor -%}
@@ -35,6 +39,19 @@
 {% schema %}
 {
   "name": "Blog page",
-  "settings": []
+  "settings": [
+    { "type": "checkbox", "id": "show_date", "label": "Show article date", "default": true },
+    { "type": "checkbox", "id": "show_excerpt", "label": "Show article excerpt", "default": true },
+    { "type": "range", "id": "articles_per_page", "label": "Articles per page", "min": 3, "max": 18, "step": 3, "default": 9 },
+    { "type": "select", "id": "columns", "label": "Grid columns", "options": [
+      { "value": "2", "label": "2 columns" },
+      { "value": "3", "label": "3 columns" }
+    ], "default": "3" },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio", "options": [
+      { "value": "landscape", "label": "Landscape (16:9)" },
+      { "value": "square", "label": "Square (1:1)" },
+      { "value": "portrait", "label": "Portrait (3:4)" }
+    ], "default": "landscape" }
+  ]
 }
 {% endschema %}

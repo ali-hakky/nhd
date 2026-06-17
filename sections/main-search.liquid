@@ -49,6 +49,15 @@
 {% schema %}
 {
   "name": "Search page",
-  "settings": []
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Search" },
+    { "type": "select", "id": "columns", "label": "Results columns", "options": [
+      { "value": "2", "label": "2 columns" },
+      { "value": "3", "label": "3 columns" },
+      { "value": "4", "label": "4 columns" }
+    ], "default": "3" },
+    { "type": "checkbox", "id": "show_articles", "label": "Show articles in results", "default": true },
+    { "type": "checkbox", "id": "show_pages", "label": "Show pages in results", "default": true }
+  ]
 }
 {% endschema %}

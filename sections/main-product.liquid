@@ -17,7 +17,7 @@
     </div>
     {%- if product.images.size > 1 -%}
       <div class="thumbs">
-        {%- for image in product.images limit: 6 -%}
+        {%- for image in product.images limit: section.settings.thumbnail_limit -%}
           <div class="thumb{% if image == current_variant.featured_image or image == product.featured_image and forloop.first %} active{% endif %}">
             {{ image | image_url: width: 160 | image_tag: loading: 'lazy', alt: product.title }}
           </div>
@@ -27,7 +27,7 @@
   </div>
 
   <div class="product-info">
-    {%- if product.vendor != blank -%}
+    {%- if product.vendor != blank and section.settings.show_vendor -%}
       <div class="product-vendor">{{ product.vendor }}</div>
     {%- endif -%}
     <h1 class="product-title">{{ product.title }}</h1>
@@ -63,7 +63,7 @@
         {%- endfor -%}
       {%- endunless -%}
 
-      {%- unless is_enquire -%}
+      {%- unless is_enquire or section.settings.show_quantity == false -%}
         <div class="product-qty">
           <label class="product-qty-label">Quantity</label>
           <div class="product-qty-wrap">
@@ -90,7 +90,7 @@
     </form>
 
     {%- comment -%} Product meta fields {%- endcomment -%}
-    {%- if product.metafields.custom.dimensions.value != blank or product.metafields.custom.lead_time.value != blank or product.metafields.custom.materials.value != blank -%}
+    {%- if section.settings.show_meta and product.metafields.custom.dimensions.value != blank or product.metafields.custom.lead_time.value != blank or product.metafields.custom.materials.value != blank -%}
       <div class="product-meta">
         {%- if product.metafields.custom.dimensions.value != blank -%}
           <div class="product-meta-row"><span class="label">Dimensions</span><span class="value">{{ product.metafields.custom.dimensions.value }}</span></div>
@@ -109,7 +109,7 @@
 
     {%- comment -%} Product tabs {%- endcomment -%}
     {%- assign has_tabs = false -%}
-    {%- if product.description != blank or product.metafields.custom.details.value != blank or product.metafields.custom.care.value != blank -%}
+    {%- if section.settings.show_tabs and product.description != blank or product.metafields.custom.details.value != blank or product.metafields.custom.care.value != blank -%}
       {%- assign has_tabs = true -%}
     {%- endif -%}
     {%- if has_tabs -%}
@@ -144,6 +144,18 @@
 {% schema %}
 {
   "name": "Product page",
-  "settings": []
+  "settings": [
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": true },
+    { "type": "checkbox", "id": "show_share", "label": "Show share buttons", "default": false },
+    { "type": "checkbox", "id": "show_meta", "label": "Show dimensions / lead time / materials", "default": true },
+    { "type": "checkbox", "id": "show_tabs", "label": "Show description / details / care tabs", "default": true },
+    { "type": "checkbox", "id": "show_quantity", "label": "Show quantity selector", "default": true },
+    { "type": "range", "id": "thumbnail_limit", "label": "Max thumbnails", "min": 3, "max": 10, "step": 1, "default": 6 },
+    { "type": "select", "id": "image_size", "label": "Main image size", "options": [
+      { "value": "small", "label": "Small (600px)" },
+      { "value": "medium", "label": "Medium (900px)" },
+      { "value": "large", "label": "Large (1200px)" }
+    ], "default": "medium" }
+  ]
 }
 {% endschema %}

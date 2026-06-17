@@ -42,6 +42,11 @@
 {% schema %}
 {
   "name": "Cart drawer",
-  "settings": []
+  "settings": [
+    { "type": "checkbox", "id": "show_note", "label": "Show order note", "default": false },
+    { "type": "text", "id": "empty_text", "label": "Empty cart message", "default": "Your cart is empty" },
+    { "type": "text", "id": "checkout_label", "label": "Checkout button label", "default": "Checkout" },
+    { "type": "text", "id": "shipping_note", "label": "Shipping note text", "default": "Shipping & taxes calculated at checkout" }
+  ]
 }
 {% endschema %}
