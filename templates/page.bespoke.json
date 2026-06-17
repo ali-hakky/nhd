@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_title": true,
+        "content_width": "medium"
+      }
+    },
+    "contact": {
+      "type": "main-contact",
+      "settings": {
+        "heading": "Start Your Bespoke Order",
+        "intro": "Tell us about the piece you're dreaming of — size, fabric, finish, inspiration. We'll get back to you with a quote and timeline.",
+        "email": "hello@nazlyhabibdesign.com",
+        "address": "Cairo & London"
+      }
+    }
+  },
+  "order": ["main", "contact"]
+}

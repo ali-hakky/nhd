@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "about-hero": {
+      "type": "about",
+      "settings": {}
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_title": false,
+        "content_width": "medium"
+      }
+    }
+  },
+  "order": ["about-hero", "main"]
+}
