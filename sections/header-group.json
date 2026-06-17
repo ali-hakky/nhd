@@ -41,9 +41,8 @@
       ],
       "custom_css": [],
       "settings": {
-        "logo": "shopify://shop_images/ChatGPT_Image_Jun_17_2026_11_24_38_AM.png",
         "tagline": "Handcrafted Interiors · Cairo & London",
-        "nav_mode": "menu",
+        "nav_mode": "collections",
         "menu": "main-menu",
         "max_collections": 8,
         "products_per_dropdown": 4,
