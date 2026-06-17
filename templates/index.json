@@ -665,78 +665,20 @@
     },
     "butlers": {
       "type": "featured-products",
-      "blocks": {
-        "bt1": {
-          "type": "product",
-          "settings": {
-            "title": "Butler's Stand — Sky Blue",
-            "material": "Imported velour · Tassel detail · Tray min. 5cm wider than stand · Tray not included",
-            "dims": "H70–80 × W45 × L50 cm",
-            "lead": "Contact for availability",
-            "badge": "none",
-            "badge_label": "",
-            "button": "Enquire",
-            "url": ""
-          }
-        },
-        "bt2": {
-          "type": "product",
-          "settings": {
-            "title": "Butler's Stand — Royal Burgundy",
-            "material": "Velour upholstered · Tassels · Shown with Swoon Tray in Black · Immediate delivery",
-            "dims": "H70–80 × W45 × L50 cm",
-            "lead": "Immediate delivery",
-            "badge": "new",
-            "badge_label": "In Stock",
-            "button": "Add to cart",
-            "url": ""
-          }
-        },
-        "bt3": {
-          "type": "product",
-          "settings": {
-            "title": "The Swoon Lacquered Tray",
-            "material": "Black & White available · Scalloped edge · Butler's tray or display piece",
-            "dims": "L70 × W50 cm",
-            "lead": "Immediate delivery",
-            "badge": "new",
-            "badge_label": "In Stock",
-            "button": "Add to cart",
-            "url": ""
-          }
-        },
-        "bt4": {
-          "type": "product",
-          "settings": {
-            "title": "The Swoon Wooden Tray",
-            "material": "Part of The Swoon Collection · Generously sized · Custom colours available",
-            "dims": "L70 × W50 cm",
-            "lead": "2 weeks (3 for custom)",
-            "badge": "none",
-            "badge_label": "",
-            "button": "Add to cart",
-            "url": ""
-          }
-        }
-      },
-      "block_order": [
-        "bt1",
-        "bt2",
-        "bt3",
-        "bt4"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "eyebrow": "The Swoon Collection",
         "heading": "Butler's Stands",
         "heading_accent": "& Trays",
         "intro": "",
         "view_all_label": "View all →",
-        "view_all_url": "/collections/accessories",
-        "columns": "4",
+        "view_all_url": "/collections/butlers-stands-trays",
+        "columns": "3",
         "image_height": "med",
         "background_off": false,
-        "collection": "",
-        "products_to_show": 4,
+        "collection": "butlers-stands-trays",
+        "products_to_show": 3,
         "show_price": true
       }
     },
