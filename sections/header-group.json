@@ -1,20 +1,59 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "Header group",
   "type": "header",
   "sections": {
     "announcement": {
       "type": "announcement-bar",
-      "settings": {}
+      "settings": {
+        "text": "Free shipping on orders over £500  ·  All pieces handcrafted in Egypt  ·  Cairo & London studio"
+      }
     },
     "header": {
       "type": "header",
-      "settings": {},
       "blocks": {
-        "link1": { "type": "top_link", "settings": { "label": "About" } },
-        "link2": { "type": "top_link", "settings": { "label": "Bespoke Orders" } }
+        "link1": {
+          "type": "top_link",
+          "settings": {
+            "label": "About",
+            "url": ""
+          }
+        },
+        "link2": {
+          "type": "top_link",
+          "settings": {
+            "label": "Bespoke Orders",
+            "url": ""
+          }
+        }
       },
-      "block_order": ["link1", "link2"]
+      "block_order": [
+        "link1",
+        "link2"
+      ],
+      "custom_css": [],
+      "settings": {
+        "logo": "shopify://shop_images/ChatGPT_Image_Jun_17_2026_11_24_38_AM.png",
+        "tagline": "Handcrafted Interiors · Cairo & London",
+        "nav_mode": "menu",
+        "menu": "main-menu",
+        "max_collections": 8,
+        "products_per_dropdown": 4,
+        "contact_label": "Contact",
+        "contact_url": ""
+      }
     }
   },
-  "order": ["announcement", "header"]
+  "order": [
+    "announcement",
+    "header"
+  ]
 }
