@@ -108,6 +108,7 @@
         "c1": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-15_at_21.16.13_1.jpg",
             "title": "Seating",
             "subtitle": "Armchairs · Sofas",
             "url": "/collections/seating"
