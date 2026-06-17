@@ -157,7 +157,8 @@
       "settings": {
         "eyebrow": "Browse by category",
         "heading": "Shop the",
-        "heading_accent": "Collection"
+        "heading_accent": "Collection",
+        "source": "auto"
       }
     },
     "new_arrivals": {
@@ -192,6 +193,7 @@
         "p3": {
           "type": "product",
           "settings": {
+            "image": "shopify://shop_images/723066830_18367094377227244_7227026465453875489_n.jpg",
             "title": "The Bahamas Lantern",
             "material": "Natural wicker, bamboo & wood · Timeless coastal charm",
             "dims": "W46 × D46 × H65 cm",
@@ -867,27 +869,45 @@
       "blocks": {
         "ig1": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "post_url": "",
+            "caption": ""
+          }
         },
         "ig2": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "post_url": "",
+            "caption": ""
+          }
         },
         "ig3": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "post_url": "",
+            "caption": ""
+          }
         },
         "ig4": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "post_url": "",
+            "caption": ""
+          }
         },
         "ig5": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "post_url": "",
+            "caption": ""
+          }
         },
         "ig6": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "post_url": "",
+            "caption": ""
+          }
         }
       },
       "block_order": [
