@@ -1,8 +1,4 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
-{%- assign is_enquire = false -%}
-{%- if product.tags contains 'enquire' or product.metafields.custom.enquire_only.value == true or product.price == 0 -%}
-  {%- assign is_enquire = true -%}
-{%- endif -%}
 
 <div class="product-page">
   <div class="product-gallery">
@@ -32,16 +28,12 @@
     {%- endif -%}
     <h1 class="product-title">{{ product.title }}</h1>
 
-    {%- if is_enquire -%}
-      <div class="product-price-main" style="color:var(--bd);font-style:italic">Price on enquiry</div>
-    {%- else -%}
-      <div class="product-price-main">
-        {%- if current_variant.compare_at_price > current_variant.price -%}
-          <span class="was">{{ current_variant.compare_at_price | money }}</span>
-        {%- endif -%}
-        {{ current_variant.price | money }}
-      </div>
-    {%- endif -%}
+    <div class="product-price-main">
+      {%- if current_variant.compare_at_price > current_variant.price -%}
+        <span class="was">{{ current_variant.compare_at_price | money }}</span>
+      {%- endif -%}
+      {{ current_variant.price | money }}
+    </div>
 
     {%- if product.description != blank -%}
       <div class="product-desc">{{ product.description }}</div>
@@ -63,7 +55,7 @@
         {%- endfor -%}
       {%- endunless -%}
 
-      {%- unless is_enquire or section.settings.show_quantity == false -%}
+      {%- unless section.settings.show_quantity == false -%}
         <div class="product-qty">
           <label class="product-qty-label">Quantity</label>
           <div class="product-qty-wrap">
@@ -75,17 +67,13 @@
       {%- endunless -%}
 
       <div class="product-form-btn">
-        {%- if is_enquire -%}
-          <a href="/pages/contact?product={{ product.title | url_encode }}" class="btn" data-enquire-url="/pages/contact?product={{ product.title | url_encode }}">{{ 'product.enquire' | t }}</a>
-        {%- else -%}
-          <button type="submit" class="btn" data-add-label="{{ product.metafields.custom.cta_label.value | default: 'Add to cart' }}"{% unless current_variant.available %} disabled{% endunless %}>
-            {%- if current_variant.available -%}
-              {{ product.metafields.custom.cta_label.value | default: 'Add to cart' }}
-            {%- else -%}
-              {{ 'product.sold_out' | t }}
-            {%- endif -%}
-          </button>
-        {%- endif -%}
+        <button type="submit" class="btn" data-add-label="Add to cart"{% unless current_variant.available %} disabled{% endunless %}>
+          {%- if current_variant.available -%}
+            Add to cart
+          {%- else -%}
+            {{ 'product.sold_out' | t }}
+          {%- endif -%}
+        </button>
       </div>
     </form>
 

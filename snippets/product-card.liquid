@@ -16,7 +16,7 @@
     assign c_lead = product.metafields.custom.lead_time.value
     assign c_badge = product.metafields.custom.badge.value
     assign c_badge_label = product.metafields.custom.badge_label.value
-    assign c_button = product.metafields.custom.cta_label.value | default: 'Add to cart'
+    assign c_button = 'Add to cart'
     assign c_image = product.featured_image
     assign c_available = product.available
   else
