@@ -5,7 +5,9 @@
 
 {%- liquid
   assign height = image_height | default: 'med'
+  assign c_product = nil
   if product
+    assign c_product = product
     assign c_url = product.url
     assign c_title = product.title
     assign c_material = product.metafields.custom.materials.value | default: product.metafields.custom.short_description.value
@@ -16,51 +18,69 @@
     assign c_lead = product.metafields.custom.lead_time.value
     assign c_badge = product.metafields.custom.badge.value
     assign c_badge_label = product.metafields.custom.badge_label.value
-    assign c_button = 'Add to cart'
     assign c_image = product.featured_image
     assign c_available = product.available
+    assign c_variant_id = product.selected_or_first_available_variant.id
   else
-    assign c_url = url | default: routes.all_products_collection_url
     assign c_title = title
     assign c_material = material
     assign c_dims = dims
     assign c_lead = lead
     assign c_badge = badge
     assign c_badge_label = badge_label
-    assign c_button = button | default: 'Add to cart'
     assign c_available = true
+    assign c_variant_id = nil
+    assign c_url = url
+
+    assign c_title_handle = c_title | handleize
+    assign found_product = all_products[c_title_handle]
+    if found_product and found_product.title != blank
+      assign c_url = found_product.url
+      assign c_variant_id = found_product.selected_or_first_available_variant.id
+      assign c_available = found_product.available
+      assign c_product = found_product
+      if c_image == blank and found_product.featured_image
+        assign c_image = found_product.featured_image
+      endif
+    endif
+
+    if c_url == blank
+      assign c_url = routes.all_products_collection_url
+    endif
   endif
 -%}
 
-<a href="{{ c_url }}" class="prod-card" {{ block_attributes }}>
-  <div class="prod-img {{ height }}">
-    {%- if product and c_image -%}
-      {{ c_image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width:640px) 50vw, 25vw', widths: '300,450,600', alt: c_title }}
-    {%- elsif image != blank -%}
-      {{ image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width:640px) 50vw, 25vw', widths: '300,450,600', alt: c_title }}
-    {%- else -%}
-      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-    {%- endif -%}
+<div class="prod-card" {{ block_attributes }}>
+  <a href="{{ c_url }}" class="prod-img-link">
+    <div class="prod-img {{ height }}">
+      {%- if c_product and c_product.featured_image -%}
+        {{ c_product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width:640px) 50vw, 25vw', widths: '300,450,600', alt: c_title }}
+      {%- elsif image != blank -%}
+        {{ image | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '(max-width:640px) 50vw, 25vw', widths: '300,450,600', alt: c_title }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
 
-    {%- if c_badge != blank and c_badge != 'none' -%}
-      <div class="badge {{ c_badge }}">{{ c_badge_label | default: c_badge }}</div>
-    {%- elsif product and product.compare_at_price > product.price -%}
-      <div class="badge sale">Sale</div>
-    {%- elsif product and c_available == false -%}
-      <div class="badge sold">Sold Out</div>
-    {%- endif -%}
-  </div>
+      {%- if c_badge != blank and c_badge != 'none' -%}
+        <div class="badge {{ c_badge }}">{{ c_badge_label | default: c_badge }}</div>
+      {%- elsif c_product and c_product.compare_at_price > c_product.price -%}
+        <div class="badge sale">Sale</div>
+      {%- elsif c_product and c_available == false -%}
+        <div class="badge sold">Sold Out</div>
+      {%- endif -%}
+    </div>
+  </a>
 
   <div class="prod-body">
-    <div class="prod-name">{{ c_title }}</div>
+    <a href="{{ c_url }}" class="prod-name">{{ c_title }}</a>
     {%- if c_material != blank -%}<div class="prod-mat">{{ c_material }}</div>{%- endif -%}
 
-    {%- if product and show_price -%}
+    {%- if c_product and show_price -%}
       <div class="prod-price">
-        {%- if product.compare_at_price > product.price -%}
-          <span class="was">{{ product.compare_at_price | money }}</span>
+        {%- if c_product.compare_at_price > c_product.price -%}
+          <span class="was">{{ c_product.compare_at_price | money }}</span>
         {%- endif -%}
-        {{ product.price | money }}
+        {{ c_product.price | money }}
       </div>
     {%- endif -%}
 
@@ -69,7 +89,11 @@
         {%- if c_dims != blank -%}<div class="prod-dims">{{ c_dims }}</div>{%- endif -%}
         {%- if c_lead != blank -%}<div class="prod-lead">{{ c_lead }}</div>{%- endif -%}
       </div>
-      <span class="add-btn">{{ c_button }}</span>
+      {%- if c_variant_id -%}
+        <button type="button" class="add-btn" data-variant-id="{{ c_variant_id }}">Add to cart</button>
+      {%- else -%}
+        <a href="{{ c_url }}" class="add-btn">Add to cart</a>
+      {%- endif -%}
     </div>
   </div>
-</a>
+</div>

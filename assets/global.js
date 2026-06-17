@@ -225,6 +225,40 @@
     });
   });
 
+  // Product card quick add-to-cart
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest('button[data-variant-id]');
+    if(!btn)return;
+    e.preventDefault();
+    e.stopPropagation();
+    var variantId=btn.dataset.variantId;
+    btn.disabled=true;
+    btn.textContent='Adding…';
+    fetch('/cart/add.js',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({items:[{id:parseInt(variantId,10),quantity:1}]})
+    })
+    .then(function(r){
+      if(!r.ok) return r.json().then(function(d){throw new Error(d.description||'Add to cart failed')});
+      return r.json();
+    })
+    .then(function(){
+      btn.textContent='Added ✓';
+      setTimeout(function(){
+        btn.disabled=false;
+        btn.textContent='Add to cart';
+      },1500);
+      openCart();
+    })
+    .catch(function(err){
+      console.error(err);
+      btn.disabled=false;
+      btn.textContent='Add to cart';
+      alert(err.message||'Could not add to cart.');
+    });
+  });
+
   // Expose globally
   window.NHD={openCart:openCart,refreshCart:refreshCart,closeCart:closeCart};
 })();
