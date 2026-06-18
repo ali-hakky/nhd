@@ -1,20 +1,58 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "Header group",
   "type": "header",
   "sections": {
     "announcement": {
       "type": "announcement-bar",
-      "settings": {}
+      "settings": {
+        "text": ""
+      }
     },
     "header": {
       "type": "header",
-      "settings": {},
       "blocks": {
-        "link1": { "type": "top_link", "settings": { "label": "About" } },
-        "link2": { "type": "top_link", "settings": { "label": "Bespoke Orders" } }
+        "link1": {
+          "type": "top_link",
+          "settings": {
+            "label": "About",
+            "url": "/pages/about"
+          }
+        },
+        "link2": {
+          "type": "top_link",
+          "settings": {
+            "label": "Bespoke Orders",
+            "url": "/pages/bespoke"
+          }
+        }
       },
-      "block_order": ["link1", "link2"]
+      "block_order": [
+        "link1",
+        "link2"
+      ],
+      "custom_css": [],
+      "settings": {
+        "tagline": "Handcrafted Interiors · Cairo & London",
+        "nav_mode": "collections",
+        "menu": "main-menu",
+        "max_collections": 8,
+        "products_per_dropdown": 4,
+        "contact_label": "Contact",
+        "contact_url": ""
+      }
     }
   },
-  "order": ["announcement", "header"]
+  "order": [
+    "announcement",
+    "header"
+  ]
 }

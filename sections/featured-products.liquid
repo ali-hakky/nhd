@@ -16,7 +16,7 @@
       <h2 class="sec-title">{{ section.settings.heading }}{% if section.settings.heading_accent != blank %} <em>{{ section.settings.heading_accent }}</em>{% endif %}</h2>
     </div>
     {%- if section.settings.view_all_label != blank -%}
-      <a href="{{ section.settings.view_all_url | default: '#' }}" class="view-all">{{ section.settings.view_all_label }}</a>
+      <a href="{{ section.settings.view_all_url | default: routes.collections_url }}" class="view-all">{{ section.settings.view_all_label }}</a>
     {%- endif -%}
   </div>
 
@@ -25,7 +25,7 @@
   {%- if tab_blocks.size > 0 -%}
     <div class="fab-tabs">
       {%- for block in tab_blocks -%}
-        <a href="{{ block.settings.link | default: '#' }}" class="fab-tab{% if forloop.first %} on{% endif %}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+        <a href="{{ block.settings.link | default: routes.collections_url }}" class="fab-tab{% if forloop.first %} on{% endif %}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
       {%- endfor -%}
     </div>
   {%- endif -%}

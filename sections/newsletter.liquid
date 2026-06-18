@@ -3,8 +3,14 @@
   <h2 class="nl-title">{{ section.settings.heading }}{% if section.settings.heading_accent != blank %} <em>{{ section.settings.heading_accent }}</em>{% endif %}</h2>
   {%- if section.settings.subtext != blank -%}<p class="nl-sub">{{ section.settings.subtext }}</p>{%- endif -%}
   {%- form 'customer', id: 'newsletter' -%}
+    {%- if form.posted_successfully? -%}
+      <p style="color:#fff;margin-bottom:16px">{{ 'general.newsletter.success' | t }}</p>
+    {%- endif -%}
+    {%- if form.errors -%}
+      <p style="color:#ffcccc;margin-bottom:16px">{{ form.errors | default_errors }}</p>
+    {%- endif -%}
     <div class="nl-form">
-      <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.placeholder' | t }}" required>
+      <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.placeholder' | t }}" required aria-label="{{ 'general.newsletter.placeholder' | t }}">
       <input type="hidden" name="contact[tags]" value="newsletter">
       <button type="submit">{{ 'general.newsletter.submit' | t }}</button>
     </div>

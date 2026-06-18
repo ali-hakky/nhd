@@ -10,13 +10,22 @@
 </head>
 <body>
   <div class="page-content" style="text-align:center;padding:60px 20px">
-    <h1>{{ shop.name }} Gift Card</h1>
-    <p style="font-size:32px;color:var(--bd);margin:20px 0">{{ gift_card.balance | money }}</p>
-    <p style="font-size:16px;letter-spacing:3px;background:var(--bl);padding:16px;display:inline-block">{{ gift_card.code | format_code }}</p>
-    {%- if gift_card.expired -%}
-      <p style="color:#c0392b;margin-top:12px">This gift card has expired.</p>
+    <p style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--mu);margin-bottom:8px">Gift Card</p>
+    <h1 style="margin-bottom:20px">{{ shop.name }}</h1>
+    <p style="font-size:32px;color:var(--bd);margin:20px 0;font-family:'Cormorant Garamond',serif">{{ gift_card.balance | money }}</p>
+    <p style="font-size:16px;letter-spacing:3px;background:var(--bl);padding:16px;display:inline-block;font-family:'Jost',sans-serif;user-select:all">{{ gift_card.code | format_code }}</p>
+    {%- if gift_card.pass_url -%}
+      <p style="margin-top:12px"><a href="{{ gift_card.pass_url }}" style="color:var(--bd);font-size:12px">Add to Apple Wallet</a></p>
     {%- endif -%}
-    <p style="margin-top:20px"><a href="{{ shop.url }}" class="btn">Shop now</a></p>
+    {%- if gift_card.expired -%}
+      <p style="color:#c0392b;margin-top:12px">This gift card expired on {{ gift_card.expires_on | date: '%B %d, %Y' }}.</p>
+    {%- elsif gift_card.enabled -%}
+      <p style="color:var(--mu);margin-top:12px;font-size:12px">Enter this code at checkout to redeem your gift card.</p>
+    {%- endif -%}
+    <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="{{ shop.url }}" class="btn">Shop now</a>
+      <button onclick="navigator.clipboard.writeText('{{ gift_card.code }}');this.textContent='Copied!';setTimeout(function(){this.textContent='Copy code'}.bind(this),2000)" class="btn" style="background:transparent;color:var(--bd);border:1px solid var(--bd)">Copy code</button>
+    </div>
   </div>
 </body>
 </html>

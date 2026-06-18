@@ -1,10 +1,65 @@
 <div class="page-content">
   <h1>My Addresses</h1>
+  <div style="display:flex;gap:16px;justify-content:center;margin-bottom:32px;font-size:11px;letter-spacing:2px;text-transform:uppercase">
+    <a href="{{ routes.account_url }}" style="color:var(--mu);text-decoration:none">Orders</a>
+    <a href="{{ routes.account_addresses_url }}" style="color:var(--bd)">Addresses</a>
+    <a href="{{ routes.account_logout_url }}" style="color:var(--mu);text-decoration:none">Log out</a>
+  </div>
+
+  <div style="text-align:center;margin-bottom:24px">
+    <button type="button" class="btn" onclick="document.getElementById('new-address-form').classList.toggle('hidden')">Add New Address</button>
+  </div>
+
+  <div id="new-address-form" class="hidden" style="max-width:500px;margin:0 auto 32px;border:1px solid var(--br);padding:24px">
+    {%- form 'customer_address', customer.new_address -%}
+      <div class="contact-form">
+        <label for="address-first">First name</label>
+        <input type="text" id="address-first" name="address[first_name]" autocomplete="given-name">
+        <label for="address-last">Last name</label>
+        <input type="text" id="address-last" name="address[last_name]" autocomplete="family-name">
+        <label for="address-company">Company</label>
+        <input type="text" id="address-company" name="address[company]" autocomplete="organization">
+        <label for="address-address1">Address</label>
+        <input type="text" id="address-address1" name="address[address1]" autocomplete="address-line1" required>
+        <label for="address-address2">Apartment, suite, etc.</label>
+        <input type="text" id="address-address2" name="address[address2]" autocomplete="address-line2">
+        <label for="address-city">City</label>
+        <input type="text" id="address-city" name="address[city]" autocomplete="address-level2" required>
+        <label for="address-country">Country</label>
+        <select id="address-country" name="address[country]" autocomplete="country-name">
+          {{ all_country_option_tags }}
+        </select>
+        <label for="address-province">Province / State</label>
+        <input type="text" id="address-province" name="address[province]" autocomplete="address-level1">
+        <label for="address-zip">Postal / ZIP code</label>
+        <input type="text" id="address-zip" name="address[zip]" autocomplete="postal-code">
+        <label for="address-phone">Phone</label>
+        <input type="tel" id="address-phone" name="address[phone]" autocomplete="tel">
+        <div style="margin-top:12px">
+          <label><input type="checkbox" name="address[default]" value="1"> Set as default address</label>
+        </div>
+        <button type="submit" class="btn" style="margin-top:16px">Add Address</button>
+      </div>
+    {%- endform -%}
+  </div>
+
   {%- for address in customer.addresses -%}
-    <div style="border:1px solid var(--br);padding:16px;margin-bottom:12px">
-      <p>{{ address | format_address }}</p>
+    <div style="border:1px solid var(--br);padding:16px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:start;gap:16px;flex-wrap:wrap">
+      <div>
+        <p>{{ address | format_address }}</p>
+        {%- if address == customer.default_address -%}
+          <p style="font-size:10px;color:var(--bd);margin-top:4px;letter-spacing:1px;text-transform:uppercase">Default</p>
+        {%- endif -%}
+      </div>
+      <div style="display:flex;gap:12px;font-size:10px;letter-spacing:1px;text-transform:uppercase">
+        <a href="{{ routes.account_addresses_url }}/{{ address.id }}/edit" style="color:var(--bd);text-decoration:none">Edit</a>
+        {%- form 'customer_address', address -%}
+          <input type="hidden" name="_method" value="delete">
+          <button type="submit" style="background:none;border:none;color:var(--mu);cursor:pointer;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-family:'Jost',sans-serif;text-decoration:underline" onclick="return confirm('Remove this address?')">Delete</button>
+        {%- endform -%}
+      </div>
     </div>
   {%- else -%}
-    <p>No saved addresses.</p>
+    <p style="color:var(--mu);text-align:center;padding:20px 0">No saved addresses.</p>
   {%- endfor -%}
 </div>

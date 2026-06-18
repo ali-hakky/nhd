@@ -1,8 +1,4 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
-{%- assign is_enquire = false -%}
-{%- if product.tags contains 'enquire' or product.metafields.custom.enquire_only.value == true or product.price == 0 -%}
-  {%- assign is_enquire = true -%}
-{%- endif -%}
 
 <div class="product-page">
   <div class="product-gallery">
@@ -17,7 +13,7 @@
     </div>
     {%- if product.images.size > 1 -%}
       <div class="thumbs">
-        {%- for image in product.images limit: 6 -%}
+        {%- for image in product.images limit: section.settings.thumbnail_limit -%}
           <div class="thumb{% if image == current_variant.featured_image or image == product.featured_image and forloop.first %} active{% endif %}">
             {{ image | image_url: width: 160 | image_tag: loading: 'lazy', alt: product.title }}
           </div>
@@ -27,19 +23,17 @@
   </div>
 
   <div class="product-info">
-    {%- if product.vendor != blank -%}
+    {%- if product.vendor != blank and section.settings.show_vendor -%}
       <div class="product-vendor">{{ product.vendor }}</div>
     {%- endif -%}
     <h1 class="product-title">{{ product.title }}</h1>
 
-    {%- unless is_enquire -%}
-      <div class="product-price-main">
-        {%- if current_variant.compare_at_price > current_variant.price -%}
-          <span class="was">{{ current_variant.compare_at_price | money }}</span>
-        {%- endif -%}
-        {{ current_variant.price | money }}
-      </div>
-    {%- endunless -%}
+    <div class="product-price-main">
+      {%- if current_variant.compare_at_price > current_variant.price -%}
+        <span class="was">{{ current_variant.compare_at_price | money }}</span>
+      {%- endif -%}
+      {{ current_variant.price | money }}
+    </div>
 
     {%- if product.description != blank -%}
       <div class="product-desc">{{ product.description }}</div>
@@ -52,32 +46,39 @@
         {%- for option in product.options_with_values -%}
           <fieldset class="variant-fieldset">
             <legend>{{ option.name }}</legend>
-            <div class="variant-options">
+            <div class="variant-options" role="radiogroup" aria-label="{{ option.name }}">
               {%- for value in option.values -%}
-                <span class="variant-opt{% if value == option.selected_value %} active{% endif %}">{{ value }}</span>
+                <span class="variant-opt{% if value == option.selected_value %} active{% endif %}" role="radio" aria-checked="{% if value == option.selected_value %}true{% else %}false{% endif %}" tabindex="0">{{ value }}</span>
               {%- endfor -%}
             </div>
           </fieldset>
         {%- endfor -%}
       {%- endunless -%}
 
+      {%- unless section.settings.show_quantity == false -%}
+        <div class="product-qty">
+          <label class="product-qty-label">Quantity</label>
+          <div class="product-qty-wrap">
+            <button type="button" class="product-qty-btn" data-action="minus" aria-label="Decrease quantity">−</button>
+            <input type="number" name="quantity" value="1" min="1" aria-label="Quantity">
+            <button type="button" class="product-qty-btn" data-action="plus" aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+      {%- endunless -%}
+
       <div class="product-form-btn">
-        {%- if is_enquire -%}
-          <a href="/pages/contact?product={{ product.title | url_encode }}" class="btn" data-enquire-url="/pages/contact?product={{ product.title | url_encode }}">Enquire</a>
-        {%- else -%}
-          <button type="submit" class="btn" data-add-label="{{ product.metafields.custom.cta_label.value | default: 'Add to cart' }}"{% unless current_variant.available %} disabled{% endunless %}>
-            {%- if current_variant.available -%}
-              {{ product.metafields.custom.cta_label.value | default: 'Add to cart' }}
-            {%- else -%}
-              Sold out
-            {%- endif -%}
-          </button>
-        {%- endif -%}
+        <button type="submit" class="btn" data-add-label="Add to cart"{% unless current_variant.available %} disabled{% endunless %}>
+          {%- if current_variant.available -%}
+            Add to cart
+          {%- else -%}
+            {{ 'product.sold_out' | t }}
+          {%- endif -%}
+        </button>
       </div>
     </form>
 
     {%- comment -%} Product meta fields {%- endcomment -%}
-    {%- if product.metafields.custom.dimensions.value != blank or product.metafields.custom.lead_time.value != blank or product.metafields.custom.materials.value != blank -%}
+    {%- if section.settings.show_meta and product.metafields.custom.dimensions.value != blank or product.metafields.custom.lead_time.value != blank or product.metafields.custom.materials.value != blank -%}
       <div class="product-meta">
         {%- if product.metafields.custom.dimensions.value != blank -%}
           <div class="product-meta-row"><span class="label">Dimensions</span><span class="value">{{ product.metafields.custom.dimensions.value }}</span></div>
@@ -93,6 +94,36 @@
         {%- endif -%}
       </div>
     {%- endif -%}
+
+    {%- comment -%} Product tabs {%- endcomment -%}
+    {%- assign has_tabs = false -%}
+    {%- if section.settings.show_tabs and product.description != blank or product.metafields.custom.details.value != blank or product.metafields.custom.care.value != blank -%}
+      {%- assign has_tabs = true -%}
+    {%- endif -%}
+    {%- if has_tabs -%}
+      <div class="product-tabs">
+        <div class="product-tabs-nav" role="tablist">
+          {%- if product.description != blank -%}
+            <button class="active" data-tab="tab-desc" role="tab" aria-selected="true">{{ 'product.description' | t }}</button>
+          {%- endif -%}
+          {%- if product.metafields.custom.details.value != blank -%}
+            <button data-tab="tab-details" role="tab" aria-selected="false">{{ 'product.details' | t }}</button>
+          {%- endif -%}
+          {%- if product.metafields.custom.care.value != blank -%}
+            <button data-tab="tab-care" role="tab" aria-selected="false">{{ 'product.care' | t }}</button>
+          {%- endif -%}
+        </div>
+        {%- if product.description != blank -%}
+          <div id="tab-desc" class="product-tab-panel" role="tabpanel">{{ product.description }}</div>
+        {%- endif -%}
+        {%- if product.metafields.custom.details.value != blank -%}
+          <div id="tab-details" class="product-tab-panel hidden" role="tabpanel">{{ product.metafields.custom.details.value }}</div>
+        {%- endif -%}
+        {%- if product.metafields.custom.care.value != blank -%}
+          <div id="tab-care" class="product-tab-panel hidden" role="tabpanel">{{ product.metafields.custom.care.value }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -101,6 +132,18 @@
 {% schema %}
 {
   "name": "Product page",
-  "settings": []
+  "settings": [
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": true },
+    { "type": "checkbox", "id": "show_share", "label": "Show share buttons", "default": false },
+    { "type": "checkbox", "id": "show_meta", "label": "Show dimensions / lead time / materials", "default": true },
+    { "type": "checkbox", "id": "show_tabs", "label": "Show description / details / care tabs", "default": true },
+    { "type": "checkbox", "id": "show_quantity", "label": "Show quantity selector", "default": true },
+    { "type": "range", "id": "thumbnail_limit", "label": "Max thumbnails", "min": 3, "max": 10, "step": 1, "default": 6 },
+    { "type": "select", "id": "image_size", "label": "Main image size", "options": [
+      { "value": "small", "label": "Small (600px)" },
+      { "value": "medium", "label": "Medium (900px)" },
+      { "value": "large", "label": "Large (1200px)" }
+    ], "default": "medium" }
+  ]
 }
 {% endschema %}

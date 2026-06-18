@@ -1,6 +1,17 @@
 <div class="section">
-  <div class="sec-head" style="justify-content:center"><div style="text-align:center"><h2 class="sec-title">All <em>Collections</em></h2></div></div>
-  <div class="grid-3">
+  <div class="sec-head" style="justify-content:center">
+    <div style="text-align:center">
+      <h2 class="sec-title">
+        {%- assign words = section.settings.heading | default: 'All Collections' | split: ' ' -%}
+        {%- assign accent = section.settings.heading_accent | default: 'Collections' -%}
+        {%- for word in words -%}
+          {%- if word == accent -%}<em>{{ word }}</em>{%- else -%}{{ word }}{%- endif -%}
+          {%- unless forloop.last %} {% endunless -%}
+        {%- endfor -%}
+      </h2>
+    </div>
+  </div>
+  <div class="grid-{{ section.settings.columns | default: '3' }}">
     {%- for collection in collections -%}
       <a href="{{ collection.url }}" class="cat-card" style="aspect-ratio:1.2">
         {%- if collection.image -%}
@@ -10,7 +21,9 @@
         {%- endif -%}
         <div class="cat-overlay">
           <div class="cat-name">{{ collection.title }}</div>
-          <div class="cat-sub">{{ collection.products_count }} products</div>
+          {%- if section.settings.show_count -%}
+            <div class="cat-sub">{{ collection.products_count }} products</div>
+          {%- endif -%}
         </div>
       </a>
     {%- endfor -%}
@@ -20,6 +33,20 @@
 {% schema %}
 {
   "name": "Collections list",
-  "settings": []
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "All Collections" },
+    { "type": "text", "id": "heading_accent", "label": "Heading italic word", "default": "Collections" },
+    { "type": "select", "id": "columns", "label": "Grid columns", "options": [
+      { "value": "2", "label": "2 columns" },
+      { "value": "3", "label": "3 columns" },
+      { "value": "4", "label": "4 columns" }
+    ], "default": "3" },
+    { "type": "checkbox", "id": "show_count", "label": "Show product count", "default": true },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio", "options": [
+      { "value": "landscape", "label": "Landscape" },
+      { "value": "square", "label": "Square" },
+      { "value": "portrait", "label": "Portrait" }
+    ], "default": "landscape" }
+  ]
 }
 {% endschema %}

@@ -1,17 +1,40 @@
 <div class="page-content">
   <h1>Order {{ order.name }}</h1>
-  <p style="color:var(--mu);margin-bottom:24px">Placed {{ order.created_at | date: '%B %d, %Y' }}</p>
+  <div style="display:flex;gap:16px;justify-content:center;margin-bottom:24px;font-size:11px;letter-spacing:2px;text-transform:uppercase">
+    <a href="{{ routes.account_url }}" style="color:var(--bd);text-decoration:none">← Back to Account</a>
+  </div>
+  <p style="color:var(--mu);margin-bottom:24px;text-align:center">Placed {{ order.created_at | date: '%B %d, %Y' }} · {{ order.fulfillment_status_label }}</p>
   <table class="cart-table">
     <thead><tr><th>Product</th><th>Qty</th><th>Price</th></tr></thead>
     <tbody>
       {%- for item in order.line_items -%}
-        <tr><td>{{ item.title }}</td><td>{{ item.quantity }}</td><td>{{ item.line_price | money }}</td></tr>
+        <tr>
+          <td>
+            {{ item.title }}
+            {%- if item.fulfillment -%}
+              <div style="font-size:10px;color:var(--mu);margin-top:4px">{{ item.fulfillment.tracking_company }} {{ item.fulfillment.tracking_number }}</div>
+            {%- endif -%}
+          </td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.line_price | money }}</td>
+        </tr>
       {%- endfor -%}
     </tbody>
   </table>
   <div class="cart-totals" style="margin-top:24px">
     <div class="cart-totals-row"><span>Subtotal</span><span>{{ order.subtotal_price | money }}</span></div>
+    {%- for discount in order.discounts -%}
+      <div class="cart-totals-row" style="color:var(--bd)"><span>Discount ({{ discount.code }})</span><span>-{{ discount.savings | money }}</span></div>
+    {%- endfor -%}
     <div class="cart-totals-row"><span>Shipping</span><span>{{ order.shipping_price | money }}</span></div>
+    <div class="cart-totals-row"><span>Tax</span><span>{{ order.tax_price | money }}</span></div>
     <div class="cart-totals-row total"><span>Total</span><span>{{ order.total_price | money }}</span></div>
   </div>
+
+  {%- if order.shipping_address -%}
+    <div style="margin-top:32px;padding-top:20px;border-top:1px solid var(--br)">
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;margin-bottom:8px">Shipping Address</h3>
+      <p style="font-size:12px;color:var(--mu);line-height:1.8">{{ order.shipping_address | format_address }}</p>
+    </div>
+  {%- endif -%}
 </div>

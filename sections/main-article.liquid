@@ -1,7 +1,9 @@
 <div class="article-page">
-  <div class="article-meta">{{ article.published_at | date: '%B %d, %Y' }} · {{ blog.title }}</div>
+  {%- if section.settings.show_date -%}
+    <div class="article-meta">{{ article.published_at | date: '%B %d, %Y' }}{% if section.settings.show_author and article.author != blank %} · {{ article.author }}{% endif %} · {{ blog.title }}</div>
+  {%- endif -%}
   <h1>{{ article.title }}</h1>
-  {%- if article.image -%}
+  {%- if section.settings.show_featured_image and article.image -%}
     <div class="article-featured">
       {{ article.image | image_url: width: 1200 | image_tag: loading: 'eager', alt: article.title }}
     </div>
@@ -12,6 +14,16 @@
 {% schema %}
 {
   "name": "Article page",
-  "settings": []
+  "settings": [
+    { "type": "checkbox", "id": "show_date", "label": "Show publish date", "default": true },
+    { "type": "checkbox", "id": "show_author", "label": "Show author", "default": false },
+    { "type": "checkbox", "id": "show_featured_image", "label": "Show featured image", "default": true },
+    { "type": "checkbox", "id": "show_share", "label": "Show share buttons", "default": false },
+    { "type": "select", "id": "image_width", "label": "Featured image width", "options": [
+      { "value": "narrow", "label": "Narrow" },
+      { "value": "wide", "label": "Wide" },
+      { "value": "full", "label": "Full width" }
+    ], "default": "wide" }
+  ]
 }
 {% endschema %}
