@@ -665,8 +665,6 @@
     },
     "butlers": {
       "type": "featured-products",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "eyebrow": "The Swoon Collection",
         "heading": "Butler's Stands",

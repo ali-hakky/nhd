@@ -1,16 +1,37 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "about-hero": {
       "type": "about",
-      "settings": {}
+      "settings": {
+        "image": "shopify://shop_images/20240719_101702388_iOS.heic",
+        "badge_text": "Est.2010",
+        "eyebrow": "Meet Nazly",
+        "title": "Design with",
+        "title_accent": "soul & intention",
+        "body": "<p>I'm Nazly — wife, mother of three, and someone who has spent most of her life quietly obsessed with beautiful rooms.</p><p>What started as a genuine love of chinoiserie, antiques and the kind of interiors you want to live inside rather than just admire, eventually became something more.</p><p>Today, Nazly Habib Design is a small studio making handcrafted rattan, wicker and upholstered furniture — bespoke pieces built around your home, your taste and your life.</p>",
+        "signature": "— Nazly Habib"
+      }
     },
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "show_title": false,
         "content_width": "medium"
       }
     }
   },
-  "order": ["about-hero", "main"]
+  "order": [
+    "about-hero",
+    "main"
+  ]
 }
